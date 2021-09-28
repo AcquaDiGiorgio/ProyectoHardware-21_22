@@ -57,18 +57,20 @@ static int candidatos_actualizar_c(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS])
 	
 	for (int fil = 0; fil < NUM_FILAS; fil++){
 		for (int col = 0; col < NUM_COLUMNAS; col++){
-				cuadricula[fil][col] = cuadricula[fil][col] & 0x007F;
-				celdas_vacias++;			
+				cuadricula[fil][col] = cuadricula[fil][col] & 0x007F;	
+				celdas_vacias++;
 		}
 	}
+	
 	for (int fil = 0; fil < NUM_FILAS; fil++){
 		for (int col = 0; col < NUM_COLUMNAS; col++){
 			if ( celda_leer_valor(cuadricula[fil][col]) != 0x0000 ){
 				candidatos_propagar_c(cuadricula,fil,col);
+				celdas_vacias--;
 			}
 		}
 	}
-	return celdas_vacias; // por favor eliminar una vez completada la función
+	return celdas_vacias;
 }
 
 /* Init del sudoku en codigo C invocando a propagar en arm
@@ -100,6 +102,9 @@ cuadricula_candidatos_verificar(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS],
 /* ************************************************************************
  * programa principal del juego que recibe el tablero
  */
+extern int candidatos_actualizar_arm_c(CELDA cuadricula_ARM_C[NUM_FILAS][NUM_COLUMNAS]);
+extern int candidatos_actualizar_arm(CELDA cuadricula_ARM_ARM[NUM_FILAS][NUM_COLUMNAS]);
+
 int
 sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
 	CELDA cuadricula_C_ARM[NUM_FILAS][NUM_COLUMNAS],
@@ -136,9 +141,11 @@ sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
     return correcto;
 }
 
+
 // MAIN
 int main (void) {
     #include "tableros.h"
+		//candidatos_actualizar_arm_c(cuadricula_ARM_C);
     int correcto = sudoku9x9(cuadricula_C_C, cuadricula_C_ARM, cuadricula_ARM_ARM, cuadricula_ARM_C, solucion);
 }
 

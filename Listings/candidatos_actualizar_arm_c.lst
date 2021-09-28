@@ -1,0 +1,37 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             candidatos_actualizar_arm_c, CO
+DE, READONLY
+    2 00000000                 EXPORT           candidatos_actualizar_arm_c
+    3 00000000         ;IMPORT candidatos_actualizar_c
+    4 00000000         
+    5 00000000         ;LDR r1,=candidatos_actualizar_c
+    6 00000000         ;CMP r1,#0
+    7 00000000         ;BEQ candidatos_actualizar_c(r0)
+    8 00000000         
+    9 00000000                 END
+Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
+bjects\candidatos_actualizar_arm_c.d -o.\objects\candidatos_actualizar_arm_c.o 
+-IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\P
+hilips --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 526" --l
+ist=.\listings\candidatos_actualizar_arm_c.lst candidatos_actualizar_arm_c.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+candidatos_actualizar_arm_c 00000000
+
+Symbol: candidatos_actualizar_arm_c
+   Definitions
+      At line 1 in file candidatos_actualizar_arm_c.s
+   Uses
+      At line 2 in file candidatos_actualizar_arm_c.s
+Comment: candidatos_actualizar_arm_c used once
+1 symbol
+333 symbols in table
