@@ -7,34 +7,82 @@ ARM Macro Assembler    Page 1
     1 00000000                 AREA             candidatos_actualizar_arm, CODE
 , READONLY
     2 00000000                 EXPORT           candidatos_actualizar_arm
-    3 00000000         
-    4 00000000         ; LDR r1, #0 ;Celdas Vacias
-    5 00000000         ; LDR r2, #0 ;i
-    6 00000000         ; LDR r3, #0 ;j
-    7 00000000         ; LDR r4,    ;NUM_FILAS
-    8 00000000         ; LDR r5,    ;NUM_COLUMNAS
-    9 00000000         ; 
-   10 00000000         ; for1:  AND r0, r0, #0x007F  ; cuadricula & 0x007F
-   11 00000000         ;   AND r1, r1, #1   ; celdas_vacias++
-   12 00000000         ;   CMP r3, r5    ; ¿j == NUM_COLUMNAS?
-   13 00000000         ;   ADDNE r3, r3, #1  ; si j != NUM_COLUMNAS -> j++
-   14 00000000         ;   ADDNE r0, r0, #0x0002 ; si j != NUM_COLUMNAS -> cuad
-                       ricula[i][j+1]
-   15 00000000         ;   BNE for1    ; si j != NUM_COLUMNAS -> realizar el bu
-                       cle de nuevo
-   16 00000000         ;   MOVEQ r3, r3, #0  ; si j == NUM_COLUMNAS -> poner j 
-                       a 0
-   17 00000000         ;   ;Aqui termina el for interno (columnas)
-   18 00000000         ;   CMP r2, r4    ; ¿i == NUM_FILAS?
-   19 00000000         ;   ADDNE r2, r2, #1  ; si i != NUM_FILAS -> i++
-   20 00000000         ;   ADDNE r0, r0, #0x00  ; si i != NUM_FILAS -> cuadricu
-                       la[i+1][j]
-   21 00000000         ;   BNE for1    ; si i != NUM_FILAS -> realizar el bucle
-                        de nuevo
-   22 00000000         ; for2: 
-   23 00000000         
-   24 00000000         
+    3 00000000                 EXTERN           candidatos_propagar_arm
+    4 00000000         
+    5 00000000         ; INICIALIZACION
+    6 00000000 E1A06000        MOV              R6,R0       ;R0=entrada     R6=
+                                                            cuadricula
+    7 00000004 E3A07000        MOV              R7,#0x0     ;R7=celdas_vacias
+    8 00000008 E3A04000        MOV              R4,#0x0     ;R4=i
+    9 0000000C E3A05000        MOV              R5,#0x0     ;R5=j
+   10 00000010         
+   11 00000010         ; EJECUCION
+   12 00000010         bucle1
+   13 00000010 E0861284        ADD              R1,R6,R4,LSL #5 ;mete en r1 val
+                                                            or de cuadricula + 
+                                                            (i desplazado 5 izq
+                                                            )
+   14 00000014 E0811085        ADD              R1,R1,R5,LSL #1 ;mete en r1 val
+                                                            or de r1 + (j despl
+                                                            azado 1)
+   15 00000018 E5D10000        LDRB             R0,[R1]     ;mete en r0 el valo
+                                                            r de r0 + [j despla
+                                                            zado 1 izq]
+   16 0000001C E3A030F8        MOV              R3,#0xF8
+   17 00000020 E1800103        ORR              R0,R0,R3,LSL #2 ;and r0 0x007F
+   18 00000024 E1C100B0        STRH             R0,[R1]     ;guarda en [r1] ½ p
+                                                            alabra de r0 (valor
+                                                             de la celda)
+   19 00000028         
+   20 00000028 E2855001        ADD              R5,R5,#0x1  ;guarda en r0 j++
+   21 0000002C E3550009        CMP              R5,#0x9     ;compara j con 16
+   22 00000030 BAFFFFF6        BLT              bucle1      ;salta a la primera
+                                                             bucle1 si es menor
+                                                            
+   23 00000034 E3A05000        MOV              R5,#0       ;pone j=0
+   24 00000038         
+   25 00000038 E2844001        ADD              R4,R4,#0x1  ;i++
+   26 0000003C E3540009        CMP              R4,#0x9     ;comara i con 144 (
+                                                            9*16)
+   27 00000040 BAFFFFF2        BLT              bucle1      ;salta a bucle1 si 
+                                                            es menor
+   28 00000044 E3A04000        MOV              R4,#0       ;pone i=0
+   29 00000048         
+   30 00000048         ;bucle2
+   31 00000048         ; ADD  R1,R6,R4,LSL #5   ;mete en r0 valor de cuadricula
+                        + (i desplazado 5 izq)
+   32 00000048         ; ADD  R1,R1,R5,LSL #1   ;mete en r1 valor de r1 + (j de
+                       splazado 1)
+   33 00000048         ; LDRB R0,[R1]     ;mete en r0 el valor de r0 + [j despl
+                       azado 1 izq]
+   34 00000048         
+   35 00000048         ; AND  R0,R0,#0xF    ;sacamos el valor número que contie
+                       ne la celda
+   36 00000048         ; CMP  R0,#0x0     ;celda contiene un 0
+   37 00000048         ; ADDEQ R7, R7, #1    ;celdas_vacias++ si no es pista
+   38 00000048         ; BEQ  candidatos_propagar_arm ;llama a candidatos_propa
+                       gar_arm si es pista
+   39 00000048         
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   40 00000048         ; ADD  R5,R5,#0x1    ;j++
+   41 00000048         ; CMP  R5,#0x10    ;compara j con 16
+   42 00000048         ; BLT  bucle2     ;salta a la primera bucle2 si es menor
                        
+   43 00000048         ; MOV  R5,#0     ;pone j=0
+   44 00000048         
+   45 00000048         ; ADD  R4,R4,#0x1    ;i++
+   46 00000048         ; CMP  R4,#0x90    ;comara i con 144 (9*16)
+   47 00000048         ; BLT  bucle2     ;salta a bucle2 si es menor
+   48 00000048         
+   49 00000048 E1A00007        MOV              R0, R7      ;pone en r0 (return
+                                                            ) celdas_vacias
+   50 0000004C         
+   51 0000004C                 END
 Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
 bjects\candidatos_actualizar_arm.d -o.\objects\candidatos_actualizar_arm.o -IC:
 \Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Phili
@@ -46,6 +94,15 @@ ps --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 526" --list=
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
+bucle1 00000010
+
+Symbol: bucle1
+   Definitions
+      At line 12 in file candidatos_actualizar_arm.s
+   Uses
+      At line 22 in file candidatos_actualizar_arm.s
+      At line 27 in file candidatos_actualizar_arm.s
+
 candidatos_actualizar_arm 00000000
 
 Symbol: candidatos_actualizar_arm
@@ -54,5 +111,20 @@ Symbol: candidatos_actualizar_arm
    Uses
       At line 2 in file candidatos_actualizar_arm.s
 Comment: candidatos_actualizar_arm used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+candidatos_propagar_arm 00000000
+
+Symbol: candidatos_propagar_arm
+   Definitions
+      At line 3 in file candidatos_actualizar_arm.s
+   Uses
+      None
+Comment: candidatos_propagar_arm unused
 1 symbol
-333 symbols in table
+335 symbols in table

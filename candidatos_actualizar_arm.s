@@ -1,25 +1,52 @@
 	AREA candidatos_actualizar_arm, CODE, READONLY
 	EXPORT candidatos_actualizar_arm
+	EXTERN candidatos_propagar_arm
 	
-;	MOV r6, r0 
-;	LDR r1, #0 ;Celdas Vacias
-;	LDR r2, #0 ;i
-;	LDR r3, #0 ;j
-;	LDR r4,    ;NUM_FILAS
-;	LDR r5,    ;NUM_COLUMNAS
-;	
-;	for1: 	AND r6, r6, #0x007F 	; cuadricula & 0x007F
-;			AND r1, r1, #1			; celdas_vacias++
-;			CMP r3, r5				; ¿j == NUM_COLUMNAS?
-;			ADDNE r3, r3, #1		; si j != NUM_COLUMNAS -> j++
-;			ADDNE r6, r6, #0x0002	; si j != NUM_COLUMNAS -> cuadricula[i][j+1]
-;			BNE for1				; si j != NUM_COLUMNAS -> realizar el bucle de nuevo
-;			MOVEQ r3, r3, #0		; si j == NUM_COLUMNAS -> poner j a 0
-;			;Aqui termina el for interno (columnas)
-;			CMP r2, r4				; ¿i == NUM_FILAS?
-;			ADDNE r2, r2, #1		; si i != NUM_FILAS -> i++
-;			ADDNE r6, r6, #0x00		; si i != NUM_FILAS -> cuadricula[i+1][j]
-;			BNE for1				; si i != NUM_FILAS -> realizar el bucle de nuevo
-;	for2:	
+; INICIALIZACION
+	MOV		R6,R0					;R0=entrada    	R6=cuadricula
+	MOV		R7,#0x0					;R7=celdas_vacias
+	MOV		R4,#0x0					;R4=i
+	MOV		R5,#0x0					;R5=j
+
+; EJECUCION
+bucle1
+	ADD		R1,R6,R4,LSL #5			;mete en r1 valor de cuadricula + (i desplazado 5 izq)
+	ADD		R1,R1,R5,LSL #1			;mete en r1 valor de r1 + (j desplazado 1)
+	LDRB	R0,[R1]					;mete en r0 el valor de r0 + [j desplazado 1 izq]
+	AND		R0,R0,0x7F				;and r0 0x007F
+	STRH	R0,[R1]					;guarda en [r1] ½ palabra de r0 (valor de la celda)
+
+	ADD		R5,R5,#0x1				;guarda en r0 j++
+	CMP		R5,#0x9	        	    ;compara j con 16
+	BLT		bucle1					;salta a la primera bucle1 si es menor
+	MOV		R5,#0					;pone j=0
+
+	ADD		R4,R4,#0x1				;i++
+	CMP		R4,#0x9					;comara i con 144 (9*16)
+	BLT		bucle1					;salta a bucle1 si es menor
+	MOV		R4,#0					;pone i=0
+
+;bucle2
+;	ADD		R1,R6,R4,LSL #5			;mete en r0 valor de cuadricula + (i desplazado 5 izq)
+;	ADD		R1,R1,R5,LSL #1			;mete en r1 valor de r1 + (j desplazado 1)
+;	LDRB	R0,[R1]					;mete en r0 el valor de r0 + [j desplazado 1 izq]
+
+;	AND		R0,R0,#0xF				;sacamos el valor número que contiene la celda
+;	CMP		R0,#0x0					;celda contiene un 0
+;	ADDEQ	R7, R7, #1				;celdas_vacias++ si no es pista
+;	BEQ		candidatos_propagar_arm	;llama a candidatos_propagar_arm si es pista
+
+;	ADD		R5,R5,#0x1				;j++
+;	CMP		R5,#0x10				;compara j con 16
+;	BLT		bucle2					;salta a la primera bucle2 si es menor
+;	MOV		R5,#0					;pone j=0
+
+;	ADD		R4,R4,#0x1				;i++
+;	CMP		R4,#0x90				;comara i con 144 (9*16)
+;	BLT		bucle2					;salta a bucle2 si es menor
+
+	MOV		R0, R7					;pone en r0 (return) celdas_vacias
+	
+	END
 			
 			

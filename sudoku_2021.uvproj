@@ -461,6 +461,11 @@
               <FileType>2</FileType>
               <FilePath>.\candidatos_actualizar_arm.s</FilePath>
             </File>
+            <File>
+              <FileName>candidatos_propagar_arm.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\candidatos_propagar_arm.s</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

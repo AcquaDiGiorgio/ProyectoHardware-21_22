@@ -149,9 +149,25 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+          <LineNumber>6</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>512</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\candidatos_actualizar_arm.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\sudoku_2021\candidatos_actualizar_arm.s\6</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
           <LineNumber>149</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1136</Address>
+          <Address>624</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -163,11 +179,11 @@
           <Expression>\\sudoku_2021\sudoku_2021.c\149</Expression>
         </Bp>
         <Bp>
-          <Number>1</Number>
+          <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>150</LineNumber>
+          <LineNumber>146</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1168</Address>
+          <Address>588</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -176,23 +192,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\sudoku_2021.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>145</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\sudoku_2021.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\sudoku_2021\sudoku_2021.c\146</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>
@@ -224,7 +224,7 @@
         <aSer3>0</aSer3>
         <eProf>0</eProf>
         <aLa>0</aLa>
-        <aPa1>1</aPa1>
+        <aPa1>0</aPa1>
         <AscS4>0</AscS4>
         <aSer4>0</aSer4>
         <StkLoc>0</StkLoc>
@@ -339,6 +339,18 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\candidatos_actualizar_arm.s</PathWithFileName>
       <FilenameWithoutPath>candidatos_actualizar_arm.s</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>7</FileNumber>
+      <FileType>2</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\candidatos_propagar_arm.s</PathWithFileName>
+      <FilenameWithoutPath>candidatos_propagar_arm.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

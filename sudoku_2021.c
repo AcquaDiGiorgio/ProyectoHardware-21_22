@@ -19,12 +19,12 @@ void candidatos_propagar_c(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS],
     uint8_t valor = celda_leer_valor(cuadricula[fila][columna]);
 
     /* recorrer fila descartando valor de listas candidatos */
-    for (j=0;j<NUM_FILAS;j++)
-	celda_eliminar_candidato(&cuadricula[fila][j],valor);
+    for (j=0;j<NUM_FILAS;j++) 
+			celda_eliminar_candidato(&cuadricula[fila][j],valor);
 
     /* recorrer columna descartando valor de listas candidatos */
     for (i=0;i<NUM_FILAS;i++)
-	celda_eliminar_candidato(&cuadricula[i][columna],valor);
+			celda_eliminar_candidato(&cuadricula[i][columna],valor);
 
     /* determinar fronteras región */
     init_i = init_region[fila];
@@ -66,7 +66,7 @@ static int candidatos_actualizar_c(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS])
 			if ( celda_leer_valor(cuadricula[i][j]) != 0x0000 ){
 				candidatos_propagar_c(cuadricula,i,j);
 			}else{
-				celdas_vacias++
+				celdas_vacias++;
 			}
 		}
 	}
@@ -116,13 +116,13 @@ sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
     int correcto = 0;
 	  size_t i;
     /* calcula lista de candidatos, versi�n C */
-    celdas_vacias[0] = candidatos_actualizar_c(cuadricula_C_C);
+//    celdas_vacias[0] = candidatos_actualizar_c(cuadricula_C_C);
 
 //    //    /* Init C con propagar arm */
 //    celdas_vacias[1] = candidatos_actualizar_c_arm(cuadricula_C_ARM);
 
 //    //    /* Init arm con propagar arm */
-//    celdas_vacias[2] = candidatos_actualizar_arm(cuadricula_ARM_ARM);
+    celdas_vacias[2] = candidatos_actualizar_arm(cuadricula_ARM_ARM);
 
 //    //    /* Init arm con propagar c */
 //    celdas_vacias[3] = candidatos_actualizar_arm_c(cuadricula_ARM_C);
@@ -134,7 +134,7 @@ sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
 //		}
 
     /* verificar que la lista de candidatos C_C calculada es correcta */
-    correcto = cuadricula_candidatos_verificar(cuadricula_C_C,solucion);
+//    correcto = cuadricula_candidatos_verificar(cuadricula_C_C,solucion);
 //    correcto += cuadricula_candidatos_verificar(cuadricula_ARM_ARM,solucion);
 //    correcto += cuadricula_candidatos_verificar(cuadricula_C_ARM,solucion);
 //    correcto += cuadricula_candidatos_verificar(cuadricula_ARM_C,solucion);
@@ -145,7 +145,6 @@ sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
 // MAIN
 int main (void) {
     #include "tableros.h"
-		//candidatos_actualizar_arm_c(cuadricula_ARM_C);
     int correcto = sudoku9x9(cuadricula_C_C, cuadricula_C_ARM, cuadricula_ARM_ARM, cuadricula_ARM_C, solucion);
 }
 

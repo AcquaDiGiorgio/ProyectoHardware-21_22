@@ -1,0 +1,61 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             candidatos_propagar_arm, CODE, 
+READONLY
+    2 00000000                 EXPORT           candidatos_propagar_arm
+    3 00000000         
+    4 00000000         ; INICIALIZACION
+    5 00000000 E1A06000        MOV              R6,R0       ;R0=entrada    R6=c
+                                                            uadricula
+    6 00000004 E3A04000        MOV              R4,#0x0     ;R4=i
+    7 00000008 E3A05000        MOV              R5,#0x0     ;R5=j
+    8 0000000C         
+    9 0000000C         ; EJECUCION
+   10 0000000C E0863281        ADD              R3,R6,R1,LSL #5
+   11 00000010 E0833082        ADD              R3,R3,R2,LSL #1 ;R3=dir(celda[f
+                                                            ila][columna])
+   12 00000014 E5D34000        LDRB             R4,[R3]     ;mete en r4 el valo
+                                                            r de dir(celda[fila
+                                                            ][columna])
+   13 00000018 E204400F        AND              R4,R4,#0xF  ;R5 = valor(celda[f
+                                                            ila][columna])
+   14 0000001C         
+   15 0000001C E2844007        ADD              R4,R4,#7    ;*celdaptr | (0x000
+                                                            1<<(BIT_CANDIDATOS 
+                                                            + valor - 1));
+   16 00000020 E2444001        SUB              R4,R4,#1
+   17 00000024 E3A07001        MOV              R7,#1
+   18 00000028 E3A08000        MOV              R8,#0
+   19 0000002C E1888417        ORR              R8,R8,R7,LSL R4 ;R8 = 0...1...0
+                                                            , se situa en la po
+                                                            cicion del candidat
+                                                            o
+   20 00000030         
+   21 00000030         ; ADD R3,R6,R1,LSL #5    
+   22 00000030         ; ADD R3,R3,R2,LSL #1   ;R3=dir(celda[fila][columna])
+                       
+Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
+bjects\candidatos_propagar_arm.d -o.\objects\candidatos_propagar_arm.o -IC:\Kei
+l_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Philips -
+-predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 526" --list=.\li
+stings\candidatos_propagar_arm.lst candidatos_propagar_arm.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+candidatos_propagar_arm 00000000
+
+Symbol: candidatos_propagar_arm
+   Definitions
+      At line 1 in file candidatos_propagar_arm.s
+   Uses
+      At line 2 in file candidatos_propagar_arm.s
+Comment: candidatos_propagar_arm used once
+1 symbol
+333 symbols in table
