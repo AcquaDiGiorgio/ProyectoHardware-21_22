@@ -55,18 +55,18 @@ static int candidatos_actualizar_c(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS])
 	uint8_t i;
   uint8_t j;	
 	
-	for (int fil = 0; fil < NUM_FILAS; fil++){
-		for (int col = 0; col < NUM_COLUMNAS; col++){
-				cuadricula[fil][col] = cuadricula[fil][col] & 0x007F;	
-				celdas_vacias++;
+	for (i = 0; i < NUM_FILAS; ++i){
+		for (j = 0; j < NUM_COLUMNAS; ++j){
+				cuadricula[i][j] = cuadricula[i][j] & 0x007F;	
 		}
 	}
 	
-	for (int fil = 0; fil < NUM_FILAS; fil++){
-		for (int col = 0; col < NUM_COLUMNAS; col++){
-			if ( celda_leer_valor(cuadricula[fil][col]) != 0x0000 ){
-				candidatos_propagar_c(cuadricula,fil,col);
-				celdas_vacias--;
+	for (i = 0; i < NUM_FILAS; ++i){
+		for (j = 0; j < NUM_COLUMNAS; ++j){
+			if ( celda_leer_valor(cuadricula[i][j]) != 0x0000 ){
+				candidatos_propagar_c(cuadricula,i,j);
+			}else{
+				celdas_vacias++
 			}
 		}
 	}
@@ -93,7 +93,7 @@ cuadricula_candidatos_verificar(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS],
 
     for(i=0; i < NUM_FILAS && 1 == correcto; ++i) {
        for(j=0; j < NUM_FILAS && 1 == correcto; ++j) {
-	   correcto = cuadricula[i][j] == solucion[i][j];
+					correcto = cuadricula[i][j] == solucion[i][j];
        }
     }
     return correcto;

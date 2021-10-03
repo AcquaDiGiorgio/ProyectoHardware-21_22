@@ -266,14 +266,14 @@ Image Symbol Table
     .text                                    0x000001fc   Section        4  use_no_semi.o(.text)
     .text                                    0x00000200   Section        0  indicate_semi.o(.text)
     i.candidatos_actualizar_c                0x00000200   Section        0  sudoku_2021.o(i.candidatos_actualizar_c)
-    candidatos_actualizar_c                  0x00000200   ARM Code     180  sudoku_2021.o(i.candidatos_actualizar_c)
-    i.candidatos_propagar_c                  0x000002b4   Section        0  sudoku_2021.o(i.candidatos_propagar_c)
-    i.celda_eliminar_candidato               0x000003b8   Section        0  sudoku_2021.o(i.celda_eliminar_candidato)
-    celda_eliminar_candidato                 0x000003b8   ARM Code      24  sudoku_2021.o(i.celda_eliminar_candidato)
-    i.cuadricula_candidatos_verificar        0x000003d0   Section        0  sudoku_2021.o(i.cuadricula_candidatos_verificar)
-    cuadricula_candidatos_verificar          0x000003d0   ARM Code     136  sudoku_2021.o(i.cuadricula_candidatos_verificar)
-    i.main                                   0x00000458   Section        0  sudoku_2021.o(i.main)
-    i.sudoku9x9                              0x0000049c   Section        0  sudoku_2021.o(i.sudoku9x9)
+    candidatos_actualizar_c                  0x00000200   ARM Code     200  sudoku_2021.o(i.candidatos_actualizar_c)
+    i.candidatos_propagar_c                  0x000002c8   Section        0  sudoku_2021.o(i.candidatos_propagar_c)
+    i.celda_eliminar_candidato               0x000003cc   Section        0  sudoku_2021.o(i.celda_eliminar_candidato)
+    celda_eliminar_candidato                 0x000003cc   ARM Code      24  sudoku_2021.o(i.celda_eliminar_candidato)
+    i.cuadricula_candidatos_verificar        0x000003e4   Section        0  sudoku_2021.o(i.cuadricula_candidatos_verificar)
+    cuadricula_candidatos_verificar          0x000003e4   ARM Code     136  sudoku_2021.o(i.cuadricula_candidatos_verificar)
+    i.main                                   0x0000046c   Section        0  sudoku_2021.o(i.main)
+    i.sudoku9x9                              0x000004b0   Section        0  sudoku_2021.o(i.sudoku9x9)
     .data                                    0x40000000   Section     1440  sudoku_2021.o(.data)
     cuadricula_C_C                           0x40000000   Data         288  sudoku_2021.o(.data)
     cuadricula_C_ARM                         0x40000120   Data         288  sudoku_2021.o(.data)
@@ -386,11 +386,11 @@ Image Symbol Table
     __I$use$semihosting                      0x000001fc   ARM Code       0  use_no_semi.o(.text)
     __use_no_semihosting_swi                 0x000001fc   ARM Code       4  use_no_semi.o(.text)
     __semihosting_library_function           0x00000200   ARM Code       0  indicate_semi.o(.text)
-    candidatos_propagar_c                    0x000002b4   ARM Code     248  sudoku_2021.o(i.candidatos_propagar_c)
-    main                                     0x00000458   ARM Code      48  sudoku_2021.o(i.main)
-    sudoku9x9                                0x0000049c   ARM Code      72  sudoku_2021.o(i.sudoku9x9)
-    Region$$Table$$Base                      0x000004e4   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x00000504   Number         0  anon$$obj.o(Region$$Table)
+    candidatos_propagar_c                    0x000002c8   ARM Code     248  sudoku_2021.o(i.candidatos_propagar_c)
+    main                                     0x0000046c   ARM Code      48  sudoku_2021.o(i.main)
+    sudoku9x9                                0x000004b0   ARM Code      72  sudoku_2021.o(i.sudoku9x9)
+    Region$$Table$$Base                      0x000004f8   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00000518   Number         0  anon$$obj.o(Region$$Table)
     __libspace_start                         0x400005a0   Data          96  libspace.o(.bss)
     __temporary_stack_top$libspace           0x40000600   Data           0  libspace.o(.bss)
 
@@ -402,9 +402,9 @@ Memory Map of the image
 
   Image Entry point : 0x00000000
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00000aa4, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x000006ac])
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00000ab8, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x000006c0])
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000504, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000518, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -468,23 +468,23 @@ Memory Map of the image
     0x000001f0   0x000001f0   0x0000000c   Code   RO          170    .text               c_t.l(sys_exit.o)
     0x000001fc   0x000001fc   0x00000004   Code   RO          181    .text               c_t.l(use_no_semi.o)
     0x00000200   0x00000200   0x00000000   Code   RO          183    .text               c_t.l(indicate_semi.o)
-    0x00000200   0x00000200   0x000000b4   Code   RO           11    i.candidatos_actualizar_c  sudoku_2021.o
-    0x000002b4   0x000002b4   0x00000104   Code   RO           13    i.candidatos_propagar_c  sudoku_2021.o
-    0x000003b8   0x000003b8   0x00000018   Code   RO           14    i.celda_eliminar_candidato  sudoku_2021.o
-    0x000003d0   0x000003d0   0x00000088   Code   RO           15    i.cuadricula_candidatos_verificar  sudoku_2021.o
-    0x00000458   0x00000458   0x00000044   Code   RO           16    i.main              sudoku_2021.o
-    0x0000049c   0x0000049c   0x00000048   Code   RO           17    i.sudoku9x9         sudoku_2021.o
-    0x000004e4   0x000004e4   0x00000020   Data   RO          238    Region$$Table       anon$$obj.o
+    0x00000200   0x00000200   0x000000c8   Code   RO           11    i.candidatos_actualizar_c  sudoku_2021.o
+    0x000002c8   0x000002c8   0x00000104   Code   RO           13    i.candidatos_propagar_c  sudoku_2021.o
+    0x000003cc   0x000003cc   0x00000018   Code   RO           14    i.celda_eliminar_candidato  sudoku_2021.o
+    0x000003e4   0x000003e4   0x00000088   Code   RO           15    i.cuadricula_candidatos_verificar  sudoku_2021.o
+    0x0000046c   0x0000046c   0x00000044   Code   RO           16    i.main              sudoku_2021.o
+    0x000004b0   0x000004b0   0x00000048   Code   RO           17    i.sudoku9x9         sudoku_2021.o
+    0x000004f8   0x000004f8   0x00000020   Data   RO          238    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Exec base: 0x40000000, Load base: 0x00000504, Size: 0x000005a0, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x000001a8])
+    Execution Region ER_RW (Exec base: 0x40000000, Load base: 0x00000518, Size: 0x000005a0, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x000001a8])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x40000000   COMPRESSED   0x000005a0   Data   RW           18    .data               sudoku_2021.o
 
 
-    Execution Region ER_ZI (Exec base: 0x400005a0, Load base: 0x000006ac, Size: 0x000004e8, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x400005a0, Load base: 0x000006c0, Size: 0x000004e8, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -501,10 +501,10 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
         32         12          0          0       1160        248   startup.o
-       740         32          0       1440          0      10551   sudoku_2021.o
+       760         32          0       1440          0      10387   sudoku_2021.o
 
     ----------------------------------------------------------------------
-       772         44         32       1440       1160      10799   Object Totals
+       792         44         32       1440       1160      10635   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          0          0          0          0          0          0   (incl. Padding)
 
@@ -553,15 +553,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      1252         64         32       1440       1256      11059   Grand Totals
-      1252         64         32        424       1256      11059   ELF Image Totals (compressed)
-      1252         64         32        424          0          0   ROM Totals
+      1272         64         32       1440       1256      10895   Grand Totals
+      1272         64         32        424       1256      10895   ELF Image Totals (compressed)
+      1272         64         32        424          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 1284 (   1.25kB)
+    Total RO  Size (Code + RO Data)                 1304 (   1.27kB)
     Total RW  Size (RW Data + ZI Data)              2696 (   2.63kB)
-    Total ROM Size (Code + RO Data + RW Data)       1708 (   1.67kB)
+    Total ROM Size (Code + RO Data + RW Data)       1728 (   1.69kB)
 
 ==============================================================================
 

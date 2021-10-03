@@ -7,6 +7,33 @@ ARM Macro Assembler    Page 1
     1 00000000                 AREA             candidatos_actualizar_arm, CODE
 , READONLY
     2 00000000                 EXPORT           candidatos_actualizar_arm
+    3 00000000         
+    4 00000000         ; LDR r1, #0 ;Celdas Vacias
+    5 00000000         ; LDR r2, #0 ;i
+    6 00000000         ; LDR r3, #0 ;j
+    7 00000000         ; LDR r4,    ;NUM_FILAS
+    8 00000000         ; LDR r5,    ;NUM_COLUMNAS
+    9 00000000         ; 
+   10 00000000         ; for1:  AND r0, r0, #0x007F  ; cuadricula & 0x007F
+   11 00000000         ;   AND r1, r1, #1   ; celdas_vacias++
+   12 00000000         ;   CMP r3, r5    ; ¿j == NUM_COLUMNAS?
+   13 00000000         ;   ADDNE r3, r3, #1  ; si j != NUM_COLUMNAS -> j++
+   14 00000000         ;   ADDNE r0, r0, #0x0002 ; si j != NUM_COLUMNAS -> cuad
+                       ricula[i][j+1]
+   15 00000000         ;   BNE for1    ; si j != NUM_COLUMNAS -> realizar el bu
+                       cle de nuevo
+   16 00000000         ;   MOVEQ r3, r3, #0  ; si j == NUM_COLUMNAS -> poner j 
+                       a 0
+   17 00000000         ;   ;Aqui termina el for interno (columnas)
+   18 00000000         ;   CMP r2, r4    ; ¿i == NUM_FILAS?
+   19 00000000         ;   ADDNE r2, r2, #1  ; si i != NUM_FILAS -> i++
+   20 00000000         ;   ADDNE r0, r0, #0x00  ; si i != NUM_FILAS -> cuadricu
+                       la[i+1][j]
+   21 00000000         ;   BNE for1    ; si i != NUM_FILAS -> realizar el bucle
+                        de nuevo
+   22 00000000         ; for2: 
+   23 00000000         
+   24 00000000         
                        
 Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
 bjects\candidatos_actualizar_arm.d -o.\objects\candidatos_actualizar_arm.o -IC:
