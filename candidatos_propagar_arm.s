@@ -1,7 +1,8 @@
 	AREA candidatos_propagar_arm, CODE, READONLY
 	EXPORT candidatos_propagar_arm
 
-	STMDB   SP, {r4-r10}
+	MOV		R12,SP
+	STMDB   SP!,{R4-R12,R14}
 
 ; INICIALIZACION
 	MOV		R6,R0					;R0=entrada    R6=cuadricula
@@ -95,6 +96,7 @@ bucle_cuadrado
 	BLT		bucle_cuadrado
 	
 	MOV		R0,#0x0
-	LDMDB   SP, {r4-r10}
+	LDMDB   SP,{R4-R12,R14}
+	MOV		SP,R12
 	BX		R14
 	END
