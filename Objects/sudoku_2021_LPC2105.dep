@@ -1,14 +1,14 @@
 Dependencies for Project 'sudoku_2021', Target 'LPC2105': (DO NOT MODIFY !)
-F (.\Startup.s)(0x615413D6)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"--list .\listings\startup.lst --xref -o .\objects\startup.o --depend .\objects\startup.d)
-F (.\celda.h)(0x615413D6)()
-F (.\tableros.h)(0x615413D6)()
-F (.\sudoku_2021.c)(0x615B4C67)(--c99 --gnu -c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\objects\sudoku_2021.o --omf_browse .\objects\sudoku_2021.crf --depend .\objects\sudoku_2021.d)
+F (.\Startup.s)(0x559D2F20)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"--list .\listings\startup.lst --xref -o .\objects\startup.o --depend .\objects\startup.d)
+F (.\celda.h)(0x6142FE2A)()
+F (.\tableros.h)(0x614B0B86)()
+F (.\sudoku_2021.c)(0x615B0A8B)(--c99 --gnu -c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork --split_sections-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\objects\sudoku_2021.o --omf_browse .\objects\sudoku_2021.crf --depend .\objects\sudoku_2021.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x599F2F9C)
-I (sudoku_2021.h)(0x615413D6)
+I (sudoku_2021.h)(0x614B0BBC)
 I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
-I (celda.h)(0x615413D6)
-I (tableros.h)(0x615413D6)
-F (.\candidatos_actualizar_arm_c.s)(0x615413D6)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"--list .\listings\candidatos_actualizar_arm_c.lst --xref -o .\objects\candidatos_actualizar_arm_c.o --depend .\objects\candidatos_actualizar_arm_c.d)
-F (.\candidatos_actualizar_arm.s)(0x615B5369)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"--list .\listings\candidatos_actualizar_arm.lst --xref -o .\objects\candidatos_actualizar_arm.o --depend .\objects\candidatos_actualizar_arm.d)
-F (.\candidatos_propagar_arm.s)(0x615B5415)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"--list .\listings\candidatos_propagar_arm.lst --xref -o .\objects\candidatos_propagar_arm.o --depend .\objects\candidatos_propagar_arm.d)
+I (celda.h)(0x6142FE2A)
+I (tableros.h)(0x614B0B86)
+F (.\candidatos_actualizar_arm_c.s)(0x6152FD96)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"--list .\listings\candidatos_actualizar_arm_c.lst --xref -o .\objects\candidatos_actualizar_arm_c.o --depend .\objects\candidatos_actualizar_arm_c.d)
+F (.\candidatos_actualizar_arm.s)(0x615C3765)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"--list .\listings\candidatos_actualizar_arm.lst --xref -o .\objects\candidatos_actualizar_arm.o --depend .\objects\candidatos_actualizar_arm.d)
+F (.\candidatos_propagar_arm.s)(0x615C3764)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"--list .\listings\candidatos_propagar_arm.lst --xref -o .\objects\candidatos_propagar_arm.o --depend .\objects\candidatos_propagar_arm.d)

@@ -9,8 +9,8 @@ ARM Macro Assembler    Page 1
     2 00000000                 EXPORT           candidatos_actualizar_arm
     3 00000000                 IMPORT           candidatos_propagar_arm
     4 00000000         
-    5 00000000 E1A0C00D        MOV              R12,SP
-    6 00000004 E92D5FF0        STMDB            SP!,{R4-R12,R14}
+    5 00000000 E1A0C00D        MOV              IP,SP
+    6 00000004 E92D5FF0        STMDB            SP!,{R4-R10,FP,IP,LR}
     7 00000008         
     8 00000008         ; INICIALIZACION
     9 00000008 E1A06000        MOV              R6,R0       ;R0=entrada     R6=
@@ -97,11 +97,9 @@ ARM Macro Assembler    Page 2
    54 00000090         
    55 00000090 E1A00007        MOV              R0, R7      ;pone en r0 (return
                                                             ) celdas_vacias
-   56 00000094 E91D5FF0        LDMDB            SP,{R4-R12,R14}
-   57 00000098 E1A0D00C        MOV              SP,R12
-   58 0000009C E12FFF1E        BX               R14
-   59 000000A0         
-   60 000000A0                 END
+   56 00000094 E89DAFF0        LDMIA            SP,{R4-R10,FP,SP,PC}
+   57 00000098         
+   58 00000098                 END
 Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
 bjects\candidatos_actualizar_arm.d -o.\objects\candidatos_actualizar_arm.o -IC:
 \Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Phili

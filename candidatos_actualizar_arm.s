@@ -2,12 +2,12 @@
 	EXPORT candidatos_actualizar_arm
 	IMPORT candidatos_propagar_arm
 	
-	MOV		R12,SP
-	STMDB   SP!,{R4-R12,R14}
+	MOV		IP,SP
+	STMDB   SP!,{R4-R10,FP,IP,LR}
 	
 ; INICIALIZACION
 	MOV		R6,R0					;R0=entrada    	R6=cuadricula
-	MOV		R7,#0x0					;R7=celdas_vacias
+ 	MOV		R7,#0x0					;R7=celdas_vacias
 	MOV		R4,#0x0					;R4=i
 	MOV		R5,#0x0					;R5=j
 ; EJECUCION
@@ -53,9 +53,7 @@ bucle2
 	BLT		bucle2					;salta a bucle2 si es menor
 
 	MOV		R0, R7					;pone en r0 (return) celdas_vacias
-	LDMDB   SP,{R4-R12,R14}
-	MOV		SP,R12
-	BX		R14
+	LDMIA   SP,{R4-R10,FP,SP,PC}
 	
 	END
 			

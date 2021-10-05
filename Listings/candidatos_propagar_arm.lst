@@ -8,8 +8,8 @@ ARM Macro Assembler    Page 1
 READONLY
     2 00000000                 EXPORT           candidatos_propagar_arm
     3 00000000         
-    4 00000000 E1A0C00D        MOV              R12,SP
-    5 00000004 E92D5FF0        STMDB            SP!,{R4-R12,R14}
+    4 00000000 E1A0C00D        MOV              IP,SP
+    5 00000004 E92D5FF0        STMDB            SP!,{R4-R10,FP,IP,LR}
     6 00000008         
     7 00000008         ; INICIALIZACION
     8 00000008 E1A06000        MOV              R6,R0       ;R0=entrada    R6=c
@@ -142,10 +142,8 @@ ARM Macro Assembler    Page 3
    96 000000F8 BAFFFFF1        BLT              bucle_cuadrado
    97 000000FC         
    98 000000FC E3A00000        MOV              R0,#0x0
-   99 00000100 E91D5FF0        LDMDB            SP,{R4-R12,R14}
-  100 00000104 E1A0D00C        MOV              SP,R12
-  101 00000108 E12FFF1E        BX               R14
-  102 0000010C                 END
+   99 00000100 E89DAFF0        LDMIA            SP,{R4-R10,FP,SP,PC}
+  100 00000104                 END
 Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
 bjects\candidatos_propagar_arm.d -o.\objects\candidatos_propagar_arm.o -IC:\Kei
 l_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Philips -
