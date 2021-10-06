@@ -13,19 +13,19 @@
 
 ; leer valor
 	ADD		R12,R6,R7,LSL #5    
-	ADD		R0,R12,R8,LSL #1		;R0=dir(celda[fila][columna])
-	LDRB	R0,[R0]					;mete en r4 el primer byte de dir(celda[fila][columna])
+;	ADD		R0,R12,R8,LSL #1		;R0=dir(celda[fila][columna])
+	LDRB	R0,[R12,R8,LSL #1]		;mete en r4 el primer byte de dir(celda[fila][columna])
 	AND		R3,R0,#0xF				;R9 = valor(celda[fila][columna]) en el que estamos
 	
 	MOV		R10, #0x1  
 ;celda_eliminar candidato
 bucle_columnas
 	ADD		R9,R12,R5,LSL #1
+	;eliminar candidato
 	LDRH	R0,[R9]            		;mete en r4 el primer byte de la celda    
-;eliminar candidato
 	ADD		R1, R3, #6				;R3 = valor celda  
-	MOV		R1, R10, LSL R1
-	ORR		R0, R0, R1                
+;	MOV		R1, R10, LSL R1
+	ORR		R0, R0, R10, LSL R1                
 	STRH	R0, [R9]
 
 
@@ -42,8 +42,8 @@ bucle_filas
 	LDRH	R0,[R9]					;mete en r4 el primer byte de la celda    
 ;eliminar candidato
 	ADD		R1, R3, #6				;R3 = valor celda   
-	MOV		R1, R10, LSL R1
-	ORR		R0, R0, R1                
+;	MOV		R1, R10, LSL R1
+	ORR		R0, R0, R10, LSL R1                
 	STRH    R0, [R9]
 
 ; bucle check
@@ -79,11 +79,11 @@ bucle_filas
 bucle_cuadrado
 	ADD		R9,R6,R4,LSL #5
 	ADD		R9,R9,R5,LSL #1
-	LDRH	R0,[R9]					;mete en r0 el contenido de la celda 
 	;eliminar candidato
+	LDRH	R0,[R9]					;mete en r0 el contenido de la celda 
 	ADD		R7,R3,#6	    		;(7 + valor - 1) == (7 - 1 + valor) == (6 + valor)
-	MOV		R7,R8,LSL R7
-	ORR		R0,R0,R7				;Pone en R0 el contenido anterior | 0x1 desplazado
+;	MOV		R7,R8,LSL R7			
+	ORR		R0,R0,R8,LSL R7			;Pone en R0 el contenido anterior | 0x1 desplazado
 	STRH	R0,[R9]					;Guarda el calculo anterior en memoria de R9
 
 ; bucle check

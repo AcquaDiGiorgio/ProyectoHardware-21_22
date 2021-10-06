@@ -79,9 +79,8 @@ ARM Macro Assembler    Page 2
    41 00000068 11A01004        MOVNE            R1,R4
    42 0000006C 11A02005        MOVNE            R2,R5
    43 00000070         
-   44 00000070 1BFFFFFE        BLNE             candidatos_propagar_arm ;llama 
-                                                            a candidatos_propag
-                                                            ar_arm si es pista
+   44 00000070 1BFFFFFE        BLNE             candidatos_propagar_arm 
+                                                            ;HACER INLINE
    45 00000074         
    46 00000074 E2855001        ADD              R5,R5,#0x1  ;j++
    47 00000078 E3550009        CMP              R5,#0x9     ;compara j con 9

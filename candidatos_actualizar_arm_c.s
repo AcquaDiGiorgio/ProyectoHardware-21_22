@@ -31,8 +31,8 @@ bucle1
 
 bucle2
 	ADD		R1,R6,R4,LSL #5			;mete en r0 valor de cuadricula + (i desplazado 5 izq)
-	ADD		R1,R1,R5,LSL #1			;mete en r1 valor de r1 + (j desplazado 1)
-	LDRH	R0,[R1]					;mete en r0 el valor de r0 + [j desplazado 1 izq]
+;	ADD		R1,R1,R5,LSL #1			;mete en r1 valor de r1 + (j desplazado 1)
+	LDRH	R0,[R1,R5,LSL #1]		;mete en r0 el valor de r0 + [j desplazado 1 izq]
 
 	AND		R0,R0,#0xF				;sacamos el valor número que contiene la celda
 	CMP		R0,#0x0					;celda contiene un 0

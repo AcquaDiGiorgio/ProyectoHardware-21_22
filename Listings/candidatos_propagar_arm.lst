@@ -23,45 +23,45 @@ READONLY
    13 0000001C         
    14 0000001C         ; leer valor
    15 0000001C E086C287        ADD              R12,R6,R7,LSL #5
-   16 00000020 E08C0088        ADD              R0,R12,R8,LSL #1 ;R0=dir(celda[
-                                                            fila][columna])
-   17 00000024 E5D00000        LDRB             R0,[R0]     ;mete en r4 el prim
-                                                            er byte de dir(celd
-                                                            a[fila][columna])
-   18 00000028 E200300F        AND              R3,R0,#0xF  ;R9 = valor(celda[f
+   16 00000020         ; ADD  R0,R12,R8,LSL #1  ;R0=dir(celda[fila][columna])
+   17 00000020 E7DC0088        LDRB             R0,[R12,R8,LSL #1] ;mete en r4 
+                                                            el primer byte de d
+                                                            ir(celda[fila][colu
+                                                            mna])
+   18 00000024 E200300F        AND              R3,R0,#0xF  ;R9 = valor(celda[f
                                                             ila][columna]) en e
                                                             l que estamos
-   19 0000002C         
-   20 0000002C E3A0A001        MOV              R10, #0x1
-   21 00000030         ;celda_eliminar candidato
-   22 00000030         bucle_columnas
-   23 00000030 E08C9085        ADD              R9,R12,R5,LSL #1
-   24 00000034 E1D900B0        LDRH             R0,[R9]     ;mete en r4 el prim
+   19 00000028         
+   20 00000028 E3A0A001        MOV              R10, #0x1
+   21 0000002C         ;celda_eliminar candidato
+   22 0000002C         bucle_columnas
+   23 0000002C E08C9085        ADD              R9,R12,R5,LSL #1
+   24 00000030         ;eliminar candidato
+   25 00000030 E1D900B0        LDRH             R0,[R9]     ;mete en r4 el prim
                                                             er byte de la celda
                                                                 
-   25 00000038         ;eliminar candidato
-   26 00000038 E2831006        ADD              R1, R3, #6  ;R3 = valor celda  
+   26 00000034 E2831006        ADD              R1, R3, #6  ;R3 = valor celda  
                                                             
-   27 0000003C E1A0111A        MOV              R1, R10, LSL R1
-   28 00000040 E1800001        ORR              R0, R0, R1
-   29 00000044 E1C900B0        STRH             R0, [R9]
-   30 00000048         
-   31 00000048         
-   32 00000048         ; bucle check
-   33 00000048 E2855001        ADD              R5, R5, #0x1
-   34 0000004C E3550009        CMP              R5, #0x9
-   35 00000050 BAFFFFF6        BLT              bucle_columnas
-   36 00000054         
-   37 00000054 E086C088        ADD              R12,R6,R8,LSL #1
-   38 00000058         
-   39 00000058 E3A0A001        MOV              R10, #0x1
-   40 0000005C         bucle_filas
-   41 0000005C E08C9284        ADD              R9,R12,R4,LSL #5
-   42 00000060 E1D900B0        LDRH             R0,[R9]     ;mete en r4 el prim
+   27 00000038         ; MOV  R1, R10, LSL R1
+   28 00000038 E180011A        ORR              R0, R0, R10, LSL R1
+   29 0000003C E1C900B0        STRH             R0, [R9]
+   30 00000040         
+   31 00000040         
+   32 00000040         ; bucle check
+   33 00000040 E2855001        ADD              R5, R5, #0x1
+   34 00000044 E3550009        CMP              R5, #0x9
+   35 00000048 BAFFFFF7        BLT              bucle_columnas
+   36 0000004C         
+   37 0000004C E086C088        ADD              R12,R6,R8,LSL #1
+   38 00000050         
+   39 00000050 E3A0A001        MOV              R10, #0x1
+   40 00000054         bucle_filas
+   41 00000054 E08C9284        ADD              R9,R12,R4,LSL #5
+   42 00000058 E1D900B0        LDRH             R0,[R9]     ;mete en r4 el prim
                                                             er byte de la celda
                                                                 
-   43 00000064         ;eliminar candidato
-   44 00000064 E2831006        ADD              R1, R3, #6  ;R3 = valor celda  
+   43 0000005C         ;eliminar candidato
+   44 0000005C E2831006        ADD              R1, R3, #6  ;R3 = valor celda  
                                                              
 
 
@@ -69,81 +69,81 @@ READONLY
 ARM Macro Assembler    Page 2 
 
 
-   45 00000068 E1A0111A        MOV              R1, R10, LSL R1
-   46 0000006C E1800001        ORR              R0, R0, R1
-   47 00000070 E1C900B0        STRH             R0, [R9]
-   48 00000074         
-   49 00000074         ; bucle check
-   50 00000074 E2844001        ADD              R4, R4, #0x1
-   51 00000078 E3540009        CMP              R4, #0x9
-   52 0000007C BAFFFFF6        BLT              bucle_filas
-   53 00000080         
-   54 00000080         ;inicializacion i y j
-   55 00000080 E3A01000        MOV              R1,#0       ;init_i
-   56 00000084 E3A02000        MOV              R2,#0       ;end_i
-   57 00000088 E3A0A000        MOV              R10,#0      ;init_j
-   58 0000008C E3A0B000        MOV              R11,#0      ;end_j
-   59 00000090         
-   60 00000090         ;init_i = init_region[fila];
-   61 00000090 E3570003        CMP              R7,#3       ;comparamos fila>=3
+   45 00000060         ; MOV  R1, R10, LSL R1
+   46 00000060 E180011A        ORR              R0, R0, R10, LSL R1
+   47 00000064 E1C900B0        STRH             R0, [R9]
+   48 00000068         
+   49 00000068         ; bucle check
+   50 00000068 E2844001        ADD              R4, R4, #0x1
+   51 0000006C E3540009        CMP              R4, #0x9
+   52 00000070 BAFFFFF7        BLT              bucle_filas
+   53 00000074         
+   54 00000074         ;inicializacion i y j
+   55 00000074 E3A01000        MOV              R1,#0       ;init_i
+   56 00000078 E3A02000        MOV              R2,#0       ;end_i
+   57 0000007C E3A0A000        MOV              R10,#0      ;init_j
+   58 00000080 E3A0B000        MOV              R11,#0      ;end_j
+   59 00000084         
+   60 00000084         ;init_i = init_region[fila];
+   61 00000084 E3570003        CMP              R7,#3       ;comparamos fila>=3
                                                             
-   62 00000094 23A01003        MOVHS            R1,#3       ;init_i = init_regi
+   62 00000088 23A01003        MOVHS            R1,#3       ;init_i = init_regi
                                                             on[fila];
-   63 00000098 E3570006        CMP              R7,#6       ;comparamos fila>=6
+   63 0000008C E3570006        CMP              R7,#6       ;comparamos fila>=6
                                                             
-   64 0000009C 23A01006        MOVHS            R1,#6
-   65 000000A0 E2812003        ADD              R2,R1,#3    ;end_i = init_i + 3
+   64 00000090 23A01006        MOVHS            R1,#6
+   65 00000094 E2812003        ADD              R2,R1,#3    ;end_i = init_i + 3
                                                             ;
-   66 000000A4         
-   67 000000A4         ;init_j = init_region[columna];
-   68 000000A4 E3580003        CMP              R8,#3       ;comparamos fila<6
-   69 000000A8 23A0A003        MOVHS            R10,#3      ;init_j = init_regi
+   66 00000098         
+   67 00000098         ;init_j = init_region[columna];
+   68 00000098 E3580003        CMP              R8,#3       ;comparamos fila<6
+   69 0000009C 23A0A003        MOVHS            R10,#3      ;init_j = init_regi
                                                             on[columna];     
-   70 000000AC E3580006        CMP              R8,#6       ;comparamos fila<6
-   71 000000B0 23A0A006        MOVHS            R10,#6
-   72 000000B4 E28AB003        ADD              R11,R10,#3  ;end_j = init_j + 3
+   70 000000A0 E3580006        CMP              R8,#6       ;comparamos fila<6
+   71 000000A4 23A0A006        MOVHS            R10,#6
+   72 000000A8 E28AB003        ADD              R11,R10,#3  ;end_j = init_j + 3
                                                             ;
-   73 000000B8         
-   74 000000B8         ;ini de la cuadricula a cuadricula[init_i][init_j]
-   75 000000B8 E1A04001        MOV              R4,R1       ;i=init_i
-   76 000000BC E1A0500A        MOV              R5,R10      ;j=init_j
-   77 000000C0 E3A08001        MOV              R8,#0x1
-   78 000000C4         
-   79 000000C4         bucle_cuadrado
-   80 000000C4 E0869284        ADD              R9,R6,R4,LSL #5
-   81 000000C8 E0899085        ADD              R9,R9,R5,LSL #1
-   82 000000CC E1D900B0        LDRH             R0,[R9]     ;mete en r0 el cont
+   73 000000AC         
+   74 000000AC         ;ini de la cuadricula a cuadricula[init_i][init_j]
+   75 000000AC E1A04001        MOV              R4,R1       ;i=init_i
+   76 000000B0 E1A0500A        MOV              R5,R10      ;j=init_j
+   77 000000B4 E3A08001        MOV              R8,#0x1
+   78 000000B8         
+   79 000000B8         bucle_cuadrado
+   80 000000B8 E0869284        ADD              R9,R6,R4,LSL #5
+   81 000000BC E0899085        ADD              R9,R9,R5,LSL #1
+   82 000000C0         ;eliminar candidato
+   83 000000C0 E1D900B0        LDRH             R0,[R9]     ;mete en r0 el cont
                                                             enido de la celda 
-   83 000000D0         ;eliminar candidato
-   84 000000D0 E2837006        ADD              R7,R3,#6    ;(7 + valor - 1) ==
+   84 000000C4 E2837006        ADD              R7,R3,#6    ;(7 + valor - 1) ==
                                                              (7 - 1 + valor) ==
                                                              (6 + valor)
-   85 000000D4 E1A07718        MOV              R7,R8,LSL R7
-   86 000000D8 E1800007        ORR              R0,R0,R7    ;Pone en R0 el cont
-                                                            enido anterior | 0x
-                                                            1 desplazado
-   87 000000DC E1C900B0        STRH             R0,[R9]     ;Guarda el calculo 
+   85 000000C8         ; MOV  R7,R8,LSL R7   
+   86 000000C8 E1800718        ORR              R0,R0,R8,LSL R7 ;Pone en R0 el 
+                                                            contenido anterior 
+                                                            | 0x1 desplazado
+   87 000000CC E1C900B0        STRH             R0,[R9]     ;Guarda el calculo 
                                                             anterior en memoria
                                                              de R9
-   88 000000E0         
-   89 000000E0         ; bucle check
-   90 000000E0 E2844001        ADD              R4,R4,#0x1
+   88 000000D0         
+   89 000000D0         ; bucle check
+   90 000000D0 E2844001        ADD              R4,R4,#0x1
 
 
 
 ARM Macro Assembler    Page 3 
 
 
-   91 000000E4 E1540002        CMP              R4,R2
-   92 000000E8 BAFFFFF5        BLT              bucle_cuadrado
-   93 000000EC E1A04001        MOV              R4,R1
-   94 000000F0 E2855001        ADD              R5,R5,#0x1
-   95 000000F4 E155000B        CMP              R5,R11
-   96 000000F8 BAFFFFF1        BLT              bucle_cuadrado
-   97 000000FC         
-   98 000000FC E3A00000        MOV              R0,#0x0
-   99 00000100 E89DAFF0        LDMIA            SP,{R4-R10,FP,SP,PC}
-  100 00000104                 END
+   91 000000D4 E1540002        CMP              R4,R2
+   92 000000D8 BAFFFFF6        BLT              bucle_cuadrado
+   93 000000DC E1A04001        MOV              R4,R1
+   94 000000E0 E2855001        ADD              R5,R5,#0x1
+   95 000000E4 E155000B        CMP              R5,R11
+   96 000000E8 BAFFFFF2        BLT              bucle_cuadrado
+   97 000000EC         
+   98 000000EC E3A00000        MOV              R0,#0x0
+   99 000000F0 E89DAFF0        LDMIA            SP,{R4-R10,FP,SP,PC}
+  100 000000F4                 END
 Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
 bjects\candidatos_propagar_arm.d -o.\objects\candidatos_propagar_arm.o -IC:\Kei
 l_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Philips -
@@ -155,7 +155,7 @@ stings\candidatos_propagar_arm.lst candidatos_propagar_arm.s
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
-bucle_columnas 00000030
+bucle_columnas 0000002C
 
 Symbol: bucle_columnas
    Definitions
@@ -163,7 +163,7 @@ Symbol: bucle_columnas
    Uses
       At line 35 in file candidatos_propagar_arm.s
 Comment: bucle_columnas used once
-bucle_cuadrado 000000C4
+bucle_cuadrado 000000B8
 
 Symbol: bucle_cuadrado
    Definitions
@@ -172,7 +172,7 @@ Symbol: bucle_cuadrado
       At line 92 in file candidatos_propagar_arm.s
       At line 96 in file candidatos_propagar_arm.s
 
-bucle_filas 0000005C
+bucle_filas 00000054
 
 Symbol: bucle_filas
    Definitions
