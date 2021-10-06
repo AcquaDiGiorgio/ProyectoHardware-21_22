@@ -55,6 +55,4 @@ bucle2
 	MOV		R0, R7					;pone en r0 (return) celdas_vacias
 	LDMIA   SP,{R4-R10,FP,SP,PC}
 	
-	END
-			
-			
+	END	

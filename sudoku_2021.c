@@ -55,14 +55,14 @@ static int candidatos_actualizar_c(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS])
 	uint8_t i;
   uint8_t j;	
 	
-	for (i = 0; i < NUM_FILAS; ++i){
-		for (j = 0; j < NUM_COLUMNAS; ++j){
+	for (i = 0; i < 9; ++i){
+		for (j = 0; j < 9; ++j){
 				cuadricula[i][j] = cuadricula[i][j] & 0x007F;	
 		}
 	}
 	
-	for (i = 0; i < NUM_FILAS; ++i){
-		for (j = 0; j < NUM_COLUMNAS; ++j){
+	for (i = 0; i < 9; ++i){
+		for (j = 0; j < 9; ++j){
 			if ( celda_leer_valor(cuadricula[i][j]) != 0x0000 ){
 				candidatos_propagar_c(cuadricula,i,j);
 			}else{
@@ -80,7 +80,26 @@ static int candidatos_actualizar_c(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS])
 static int
 candidatos_actualizar_c_arm(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS])
 {
-	return -1; // por favor eliminar una vez completada la función
+	int celdas_vacias = 0;
+	uint8_t i;
+  uint8_t j;	
+	
+	for (i = 0; i < 9; ++i){
+		for (j = 0; j < 9; ++j){
+				cuadricula[i][j] = cuadricula[i][j] & 0x007F;	
+		}
+	}
+	
+	for (i = 0; i < 9; ++i){
+		for (j = 0; j < 9; ++j){
+			if ( celda_leer_valor(cuadricula[i][j]) != 0x0000 ){
+				candidatos_propagar_arm(cuadricula,i,j);
+			}else{
+				celdas_vacias++;
+			}
+		}
+	}
+	return celdas_vacias;
 }
 
 static int
@@ -116,27 +135,27 @@ sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
     int correcto = 0;
 	  size_t i;
     /* calcula lista de candidatos, versi�n C */
-//    celdas_vacias[0] = candidatos_actualizar_c(cuadricula_C_C);
+    celdas_vacias[0] = candidatos_actualizar_c(cuadricula_C_C);
 
-//    //    /* Init C con propagar arm */
-//    celdas_vacias[1] = candidatos_actualizar_c_arm(cuadricula_C_ARM);
+    /* Init C con propagar arm */
+    celdas_vacias[1] = candidatos_actualizar_c_arm(cuadricula_C_ARM);
 
-//    //    /* Init arm con propagar arm */
+    /* Init arm con propagar arm */
     celdas_vacias[2] = candidatos_actualizar_arm(cuadricula_ARM_ARM);
 
-//    //    /* Init arm con propagar c */
-//    celdas_vacias[3] = candidatos_actualizar_arm_c(cuadricula_ARM_C);
-//	
-//	  for (i=1; i < 4; ++i) {
-//			if (celdas_vacias[i] != celdas_vacias[0]) {
-//				return -1;
-//			}
-//		}
+    /* Init arm con propagar c */
+    celdas_vacias[3] = candidatos_actualizar_arm_c(cuadricula_ARM_C);
+	
+	  for (i=1; i < 4; ++i) {
+			if (celdas_vacias[i] != celdas_vacias[0]) {
+				return -1;
+			}
+		}
 
     /* verificar que la lista de candidatos C_C calculada es correcta */
-//    correcto = cuadricula_candidatos_verificar(cuadricula_C_C,solucion);
+    correcto = cuadricula_candidatos_verificar(cuadricula_C_C,solucion);
     correcto += cuadricula_candidatos_verificar(cuadricula_ARM_ARM,solucion);
-//    correcto += cuadricula_candidatos_verificar(cuadricula_C_ARM,solucion);
+    correcto += cuadricula_candidatos_verificar(cuadricula_C_ARM,solucion);
 //    correcto += cuadricula_candidatos_verificar(cuadricula_ARM_C,solucion);
     return correcto;
 }
