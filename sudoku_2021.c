@@ -156,7 +156,7 @@ sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
     correcto = cuadricula_candidatos_verificar(cuadricula_C_C,solucion);
     correcto += cuadricula_candidatos_verificar(cuadricula_ARM_ARM,solucion);
     correcto += cuadricula_candidatos_verificar(cuadricula_C_ARM,solucion);
-//    correcto += cuadricula_candidatos_verificar(cuadricula_ARM_C,solucion);
+    correcto += cuadricula_candidatos_verificar(cuadricula_ARM_C,solucion);
     return correcto;
 }
 

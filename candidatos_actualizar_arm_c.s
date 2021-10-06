@@ -42,8 +42,8 @@ bucle2
 	MOVNE	R1,R4
 	MOVNE	R2,R5
 	
-	MOV		LR,PC
-	BX		R8						;llama a candidatos_propagar_arm si es pista
+	MOVNE	LR,PC
+	BXNE	R8						;llama a candidatos_propagar_c si es pista
 
 	ADD		R5,R5,#0x1				;j++
 	CMP		R5,#0x9					;compara j con 9
