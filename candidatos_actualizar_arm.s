@@ -41,7 +41,7 @@ bucle2
 	MOVNE	R1,R4
 	MOVNE	R2,R5
 	
-	BLNE	candidatos_propagar_arm	;HACER INLINE
+	BLNE	candidatos_propagar_arm	;llama a candidatos_propagar_arm si es pista
 
 	ADD		R5,R5,#0x1				;j++
 	CMP		R5,#0x9					;compara j con 9
