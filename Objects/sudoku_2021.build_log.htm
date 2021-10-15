@@ -22,18 +22,26 @@ Dialog DLL:      TARMP.DLL V1.53.0.0
  
 <h2>Project:</h2>
 C:\Users\jorge\Documents\GitHub\ProyectoHardware-21_22\sudoku_2021.uvproj
-Project File Date:  10/06/2021
+Project File Date:  10/15/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'LPC2105'
-assembling candidatos_actualizar_arm.s...
-assembling candidatos_propagar_arm.s...
-assembling candidatos_actualizar_arm_c.s...
-candidatos_actualizar_arm_c.s(35): error: A1856E: Shifted register operand not allowed
-".\Objects\sudoku_2021.axf" - 1 Error(s), 0 Warning(s).
-Target not created.
-Build Time Elapsed:  00:00:00
+compiling sudoku_2021.c...
+linking...
+.\Objects\sudoku_2021.axf: Warning: L6437W: Relocation #REL:0 in candidatos_actualizar_arm.o(candidatos_actualizar_arm) with respect to candidatos_propagar_arm. Branch relocation to untyped symbol in object candidatos_propagar_arm.o, target state unknown.
+.\Objects\sudoku_2021.axf: Warning: L6806W: Relocation #REL:0 in candidatos_actualizar_arm.o(candidatos_actualizar_arm) with respect to candidatos_propagar_arm. Branch to untyped symbol in candidatos_propagar_arm.o(candidatos_propagar_arm), ABI requires external code symbols to be of type STT_FUNC.
+.\Objects\sudoku_2021.axf: Warning: L6437W: Relocation #REL:0 in sudoku_2021.o(i.sudoku9x9) with respect to candidatos_propagar_arm. Branch relocation to untyped symbol in object candidatos_propagar_arm.o, target state unknown.
+.\Objects\sudoku_2021.axf: Warning: L6437W: Relocation #REL:1 in sudoku_2021.o(i.sudoku9x9) with respect to candidatos_actualizar_arm. Branch relocation to untyped symbol in object candidatos_actualizar_arm.o, target state unknown.
+.\Objects\sudoku_2021.axf: Warning: L6437W: Relocation #REL:2 in sudoku_2021.o(i.sudoku9x9) with respect to candidatos_actualizar_arm_c. Branch relocation to untyped symbol in object candidatos_actualizar_arm_c.o, target state unknown.
+.\Objects\sudoku_2021.axf: Warning: L6318W: candidatos_actualizar_arm.o(candidatos_actualizar_arm) contains branch to a non-code symbol candidatos_propagar_arm.
+.\Objects\sudoku_2021.axf: Warning: L6318W: sudoku_2021.o(i.sudoku9x9) contains branch to a non-code symbol candidatos_propagar_arm.
+.\Objects\sudoku_2021.axf: Warning: L6318W: sudoku_2021.o(i.sudoku9x9) contains branch to a non-code symbol candidatos_actualizar_arm.
+.\Objects\sudoku_2021.axf: Warning: L6318W: sudoku_2021.o(i.sudoku9x9) contains branch to a non-code symbol candidatos_actualizar_arm_c.
+Program Size: Code=2548 RO-data=32 RW-data=1440 ZI-data=1256  
+Finished: 0 information, 9 warning and 0 error messages.
+".\Objects\sudoku_2021.axf" - 0 Error(s), 9 Warning(s).
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

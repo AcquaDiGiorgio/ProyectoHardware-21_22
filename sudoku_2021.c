@@ -1,6 +1,9 @@
 #include <stddef.h>
 #include "sudoku_2021.h"
 
+extern int candidatos_actualizar_arm_c(CELDA cuadricula_ARM_C[NUM_FILAS][NUM_COLUMNAS]);
+extern int candidatos_actualizar_arm(CELDA cuadricula_ARM_ARM[NUM_FILAS][NUM_COLUMNAS]);
+
 /* *****************************************************************************
  * propaga el valor de una determinada celda en C
  * para actualizar las listas de candidatos
@@ -121,8 +124,7 @@ cuadricula_candidatos_verificar(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS],
 /* ************************************************************************
  * programa principal del juego que recibe el tablero
  */
-extern int candidatos_actualizar_arm_c(CELDA cuadricula_ARM_C[NUM_FILAS][NUM_COLUMNAS]);
-extern int candidatos_actualizar_arm(CELDA cuadricula_ARM_ARM[NUM_FILAS][NUM_COLUMNAS]);
+
 
 int
 sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],

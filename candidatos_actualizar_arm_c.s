@@ -1,3 +1,4 @@
+	PRESERVE8
 	AREA candidatos_actualizar_arm_c, CODE, READONLY
 	EXPORT candidatos_actualizar_arm_c
 	IMPORT candidatos_propagar_c

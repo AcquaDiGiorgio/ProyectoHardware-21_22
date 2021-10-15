@@ -1,6 +1,6 @@
 	AREA candidatos_propagar_arm, CODE, READONLY
 	EXPORT candidatos_propagar_arm
-
+		
 	MOV		IP,SP
 	STMDB   SP!,{R4-R10,FP,IP,LR}
 
