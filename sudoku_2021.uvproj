@@ -441,6 +441,16 @@
               <FileType>5</FileType>
               <FilePath>.\tableros.h</FilePath>
             </File>
+            <File>
+              <FileName>eventos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\eventos.h</FilePath>
+            </File>
+            <File>
+              <FileName>cola.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\cola.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -465,6 +475,11 @@
               <FileName>candidatos_propagar_arm.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\candidatos_propagar_arm.s</FilePath>
+            </File>
+            <File>
+              <FileName>cola.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\cola.c</FilePath>
             </File>
           </Files>
         </Group>
