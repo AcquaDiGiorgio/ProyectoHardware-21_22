@@ -1,15 +1,7 @@
-#ifndef COLA_H
-#define COLA_H
-
-#include <inttypes.h>
-
-struct Node
-{
-    uint64_t data;
-    struct Node *next;
-};
-
-struct Node *add(struct Node *last, uint64_t data);
-uint64_t pop(struct Node *first);
-
-#endif //COLA_H
+void inicializacion(Lista *l);
+int cantidad(Lista *l);
+void insertarPrimero(Lista *l,Info *x);
+void insertarUltimo(Lista *l, Info *x);
+void liberar(Lista *l);
+struct Informacion borrarElemento(Lista *l);
+void imprimir(Lista *l);	
