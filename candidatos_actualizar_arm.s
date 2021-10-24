@@ -1,7 +1,7 @@
 ;;;; AUTORES: Jorge Lisa y David Zandundo
 ;;;; ASIGNATURA: Proyecto Hardware del Grado en Ingeniería Informática
 ;;;; Escuela de Ingeniería y Arquitectura - Universidad de Zaragoza
-;;;; FECHA: octubre de 2021
+;;;; FECHA: octubre de 2021 
 ;;;; FICHERO: candidatos_actualizar_arm.s
 ;;;; DESCRIPCIÓN: funcion candidatos_actualizar_arm de la práctica 1
 	
