@@ -1,16 +1,28 @@
+;;;; AUTORES: Jorge Lisa y David Zandundo
+;;;; ASIGNATURA: Proyecto Hardware del Grado en Ingeniería Informática
+;;;; Escuela de Ingeniería y Arquitectura - Universidad de Zaragoza
+;;;; FECHA: octubre de 2021
+;;;; FICHERO: candidatos_actualizar_arm.s
+;;;; DESCRIPCIÓN: funcion candidatos_actualizar_arm de la práctica 1
+	
 	AREA candidatos_actualizar_arm, CODE, READONLY
 	EXPORT candidatos_actualizar_arm
 	IMPORT candidatos_propagar_arm
 	
+; Calcula todas las listas de candidatos (9x9)
+; necesario tras borrar o cambiar un valor (listas corrompidas)
+
+; Recibe la cuadricula como primer parametro
+; y devuelve el numero de celdas vacias
+
 	MOV		IP,SP
-	STMDB   SP!,{R4-R9,FP,IP,LR}
+	STMDB   SP!,{R4-R10,FP,IP,LR}
 	
 ; INICIALIZACION
 	MOV		R6,R0					;R0=entrada    	R6=cuadricula
  	MOV		R7,#0x0					;R7=celdas_vacias
 	MOV		R4,#0x0					;R4=i
 	MOV		R5,#0x0					;R5=j
-
 ; EJECUCION
 bucle1
 	ADD		R1,R6,R4,LSL #5			;mete en r1 valor de cuadricula + (i desplazado 5 izq)
@@ -54,6 +66,6 @@ bucle2
 	BLT		bucle2					;salta a bucle2 si es menor
 
 	MOV		R0, R7					;pone en r0 (return) celdas_vacias
-	LDMIA   SP,{R4-R9,FP,SP,PC}
+	LDMIA   SP,{R4-R10,FP,SP,PC}
 	
 	END	

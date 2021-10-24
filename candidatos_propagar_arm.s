@@ -1,6 +1,20 @@
+;;;; AUTORES: Jorge Lisa y David Zandundo
+;;;; ASIGNATURA: Proyecto Hardware del Grado en Ingeniería Informática
+;;;; Escuela de Ingeniería y Arquitectura - Universidad de Zaragoza
+;;;; FECHA: octubre de 2021
+;;;; FICHERO: candidatos_propagar_arm.s
+;;;; DESCRIPCIÓN: funcion candidatos_propagar_arm de la práctica 1
+	
 	AREA candidatos_propagar_arm, CODE, READONLY
 	EXPORT candidatos_propagar_arm
 		
+; Propaga el valor de una determinada celda
+; para actualizar las listas de candidatos
+; de las celdas en su su fila, columna y region
+
+; Recibe como parametro la cuadricula, y la fila y columna de
+; la celda a propagar; no devuelve nada
+
 	MOV		IP,SP
 	STMDB   SP!,{R4-R10,FP,IP,LR}
 
@@ -75,7 +89,8 @@ bucle_filas
 	MOV		R4,R1					;i=init_i
 	MOV		R5,R10					;j=init_j
 	MOV		R8,#0x1
-	
+
+; recorrer region descartando valor de listas candidatos
 bucle_cuadrado
 	ADD		R9,R6,R4,LSL #5
 	ADD		R9,R9,R5,LSL #1

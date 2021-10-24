@@ -1,8 +1,20 @@
-	PRESERVE8
+;;;; AUTORES: Jorge Lisa y David Zandundo
+;;;; ASIGNATURA: Proyecto Hardware del Grado en Ingeniería Informática
+;;;; Escuela de Ingeniería y Arquitectura - Universidad de Zaragoza
+;;;; FECHA: octubre de 2021
+;;;; FICHERO: candidatos_actualizar_arm_c.s
+;;;; DESCRIPCIÓN: funcion candidatos_actualizar_arm_c de la práctica 1
+
 	AREA candidatos_actualizar_arm_c, CODE, READONLY
 	EXPORT candidatos_actualizar_arm_c
 	IMPORT candidatos_propagar_c
-	
+
+; Calcula todas las listas de candidatos (9x9)
+; necesario tras borrar o cambiar un valor (listas corrompidas)
+
+; Recibe la cuadricula como primer parametro
+; y devuelve el numero de celdas vacias
+
 	MOV		IP,SP
 	STMDB   SP!,{R4-R10,FP,IP,LR}
 	
