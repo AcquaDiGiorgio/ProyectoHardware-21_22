@@ -4,105 +4,121 @@
 ARM Macro Assembler    Page 1 
 
 
-    1 00000000                 PRESERVE8
-    2 00000000                 AREA             candidatos_actualizar_arm_c, CO
+    1 00000000         ;;;; AUTORES: Jorge Lisa y David Zandundo
+    2 00000000         ;;;; ASIGNATURA: Proyecto Hardware del Grado en Ingenier
+                       ía Informática
+    3 00000000         ;;;; Escuela de Ingeniería y Arquitectura - Universidad 
+                       de Zaragoza
+    4 00000000         ;;;; FECHA: octubre de 2021
+    5 00000000         ;;;; FICHERO: candidatos_actualizar_arm_c.s
+    6 00000000         ;;;; DESCRIPCIÓN: funcion candidatos_actualizar_arm_c de
+                        la práctica 1
+    7 00000000         
+    8 00000000                 AREA             candidatos_actualizar_arm_c, CO
 DE, READONLY
-    3 00000000                 EXPORT           candidatos_actualizar_arm_c
-    4 00000000                 IMPORT           candidatos_propagar_c
-    5 00000000         
-    6 00000000 E1A0C00D        MOV              IP,SP
-    7 00000004 E92D5FF0        STMDB            SP!,{R4-R10,FP,IP,LR}
-    8 00000008         
-    9 00000008         ; INICIALIZACION
-   10 00000008 E1A06000        MOV              R6,R0       ;R0=entrada     R6=
+    9 00000000                 EXPORT           candidatos_actualizar_arm_c
+   10 00000000                 IMPORT           candidatos_propagar_c
+   11 00000000         
+   12 00000000         ; Calcula todas las listas de candidatos (9x9)
+   13 00000000         ; necesario tras borrar o cambiar un valor (listas corro
+                       mpidas)
+   14 00000000         
+   15 00000000         ; Recibe la cuadricula como primer parametro
+   16 00000000         ; y devuelve el numero de celdas vacias
+   17 00000000         
+   18 00000000 E1A0C00D        MOV              IP,SP
+   19 00000004 E92D5FF0        STMDB            SP!,{R4-R10,FP,IP,LR}
+   20 00000008         
+   21 00000008         ; INICIALIZACION
+   22 00000008 E1A06000        MOV              R6,R0       ;R0=entrada     R6=
                                                             cuadricula
-   11 0000000C E3A07000        MOV              R7,#0x0     ;R7=celdas_vacias
-   12 00000010 E3A04000        MOV              R4,#0x0     ;R4=i
-   13 00000014 E3A05000        MOV              R5,#0x0     ;R5=j
-   14 00000018 E59F8080        LDR              R8, = candidatos_propagar_c
-   15 0000001C         ; EJECUCION
-   16 0000001C         bucle1
-   17 0000001C E0861284        ADD              R1,R6,R4,LSL #5 ;mete en r1 val
+   23 0000000C E3A07000        MOV              R7,#0x0     ;R7=celdas_vacias
+   24 00000010 E3A04000        MOV              R4,#0x0     ;R4=i
+   25 00000014 E3A05000        MOV              R5,#0x0     ;R5=j
+   26 00000018 E59F8080        LDR              R8, = candidatos_propagar_c
+   27 0000001C         ; EJECUCION
+   28 0000001C         bucle1
+   29 0000001C E0861284        ADD              R1,R6,R4,LSL #5 ;mete en r1 val
                                                             or de cuadricula + 
                                                             (i desplazado 5 izq
                                                             )
-   18 00000020 E0811085        ADD              R1,R1,R5,LSL #1 ;mete en r1 val
+   30 00000020 E0811085        ADD              R1,R1,R5,LSL #1 ;mete en r1 val
                                                             or de r1 + (j despl
                                                             azado 1)
-   19 00000024 E5D10000        LDRB             R0,[R1]     ;mete en r0 el valo
+   31 00000024 E5D10000        LDRB             R0,[R1]     ;mete en r0 el valo
                                                             r de r0 + [j despla
                                                             zado 1 izq]
-   20 00000028 E200007F        AND              R0,R0,#0x7F ;and r0 0x007F
-   21 0000002C E1C100B0        STRH             R0,[R1]     ;guarda en [r1] ½ p
+   32 00000028 E200007F        AND              R0,R0,#0x7F ;and r0 0x007F
+   33 0000002C E1C100B0        STRH             R0,[R1]     ;guarda en [r1] ½ p
                                                             alabra de r0 (valor
                                                              de la celda)
-   22 00000030         
-   23 00000030 E2855001        ADD              R5,R5,#0x1  ;guarda en r0 j++
-   24 00000034 E3550009        CMP              R5,#0x9     ;compara j con 16
-   25 00000038 BAFFFFF7        BLT              bucle1      ;salta a la primera
+   34 00000030         
+   35 00000030 E2855001        ADD              R5,R5,#0x1  ;guarda en r0 j++
+   36 00000034 E3550009        CMP              R5,#0x9     ;compara j con 16
+   37 00000038 BAFFFFF7        BLT              bucle1      ;salta a la primera
                                                              bucle1 si es menor
                                                             
-   26 0000003C E3A05000        MOV              R5,#0       ;pone j=0
-   27 00000040         
-   28 00000040 E2844001        ADD              R4,R4,#0x1  ;i++
-   29 00000044 E3540009        CMP              R4,#0x9     ;comara i con 144 (
+   38 0000003C E3A05000        MOV              R5,#0       ;pone j=0
+   39 00000040         
+   40 00000040 E2844001        ADD              R4,R4,#0x1  ;i++
+   41 00000044 E3540009        CMP              R4,#0x9     ;comara i con 144 (
                                                             9*16)
-   30 00000048 BAFFFFF3        BLT              bucle1      ;salta a bucle1 si 
-                                                            es menor
-   31 0000004C E3A04000        MOV              R4,#0       ;pone i=0
-   32 00000050         
-   33 00000050         bucle2
-   34 00000050 E0861284        ADD              R1,R6,R4,LSL #5 ;mete en r0 val
-                                                            or de cuadricula + 
-                                                            (i desplazado 5 izq
-                                                            )
-   35 00000054 E0811085        ADD              R1,R1,R5,LSL #1 ;mete en r1 val
-                                                            or de r1 + (j despl
-                                                            azado 1)
-   36 00000058 E1D100B0        LDRH             R0,[R1]     ;mete en r0 el valo
-                                                            r de r0 + [j despla
-                                                            zado 1 izq]
-   37 0000005C         
 
 
 
 ARM Macro Assembler    Page 2 
 
 
-   38 0000005C E200000F        AND              R0,R0,#0xF  ;sacamos el valor n
+   42 00000048 BAFFFFF3        BLT              bucle1      ;salta a bucle1 si 
+                                                            es menor
+   43 0000004C E3A04000        MOV              R4,#0       ;pone i=0
+   44 00000050         
+   45 00000050         bucle2
+   46 00000050 E0861284        ADD              R1,R6,R4,LSL #5 ;mete en r0 val
+                                                            or de cuadricula + 
+                                                            (i desplazado 5 izq
+                                                            )
+   47 00000054 E0811085        ADD              R1,R1,R5,LSL #1 ;mete en r1 val
+                                                            or de r1 + (j despl
+                                                            azado 1)
+   48 00000058 E1D100B0        LDRH             R0,[R1]     ;mete en r0 el valo
+                                                            r de r0 + [j despla
+                                                            zado 1 izq]
+   49 0000005C         
+   50 0000005C E200000F        AND              R0,R0,#0xF  ;sacamos el valor n
                                                             úmero que contiene 
                                                             la celda
-   39 00000060 E3500000        CMP              R0,#0x0     ;celda contiene un 
+   51 00000060 E3500000        CMP              R0,#0x0     ;celda contiene un 
                                                             0
-   40 00000064 02877001        ADDEQ            R7,R7,#1    ;celdas_vacias++ si
+   52 00000064 02877001        ADDEQ            R7,R7,#1    ;celdas_vacias++ si
                                                              no es pista
-   41 00000068         
-   42 00000068 11A00006        MOVNE            R0,R6
-   43 0000006C 11A01004        MOVNE            R1,R4
-   44 00000070 11A02005        MOVNE            R2,R5
-   45 00000074         
-   46 00000074 11A0E00F        MOVNE            LR,PC
-   47 00000078 112FFF18        BXNE             R8          ;llama a candidatos
+   53 00000068         
+   54 00000068 11A00006        MOVNE            R0,R6
+   55 0000006C 11A01004        MOVNE            R1,R4
+   56 00000070 11A02005        MOVNE            R2,R5
+   57 00000074         
+   58 00000074 11A0E00F        MOVNE            LR,PC
+   59 00000078 112FFF18        BXNE             R8          ;llama a candidatos
                                                             _propagar_c si es p
                                                             ista
-   48 0000007C         
-   49 0000007C E2855001        ADD              R5,R5,#0x1  ;j++
-   50 00000080 E3550009        CMP              R5,#0x9     ;compara j con 9
-   51 00000084 BAFFFFF1        BLT              bucle2      ;salta a la primera
+   60 0000007C         
+   61 0000007C E2855001        ADD              R5,R5,#0x1  ;j++
+   62 00000080 E3550009        CMP              R5,#0x9     ;compara j con 9
+   63 00000084 BAFFFFF1        BLT              bucle2      ;salta a la primera
                                                              bucle2 si es menor
                                                             
-   52 00000088 E3A05000        MOV              R5,#0       ;pone j=0
-   53 0000008C         
-   54 0000008C E2844001        ADD              R4,R4,#0x1  ;i++
-   55 00000090 E3540009        CMP              R4,#0x9     ;comara i con 9
-   56 00000094 BAFFFFED        BLT              bucle2      ;salta a bucle2 si 
+   64 00000088 E3A05000        MOV              R5,#0       ;pone j=0
+   65 0000008C         
+   66 0000008C E2844001        ADD              R4,R4,#0x1  ;i++
+   67 00000090 E3540009        CMP              R4,#0x9     ;comara i con 9
+   68 00000094 BAFFFFED        BLT              bucle2      ;salta a bucle2 si 
                                                             es menor
-   57 00000098         
-   58 00000098 E1A00007        MOV              R0, R7      ;pone en r0 (return
+   69 00000098         
+   70 00000098 E1A00007        MOV              R0, R7      ;pone en r0 (return
                                                             ) celdas_vacias
-   59 0000009C E89DAFF0        LDMIA            SP,{R4-R10,FP,SP,PC}
-   60 000000A0         
-   61 000000A0                 END
+   71 0000009C E89DAFF0        LDMIA            SP,{R4-R10,FP,SP,PC}
+   72 000000A0         
+   73 000000A0                 END
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
 bjects\candidatos_actualizar_arm_c.d -o.\objects\candidatos_actualizar_arm_c.o 
@@ -119,27 +135,27 @@ bucle1 0000001C
 
 Symbol: bucle1
    Definitions
-      At line 16 in file candidatos_actualizar_arm_c.s
+      At line 28 in file candidatos_actualizar_arm_c.s
    Uses
-      At line 25 in file candidatos_actualizar_arm_c.s
-      At line 30 in file candidatos_actualizar_arm_c.s
+      At line 37 in file candidatos_actualizar_arm_c.s
+      At line 42 in file candidatos_actualizar_arm_c.s
 
 bucle2 00000050
 
 Symbol: bucle2
    Definitions
-      At line 33 in file candidatos_actualizar_arm_c.s
+      At line 45 in file candidatos_actualizar_arm_c.s
    Uses
-      At line 51 in file candidatos_actualizar_arm_c.s
-      At line 56 in file candidatos_actualizar_arm_c.s
+      At line 63 in file candidatos_actualizar_arm_c.s
+      At line 68 in file candidatos_actualizar_arm_c.s
 
 candidatos_actualizar_arm_c 00000000
 
 Symbol: candidatos_actualizar_arm_c
    Definitions
-      At line 2 in file candidatos_actualizar_arm_c.s
+      At line 8 in file candidatos_actualizar_arm_c.s
    Uses
-      At line 3 in file candidatos_actualizar_arm_c.s
+      At line 9 in file candidatos_actualizar_arm_c.s
 Comment: candidatos_actualizar_arm_c used once
 3 symbols
 
@@ -152,9 +168,9 @@ candidatos_propagar_c 00000000
 
 Symbol: candidatos_propagar_c
    Definitions
-      At line 4 in file candidatos_actualizar_arm_c.s
+      At line 10 in file candidatos_actualizar_arm_c.s
    Uses
-      At line 14 in file candidatos_actualizar_arm_c.s
+      At line 26 in file candidatos_actualizar_arm_c.s
 Comment: candidatos_propagar_c used once
 1 symbol
 338 symbols in table
