@@ -451,6 +451,11 @@
               <FileType>5</FileType>
               <FilePath>.\cola.h</FilePath>
             </File>
+            <File>
+              <FileName>gestor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gestor.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -480,6 +485,16 @@
               <FileName>cola.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\cola.c</FilePath>
+            </File>
+            <File>
+              <FileName>gestor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor.c</FilePath>
+            </File>
+            <File>
+              <FileName>temporizador.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\temporizador.c</FilePath>
             </File>
           </Files>
         </Group>

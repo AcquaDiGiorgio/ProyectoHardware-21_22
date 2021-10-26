@@ -168,6 +168,7 @@ sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
 int main (void) {
    //#include "tableros.h"
    //int correcto = sudoku9x9(cuadricula_C_C, cuadricula_C_ARM, cuadricula_ARM_ARM, cuadricula_ARM_C, solucion);
+	/*
 	#include "cola.h"
 	struct Lista *l = NULL;
 	Info f1 = newInfo(13,16,19);
@@ -192,5 +193,9 @@ int main (void) {
 		ret++;
 	}
 	return ret;
+	*/
+	
+	#include "gestor.h"
+	
 }
 
