@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include "sudoku_2021.h"
-//#include "cola.c"
+
 
 extern int candidatos_actualizar_arm_c(CELDA cuadricula_ARM_C[NUM_FILAS][NUM_COLUMNAS]);
 extern int candidatos_actualizar_arm(CELDA cuadricula_ARM_ARM[NUM_FILAS][NUM_COLUMNAS]);
@@ -166,7 +166,36 @@ sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
 
 // MAIN
 int main (void) {
-   #include "tableros.h"
-   int correcto = sudoku9x9(cuadricula_C_C, cuadricula_C_ARM, cuadricula_ARM_ARM, cuadricula_ARM_C, solucion);
+   //#include "tableros.h"
+   //int correcto = sudoku9x9(cuadricula_C_C, cuadricula_C_ARM, cuadricula_ARM_ARM, cuadricula_ARM_C, solucion);
+	/*
+	#include "cola.h"
+	struct Lista *l = NULL;
+	Info f1 = newInfo(13,16,19);
+	inicializarLista(l,f1);
+	
+	Info f2 = newInfo(25,27,29);
+	Info f3 = newInfo(31,33,37);
+	Info f4 = newInfo(42,44,46);
+	
+	insertar(l,f1);
+	insertar(l,f2);
+	Info out1 = sacarElemento(l);
+	insertar(l,f3);
+	Info out2 = sacarElemento(l);
+	insertar(l,f4);
+	
+	int ret = 0;
+	if (f1.ID_evento == out1.ID_evento && f1.auxData == out1.auxData && f1.marca_temporal == out1.marca_temporal){
+		ret++;
+	}
+	if (f2.ID_evento == out2.ID_evento && f2.auxData == out2.auxData && f2.marca_temporal == out2.marca_temporal){
+		ret++;
+	}
+	return ret;
+	*/
+	
+	#include "gestor.h"
+	
 }
 

@@ -3,7 +3,7 @@
 
 #include <inttypes.h>
 
-#define uint8_t INT_ALARMA = 1;
+#define uint8_t SET_ALARMA = 0x0000001;
 
 
 
