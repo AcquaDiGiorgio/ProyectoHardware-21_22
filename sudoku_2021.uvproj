@@ -447,14 +447,14 @@
               <FilePath>.\eventos.h</FilePath>
             </File>
             <File>
+              <FileName>OLD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\OLD.h</FilePath>
+            </File>
+            <File>
               <FileName>cola.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\cola.h</FilePath>
-            </File>
-            <File>
-              <FileName>gestor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\gestor.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -482,24 +482,26 @@
               <FilePath>.\candidatos_propagar_arm.s</FilePath>
             </File>
             <File>
+              <FileName>OLD.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\OLD.c</FilePath>
+            </File>
+            <File>
               <FileName>cola.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\cola.c</FilePath>
-            </File>
-            <File>
-              <FileName>gestor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\gestor.c</FilePath>
             </File>
             <File>
               <FileName>temporizador.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\temporizador.c</FilePath>
             </File>
+            <File>
+              <FileName>gestor_alarmas.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor_alarmas.c</FilePath>
+            </File>
           </Files>
-        </Group>
-        <Group>
-          <GroupName>New Group</GroupName>
         </Group>
       </Groups>
     </Target>

@@ -1,34 +1,24 @@
 #ifndef COLA_H
 #define COLA_H
 
+#include <stdlib.h>
 #include <inttypes.h>
 
-//Struct que almacena la informacion del evento 
-typedef struct Informacion {
-    int ID_evento;
-    int auxData;
-    int marca_temporal;
-}Info;
+#define MAX_INTERRUPTIONS 32  /* the maximal number of processes in the system */
 
-//Struct que representa un nodo de la lista circular
-struct nodo {
-    struct Informacion dato;
-    struct nodo *sig;
-    struct nodo *ant;
+/* Process control block - 
+ * holding all process relevant informations 
+*/
+struct interruption{
+	uint8_t id;                    /* ID of the proces */
+	uint32_t auxData;
+	int ready;
 };
 
-//Struct que representa una lista circular que almacena informacion de eventos
-typedef struct Lista {
-     struct nodo *ini;
-     int tamano;
-}Lista;
+static struct interruption interruptionlist[MAX_INTERRUPTIONS];
+void cola_guardar_eventos(uint8_t idEvento, uint32_t auxData);
+int leer_evento();
+int hay_evento();
+int scheduler();
 
-Info newInfo(int ID, int auxData, int timeStamp);
-void inicializarLista(Lista *l, Info x);
-int size(Lista *l);
-//void insertarPrimero(Lista *l,Info x);
-void insertar(Lista *l, Info x);
-void liberar(Lista *l);
-struct Informacion sacarElemento(Lista *l);
-
-#endif //EVENTOS_H
+#endif //COLA_H
