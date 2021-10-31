@@ -1,47 +1,57 @@
 #include "cola.h"
+#include "eventos.h"
+#include "gestor_alarmas.h"
 
-static volatile int primero = 0;
+static volatile int aLeer = 0;
+static volatile int actual = 0;
 
 void cola_guardar_eventos(uint8_t idEvento, uint32_t auxData)
 {
 	int iteracion = 0;
-	int i = primero+1;
 	int ret = -1;
-	while(iteracion < MAX_INTERRUPTIONS)
+	if(interruptionlist[actual].ready != 1)
 	{
-		if(i == MAX_INTERRUPTIONS){i=0;}
-		if(interruptionlist[i].ready != 1)
-		{
-			interruptionlist[i].id = idEvento;
-			interruptionlist[i].auxData = auxData;
-			interruptionlist[i].ready = 1;
-			ret = 0;
-			return;
-		}
-		iteracion++;
-		i++;
+		interruptionlist[actual].id = idEvento;
+		interruptionlist[actual].auxData = auxData;
+		interruptionlist[actual].ready = 1;
+		ret = 0;
+		actual++;
+		return;
 	}
 	//ILUMINAR EL LED DE OVERFLOW
 }
 
-int leer_evento()
+void leer_evento()
 { 
-	interruptionlist[primero].ready = 0;
-	uint8_t id = interruptionlist[primero].id;
-	uint32_t auxData = interruptionlist[primero].auxData;
+	interruptionlist[aLeer].ready = 0;
+	uint8_t id = interruptionlist[aLeer].id;
+	uint32_t auxData = interruptionlist[aLeer].auxData;
 	
-	primero++;
-	if(primero == MAX_INTERRUPTIONS){
-		primero = 0;
+	aLeer++;
+	if(aLeer == MAX_INTERRUPTIONS){
+		aLeer = 0;
 	}
 	
-	// EJECUTAR EL EVENTO
-	
-	return 0;
+	switch (id)
+	{
+		case SET_ALARMA:
+			break;
+		
+		case TIMER_0:
+			gestionar_alarmas();
+		  break;
+		/*
+		case :
+			return 0;
+		
+		case :
+			return 0;
+		*/
+	}
 }
 
 int hay_evento(){
-	return interruptionlist[primero].ready;
+	return interruptionlist[aLeer].ready;
 }
 
 

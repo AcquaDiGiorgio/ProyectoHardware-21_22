@@ -5,6 +5,8 @@
 
 // Definición de los IDs de los Eventos Posibles
 
-const uint8_t SET_ALARMA = 0x0; // 0000 000
+typedef enum {
+	SET_ALARMA = 0x0, TIMER_0
+}event_t;
 
 #endif //EVENTOS_H

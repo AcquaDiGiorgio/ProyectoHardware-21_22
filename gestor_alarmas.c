@@ -1,38 +1,77 @@
 #include <inttypes.h>
-#include "eventos.h"
+#include "gestor_alarmas.h"
 
-const int TOT_ALARMAS = 8;
-static volatile int ocupada[TOT_ALARMAS] = {0,0,0,0,0,0,0,0};
-
-void crear_alarma_unica(uint8_t evento){
+void crear_alarma_unica(uint8_t evento, int retardo){
 	for (int i = 0; i < TOT_ALARMAS; i++){
 		if(ocupada[i] == 0){
-			int id = SET_ALARMA | i;
+			uint8_t id = SET_ALARMA;
+			uint32_t auxData = returnAuxData(evento,0,retardo);
+			dataAlarma[i] = auxData; // CALCULAR RETADO EN CICLOS, NO SEGUNDOS
 			
+			cola_guardar_eventos(id,auxData);
 
-			break;
+			return;
 		}
 	}
 }
 
-void crear_alarma_periodica(uint8_t evento){
+void crear_alarma_periodica(uint8_t evento, int retardo){
 	for (int i = 0; i < TOT_ALARMAS; i++){
 		if(ocupada[i] == 0){
-			int id = SET_ALARMA | i;
+			int id = SET_ALARMA;
 			
+			uint32_t auxData = returnAuxData(evento,1,retardo);
 
-			break;
+			return;
 		}
 	}
 }
 
-int esPeriodica(uint32_t alarma){
-	return alarma & 0x0000800000 >> 5;
+// PRE: id del evento a gestionar, la periodicidad de la alama y su retardo
+// POST: Crea los Datos auxilires de una alama
+int returnAuxData(int evento, int perioica, int retardo){
+	uint32_t retVal = 0;
+	// TODO
+	return retVal;
 }
 
-void gestionar_alarma(uint8_t idEvento, uint32_t auxData){
-	// Ejecutar evento
-	if (esPeriodica() ){
-	}
+int getRetardo(uint32_t auxData){
+	// TODO
+}
 
+int getEvento(uint32_t auxData){
+	// TODO	
+}
+
+int esPeriodica(uint32_t auxData){
+	return auxData & 0x0000800000 >> 5; // No creo que esté bien
+}
+
+// PRE: True
+// POST: suma 1 en el contador de la alarmas activas y las gestiona si es
+// 			 necesario
+void gestionar_alarmas(){
+	for(int i = 0; i < TOT_ALARMAS; i++){
+		if(ocupada[i] == 1){
+			valAlarma[i]++;
+			if(valAlarma[i] == getRetardo(dataAlarma[i])){
+				gestionar_alarma(i, dataAlarma[i]);
+			}
+		}
+	}
+}
+
+// PRE: id de un Evento a gestionar y los datos de la alarma ejecutada
+// POST: gestiona el evento anclado a la alrma ejecutada y si es periódica
+// 			 la reinicia
+void gestionar_alarma(int idAlarma, uint32_t auxData){
+	// GUARDAMOS EL EVENTO QUE SE TIENE QUE GESTIONAR
+	cola_guardar_eventos(getEvento(auxData),0);
+	
+	// SI ES PERIÓDICA, LA VOLVEMOS A INTRODUCIR
+	if (esPeriodica(auxData) == 1){
+		cola_guardar_eventos(idAlarma, auxData);
+	}else{
+		ocupada[idAlarma] = 0;
+	}
 }
