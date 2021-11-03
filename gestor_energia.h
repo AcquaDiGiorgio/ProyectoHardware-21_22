@@ -1,8 +1,10 @@
 #ifndef GESTOR_ENERGIA_H
 #define GESTOR_ENERGIA_H
 
-#include <stdlib.h>
-#include <inttypes.h>
+enum {
+	MODO_IDLE = 0,
+	MODO_NORMAL = 1
+};
 
 void PM_power_down (void);
 void PM_idle (void);
