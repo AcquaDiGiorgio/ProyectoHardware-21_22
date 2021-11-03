@@ -2,11 +2,6 @@
 #include <LPC210X.H>                            // LPC21XX Peripheral Registers
 #include <stdint.h>
 
-//Esportamos las funciones auxiliares correspondientes
-extern int32_t GPIO_marcar_arm(int bit_inicial, int num_bits);
-extern int GPIO_leer_arm(int bit_inicial, int num_bits, int32_t valor);
-extern int GPIO_escribir_arm(int bit_inicial, int num_bits, int32_t valor);
-
 /*Permite emplear el GPIO y debe ser invocada antes de
 poder llamar al resto de funciones de la biblioteca */
 void GPIO_iniciar (void) {
