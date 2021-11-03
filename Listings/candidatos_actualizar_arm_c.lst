@@ -120,11 +120,11 @@ ARM Macro Assembler    Page 2
    72 000000A0         
    73 000000A0                 END
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
-bjects\candidatos_actualizar_arm_c.d -o.\objects\candidatos_actualizar_arm_c.o 
--IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\P
-hilips --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 526" --l
-ist=.\listings\candidatos_actualizar_arm_c.lst candidatos_actualizar_arm_c.s
+Command Line: --debug --xref --diag_suppress=9931 --depend=.\objects\candidatos
+_actualizar_arm_c.d -o.\objects\candidatos_actualizar_arm_c.o -IC:\Keil_v5\ARM\
+RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Philips --predefin
+e="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 526" --list=.\listings\ca
+ndidatos_actualizar_arm_c.lst candidatos_actualizar_arm_c.s
 
 
 

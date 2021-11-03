@@ -6,7 +6,7 @@
 // Definición de los IDs de los Eventos Posibles
 
 typedef enum {
-	SET_ALARMA = 0x0, TIMER_0
+	SET_ALARMA, TIMER_0
 }event_t;
 
 #endif //EVENTOS_H

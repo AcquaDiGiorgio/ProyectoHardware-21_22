@@ -1,15 +1,16 @@
 #include <inttypes.h>
 #include "gestor_alarmas.h"
 
+#define ON 1
+#define OFF 0
+
 void crear_alarma_unica(uint8_t evento, int retardo){
 	for (int i = 0; i < TOT_ALARMAS; i++){
-		if(ocupada[i] == 0){
-			uint8_t id = SET_ALARMA;
-			uint32_t auxData = returnAuxData(evento,0,retardo);
-			dataAlarma[i] = auxData; // CALCULAR RETADO EN CICLOS, NO SEGUNDOS
+		if(alarmas[i].active == OFF){
+			alarmas[i].active = ON;
 			
-			cola_guardar_eventos(id,auxData);
-
+			uint32_t auxData = returnAuxData(evento,0,retardo);
+			alarmas[i].auxData = auxData;
 			return;
 		}
 	}
@@ -17,11 +18,11 @@ void crear_alarma_unica(uint8_t evento, int retardo){
 
 void crear_alarma_periodica(uint8_t evento, int retardo){
 	for (int i = 0; i < TOT_ALARMAS; i++){
-		if(ocupada[i] == 0){
-			int id = SET_ALARMA;
+		if(alarmas[i].active == OFF){		
+			alarmas[i].active = ON;
 			
 			uint32_t auxData = returnAuxData(evento,1,retardo);
-
+			alarmas[i].auxData = auxData;
 			return;
 		}
 	}
@@ -29,22 +30,23 @@ void crear_alarma_periodica(uint8_t evento, int retardo){
 
 // PRE: id del evento a gestionar, la periodicidad de la alama y su retardo
 // POST: Crea los Datos auxilires de una alama
-int returnAuxData(int evento, int perioica, int retardo){
-	uint32_t retVal = 0;
-	// TODO
+uint32_t returnAuxData(int evento, int perioica, int retardo){
+	uint32_t retVal = evento;
+	retVal = ( retVal << 1 ) | perioica;
+	retVal = ( retVal << 23 ) | retardo;
 	return retVal;
 }
 
-int getRetardo(uint32_t auxData){
-	// TODO
+inline int getRetardo(uint32_t auxData){
+	return auxData & 0x7FFFFF;
 }
 
-int getEvento(uint32_t auxData){
-	// TODO	
+inline int getEvento(uint32_t auxData){
+	return (auxData >> 24) & 0xFF;
 }
 
-int esPeriodica(uint32_t auxData){
-	return auxData & 0x0000800000 >> 5; // No creo que esté bien
+inline int esPeriodica(uint32_t auxData){
+	return (auxData >> 23) & 0x1; // No creo que esté bien
 }
 
 // PRE: True
@@ -52,10 +54,10 @@ int esPeriodica(uint32_t auxData){
 // 			 necesario
 void gestionar_alarmas(){
 	for(int i = 0; i < TOT_ALARMAS; i++){
-		if(ocupada[i] == 1){
-			valAlarma[i]++;
-			if(valAlarma[i] == getRetardo(dataAlarma[i])){
-				gestionar_alarma(i, dataAlarma[i]);
+		if(alarmas[i].active == ON){
+			alarmas[i].elapsedTime++;
+			if(alarmas[i].elapsedTime == getRetardo(alarmas[i].auxData)){
+				gestionar_alarma(i, alarmas[i].auxData);
 			}
 		}
 	}
@@ -66,12 +68,12 @@ void gestionar_alarmas(){
 // 			 la reinicia
 void gestionar_alarma(int idAlarma, uint32_t auxData){
 	// GUARDAMOS EL EVENTO QUE SE TIENE QUE GESTIONAR
-	cola_guardar_eventos(getEvento(auxData),0);
+	cola_guardar_eventos(SET_ALARMA, getEvento(auxData));
 	
-	// SI ES PERIÓDICA, LA VOLVEMOS A INTRODUCIR
+	// SI ES PERIÓDICA, LA REINICIAMOS
 	if (esPeriodica(auxData) == 1){
-		cola_guardar_eventos(idAlarma, auxData);
+		alarmas[idAlarma].elapsedTime = 0;
 	}else{
-		ocupada[idAlarma] = 0;
+		alarmas[idAlarma].active = 0;
 	}
 }

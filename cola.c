@@ -7,14 +7,11 @@ static volatile int actual = 0;
 
 void cola_guardar_eventos(uint8_t idEvento, uint32_t auxData)
 {
-	int iteracion = 0;
-	int ret = -1;
 	if(interruptionlist[actual].ready != 1)
 	{
 		interruptionlist[actual].id = idEvento;
 		interruptionlist[actual].auxData = auxData;
 		interruptionlist[actual].ready = 1;
-		ret = 0;
 		actual++;
 		return;
 	}
@@ -35,27 +32,27 @@ void leer_evento()
 	switch (id)
 	{
 		case SET_ALARMA:
+			// Gestionar evento de la alarma
 			break;
 		
 		case TIMER_0:
-			gestionar_alarmas();
+			//gestionar_alarmas();
 		  break;
 		/*
 		case :
-			return 0;
+			break;
 		
 		case :
-			return 0;
+			break;
 		*/
 	}
 }
 
-int hay_evento(){
+inline int hay_evento(){
 	return interruptionlist[aLeer].ready;
 }
 
-
-int scheduler()
+void scheduler()
 {	
 	while(1)
 	{
@@ -63,5 +60,4 @@ int scheduler()
 			leer_evento();
 		}		
 	}
-	return 0;
 }

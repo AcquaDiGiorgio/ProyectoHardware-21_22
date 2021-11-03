@@ -117,11 +117,11 @@ ARM Macro Assembler    Page 2
    69 00000094 E89DAFF0        LDMIA            SP,{R4-R10,FP,SP,PC}
    70 00000098         
    71 00000098                 END
-Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
-bjects\candidatos_actualizar_arm.d -o.\objects\candidatos_actualizar_arm.o -IC:
-\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Phili
-ps --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 526" --list=
-.\listings\candidatos_actualizar_arm.lst candidatos_actualizar_arm.s
+Command Line: --debug --xref --diag_suppress=9931 --depend=.\objects\candidatos
+_actualizar_arm.d -o.\objects\candidatos_actualizar_arm.o -IC:\Keil_v5\ARM\RV31
+\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Philips --predefine="_
+_EVAL SETA 1" --predefine="__UVISION_VERSION SETA 526" --list=.\listings\candid
+atos_actualizar_arm.lst candidatos_actualizar_arm.s
 
 
 

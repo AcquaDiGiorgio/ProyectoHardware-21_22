@@ -10,15 +10,15 @@
  * holding all process relevant informations 
 */
 struct interruption{
-	uint8_t id;                    /* ID of the proces */
+	uint8_t id;                    /* ID of the process */
 	uint32_t auxData;
 	int ready;
 };
 
 static struct interruption interruptionlist[MAX_INTERRUPTIONS];
 void cola_guardar_eventos(uint8_t idEvento, uint32_t auxData);
-int leer_evento();
-int hay_evento();
-int scheduler();
+void leer_evento(void);
+int hay_evento(void);
+void scheduler(void);
 
 #endif //COLA_H

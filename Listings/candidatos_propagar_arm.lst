@@ -164,11 +164,11 @@ ARM Macro Assembler    Page 3
   113 000000FC E3A00000        MOV              R0,#0x0
   114 00000100 E89DAFF0        LDMIA            SP,{R4-R10,FP,SP,PC}
   115 00000104                 END
-Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
-bjects\candidatos_propagar_arm.d -o.\objects\candidatos_propagar_arm.o -IC:\Kei
-l_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Philips -
--predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 526" --list=.\li
-stings\candidatos_propagar_arm.lst candidatos_propagar_arm.s
+Command Line: --debug --xref --diag_suppress=9931 --depend=.\objects\candidatos
+_propagar_arm.d -o.\objects\candidatos_propagar_arm.o -IC:\Keil_v5\ARM\RV31\INC
+ -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\INC\Philips --predefine="__EVA
+L SETA 1" --predefine="__UVISION_VERSION SETA 526" --list=.\listings\candidatos
+_propagar_arm.lst candidatos_propagar_arm.s
 
 
 
