@@ -20,9 +20,10 @@ void cola_guardar_eventos(uint8_t idEvento, uint32_t auxData)
 
 void leer_evento()
 { 
-	interruptionlist[aLeer].ready = 0;
+	
 	uint8_t id = interruptionlist[aLeer].id;
 	uint32_t auxData = interruptionlist[aLeer].auxData;
+	interruptionlist[aLeer].ready = 0;
 	
 	aLeer++;
 	if(aLeer == MAX_INTERRUPTIONS){
@@ -48,7 +49,7 @@ void leer_evento()
 	}
 }
 
-inline int hay_evento(){
+int hay_evento(){
 	return interruptionlist[aLeer].ready;
 }
 

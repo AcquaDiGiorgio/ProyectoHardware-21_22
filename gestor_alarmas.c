@@ -5,24 +5,24 @@
 #define OFF 0
 
 void crear_alarma_unica(uint8_t evento, int retardo){
-	for (int i = 0; i < TOT_ALARMAS; i++){
+	int i;
+	for (i = 0; i < TOT_ALARMAS; i++){
 		if(alarmas[i].active == OFF){
-			alarmas[i].active = ON;
-			
 			uint32_t auxData = returnAuxData(evento,0,retardo);
 			alarmas[i].auxData = auxData;
+			alarmas[i].active = ON;
 			return;
 		}
 	}
 }
 
 void crear_alarma_periodica(uint8_t evento, int retardo){
-	for (int i = 0; i < TOT_ALARMAS; i++){
+	int i;
+	for (i = 0; i < TOT_ALARMAS; i++){
 		if(alarmas[i].active == OFF){		
-			alarmas[i].active = ON;
-			
 			uint32_t auxData = returnAuxData(evento,1,retardo);
 			alarmas[i].auxData = auxData;
+			alarmas[i].active = ON;
 			return;
 		}
 	}
@@ -37,15 +37,15 @@ uint32_t returnAuxData(int evento, int perioica, int retardo){
 	return retVal;
 }
 
-inline int getRetardo(uint32_t auxData){
+int getRetardo(uint32_t auxData){
 	return auxData & 0x7FFFFF;
 }
 
-inline int getEvento(uint32_t auxData){
+int getEvento(uint32_t auxData){
 	return (auxData >> 24) & 0xFF;
 }
 
-inline int esPeriodica(uint32_t auxData){
+int esPeriodica(uint32_t auxData){
 	return (auxData >> 23) & 0x1; // No creo que esté bien
 }
 
@@ -53,7 +53,8 @@ inline int esPeriodica(uint32_t auxData){
 // POST: suma 1 en el contador de la alarmas activas y las gestiona si es
 // 			 necesario
 void gestionar_alarmas(){
-	for(int i = 0; i < TOT_ALARMAS; i++){
+	int i;
+	for(i = 0; i < TOT_ALARMAS; i++){
 		if(alarmas[i].active == ON){
 			alarmas[i].elapsedTime++;
 			if(alarmas[i].elapsedTime == getRetardo(alarmas[i].auxData)){

@@ -167,7 +167,8 @@ sudoku9x9(CELDA cuadricula_C_C[NUM_FILAS][NUM_COLUMNAS],
 // MAIN
 
 //int main (void) {
-   //#include "tableros.h"
-   //int correcto = sudoku9x9(cuadricula_C_C, cuadricula_C_ARM, cuadricula_ARM_ARM, cuadricula_ARM_C, solucion);
+//   //#include "tableros.h"
+//   //int correcto = sudoku9x9(cuadricula_C_C, cuadricula_C_ARM, cuadricula_ARM_ARM, cuadricula_ARM_C, solucion);
+//	
 //}
 	

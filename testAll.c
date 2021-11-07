@@ -1,7 +1,7 @@
 #include <LPC210x.H>  
-#include "timer0.h"
+#include "temporizador.h"
 
 int main (void) {
-	timer0_init();
+	temporizador_iniciar();
 	while(1){}
 }

@@ -14,7 +14,8 @@ int32_t GPIO_leer (int bit_inicial, int num_bits) {
 	if((num_bits+bit_inicial) <= 32){
 		int32_t mascara = 0x0;
 		int32_t dato = IOSET; //Recoge los datos de IOSET
-		for(int i=0; i<num_bits; i++){ //Bucle que genera la mascara para seleccionar el dato
+		int i;
+		for(i = 0; i<num_bits; i++){ //Bucle que genera la mascara para seleccionar el dato
 			mascara = mascara << 1;
 			mascara = mascara | 0x1;
 		}
@@ -30,7 +31,8 @@ de leer escribe en los bits indicados el valor*/
 void GPIO_escribir (int bit_inicial, int num_bits, int32_t valor) {
 	if((num_bits+bit_inicial) <= 32){
 		int32_t mascara = 0x0;
-		for(int i=0; i<num_bits; i++){ //Bucle que genera la mascara para seleccionar el valor
+		int i;
+		for(i=0; i<num_bits; i++){ //Bucle que genera la mascara para seleccionar el valor
 			mascara = mascara << 1;
 			mascara = mascara | 0x1;
 		}
@@ -45,7 +47,8 @@ como pines de entrada*/
 void GPIO_marcar_entrada (int bit_inicial, int num_bits) {
 		if((num_bits+bit_inicial) <= 32){
 		int32_t mascara = 0x0;
-		for(int i=0; i<num_bits; i++){ //Bucle que genera la mascara
+		int i;
+		for(i=0; i<num_bits; i++){ //Bucle que genera la mascara
 			mascara = mascara << 1;
 			mascara = mascara | 0x1;
 		}
@@ -60,7 +63,8 @@ como pines de salida*/
 void GPIO_marcar_salida (int bit_inicial, int num_bits)  {
 	if((num_bits+bit_inicial) <= 32){
 		int32_t mascara = 0x0;
-		for(int i=0; i<num_bits; i++){ //Bucle que genera la mascara
+		int i;
+		for(i = 0; i<num_bits; i++){ //Bucle que genera la mascara
 			mascara = mascara << 1;
 			mascara = mascara | 0x1;
 		}

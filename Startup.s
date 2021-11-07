@@ -1,10 +1,10 @@
 ;/*****************************************************************************/
-;/* STARTUP.S: Startup file for Philips LPC2000                               */
+;/* STARTUP.S: Startup file for Blinky Example                                */
 ;/*****************************************************************************/
 ;/* <<< Use Configuration Wizard in Context Menu >>>                          */ 
 ;/*****************************************************************************/
 ;/* This file is part of the uVision/ARM development tools.                   */
-;/* Copyright (c) 2005-2007 Keil Software. All rights reserved.               */
+;/* Copyright (c) 2005-2006 Keil Software. All rights reserved.               */
 ;/* This software may only be used under the terms of a valid, current,       */
 ;/* end user licence from KEIL for a compatible version of KEIL software      */
 ;/* development tools. Nothing else gives you the right to use this software. */
@@ -20,17 +20,10 @@
 ; *  which overwrites the settings of the CPU configuration pins. The 
 ; *  startup and interrupt vectors are remapped from:
 ; *     0x00000000  default setting (not remapped)
-; *     0x80000000  when EXTMEM_MODE is used
 ; *     0x40000000  when RAM_MODE is used
 ; *
-; *  EXTMEM_MODE: when set the device is configured for code execution
-; *  from external memory starting at address 0x80000000.
-; *
 ; *  RAM_MODE: when set the device is configured for code execution
-; *  from on-chip RAM starting at address 0x40000000.
-; *
-; *  EXTERNAL_MODE: when set the PIN2SEL values are written that enable
-; *  the external BUS at startup.
+; *  from on-chip RAM starting at address 0x40000000. 
 ; */
 
 
@@ -58,21 +51,19 @@ F_Bit           EQU     0x40            ; when F bit is set, FIQ is disabled
 ;// </h>
 
 UND_Stack_Size  EQU     0x00000000
-SVC_Stack_Size  EQU     0x00000008
+SVC_Stack_Size  EQU     0x00000400
 ABT_Stack_Size  EQU     0x00000000
 FIQ_Stack_Size  EQU     0x00000000
 IRQ_Stack_Size  EQU     0x00000080
 USR_Stack_Size  EQU     0x00000400
 
-ISR_Stack_Size  EQU     (UND_Stack_Size + SVC_Stack_Size + ABT_Stack_Size + \
-                         FIQ_Stack_Size + IRQ_Stack_Size)
+Stack_Size      EQU     (UND_Stack_Size + SVC_Stack_Size + ABT_Stack_Size + \
+                         FIQ_Stack_Size + IRQ_Stack_Size + USR_Stack_Size)
 
                 AREA    STACK, NOINIT, READWRITE, ALIGN=3
+Stack_Mem       SPACE   Stack_Size
 
-Stack_Mem       SPACE   USR_Stack_Size
-__initial_sp    SPACE   ISR_Stack_Size
-
-Stack_Top
+Stack_Top       EQU     Stack_Mem + Stack_Size
 
 
 ;// <h> Heap Configuration
@@ -82,9 +73,7 @@ Stack_Top
 Heap_Size       EQU     0x00000000
 
                 AREA    HEAP, NOINIT, READWRITE, ALIGN=3
-__heap_base
 Heap_Mem        SPACE   Heap_Size
-__heap_limit
 
 
 ; VPBDIV definitions
@@ -150,80 +139,6 @@ MAMCR_Val       EQU     0x00000002
 MAMTIM_Val      EQU     0x00000004
 
 
-; External Memory Controller (EMC) definitions
-EMC_BASE        EQU     0xFFE00000      ; EMC Base Address
-BCFG0_OFS       EQU     0x00            ; BCFG0 Offset
-BCFG1_OFS       EQU     0x04            ; BCFG1 Offset
-BCFG2_OFS       EQU     0x08            ; BCFG2 Offset
-BCFG3_OFS       EQU     0x0C            ; BCFG3 Offset
-
-;// <e> External Memory Controller (EMC)
-EMC_SETUP       EQU     0
-
-;//   <e> Bank Configuration 0 (BCFG0)
-;//     <o1.0..3>   IDCY: Idle Cycles <0-15>
-;//     <o1.5..9>   WST1: Wait States 1 <0-31>
-;//     <o1.11..15> WST2: Wait States 2 <0-31>
-;//     <o1.10>     RBLE: Read Byte Lane Enable
-;//     <o1.26>     WP: Write Protect
-;//     <o1.27>     BM: Burst ROM
-;//     <o1.28..29> MW: Memory Width  <0=>  8-bit  <1=> 16-bit
-;//                                   <2=> 32-bit  <3=> Reserved
-;//   </e>
-BCFG0_SETUP EQU         0
-BCFG0_Val   EQU         0x0000FBEF
-
-;//   <e> Bank Configuration 1 (BCFG1)
-;//     <o1.0..3>   IDCY: Idle Cycles <0-15>
-;//     <o1.5..9>   WST1: Wait States 1 <0-31>
-;//     <o1.11..15> WST2: Wait States 2 <0-31>
-;//     <o1.10>     RBLE: Read Byte Lane Enable
-;//     <o1.26>     WP: Write Protect
-;//     <o1.27>     BM: Burst ROM
-;//     <o1.28..29> MW: Memory Width  <0=>  8-bit  <1=> 16-bit
-;//                                   <2=> 32-bit  <3=> Reserved
-;//   </e>
-BCFG1_SETUP EQU         0
-BCFG1_Val   EQU         0x0000FBEF
-
-;//   <e> Bank Configuration 2 (BCFG2)
-;//     <o1.0..3>   IDCY: Idle Cycles <0-15>
-;//     <o1.5..9>   WST1: Wait States 1 <0-31>
-;//     <o1.11..15> WST2: Wait States 2 <0-31>
-;//     <o1.10>     RBLE: Read Byte Lane Enable
-;//     <o1.26>     WP: Write Protect
-;//     <o1.27>     BM: Burst ROM
-;//     <o1.28..29> MW: Memory Width  <0=>  8-bit  <1=> 16-bit
-;//                                   <2=> 32-bit  <3=> Reserved
-;//   </e>
-BCFG2_SETUP EQU         0
-BCFG2_Val   EQU         0x0000FBEF
-
-;//   <e> Bank Configuration 3 (BCFG3)
-;//     <o1.0..3>   IDCY: Idle Cycles <0-15>
-;//     <o1.5..9>   WST1: Wait States 1 <0-31>
-;//     <o1.11..15> WST2: Wait States 2 <0-31>
-;//     <o1.10>     RBLE: Read Byte Lane Enable
-;//     <o1.26>     WP: Write Protect
-;//     <o1.27>     BM: Burst ROM
-;//     <o1.28..29> MW: Memory Width  <0=>  8-bit  <1=> 16-bit
-;//                                   <2=> 32-bit  <3=> Reserved
-;//   </e>
-BCFG3_SETUP EQU         0
-BCFG3_Val   EQU         0x0000FBEF
-
-;// </e> End of EMC
-
-
-; External Memory Pins definitions
-PINSEL2         EQU     0xE002C014      ; PINSEL2 Address
-PINSEL2_Val     EQU     0x0E6149E4      ; CS0..3, OE, WE, BLS0..3, 
-                                        ; D0..31, A2..23, JTAG Pins
-
-
-                PRESERVE8
-                
-
 ; Area Definition and Entry Point
 ;  Startup Code must be linked first at Address at which it expects to run.
 
@@ -267,41 +182,6 @@ FIQ_Handler     B       FIQ_Handler
 
                 EXPORT  Reset_Handler
 Reset_Handler   
-
-
-; Setup External Memory Pins
-                IF      :DEF:EXTERNAL_MODE
-                LDR     R0, =PINSEL2
-                LDR     R1, =PINSEL2_Val
-                STR     R1, [R0]
-                ENDIF
-
-
-; Setup External Memory Controller
-                IF      EMC_SETUP <> 0
-                LDR     R0, =EMC_BASE
-
-                IF      BCFG0_SETUP <> 0
-                LDR     R1, =BCFG0_Val
-                STR     R1, [R0, #BCFG0_OFS]
-                ENDIF
-
-                IF      BCFG1_SETUP <> 0
-                LDR     R1, =BCFG1_Val
-                STR     R1, [R0, #BCFG1_OFS]
-                ENDIF
-
-                IF      BCFG2_SETUP <> 0
-                LDR     R1, =BCFG2_Val
-                STR     R1, [R0, #BCFG2_OFS]
-                ENDIF
-
-                IF      BCFG3_SETUP <> 0
-                LDR     R1, =BCFG3_Val
-                STR     R1, [R0, #BCFG3_OFS]
-                ENDIF
-
-                ENDIF   ; EMC_SETUP
 
 
 ; Setup VPBDIV
@@ -353,9 +233,7 @@ PLL_Loop        LDR     R3, [R0, #PLLSTAT_OFS]
 MEMMAP          EQU     0xE01FC040      ; Memory Mapping Control
                 IF      :DEF:REMAP
                 LDR     R0, =MEMMAP
-                IF      :DEF:EXTMEM_MODE
-                MOV     R1, #3
-                ELIF    :DEF:RAM_MODE
+                IF      :DEF:RAM_MODE
                 MOV     R1, #2
                 ELSE
                 MOV     R1, #1
@@ -392,23 +270,15 @@ MEMMAP          EQU     0xE01FC040      ; Memory Mapping Control
                 MOV     SP, R0
                 SUB     R0, R0, #IRQ_Stack_Size
 
+;  Enter User Mode and set its Stack Pointer
+                MSR     CPSR_c, #Mode_USR
+                MOV     SP, R0
+                SUB     SL, SP, #USR_Stack_Size
+
 ;  Enter Supervisor Mode and set its Stack Pointer
                 MSR     CPSR_c, #Mode_SVC:OR:I_Bit:OR:F_Bit
                 MOV     SP, R0
                 SUB     R0, R0, #SVC_Stack_Size
-
-;  Enter User Mode and set its Stack Pointer
-                MSR     CPSR_c, #Mode_USR
-                IF      :DEF:__MICROLIB
-
-                EXPORT __initial_sp
-
-                ELSE
-
-                MOV     SP, R0
-                SUB     SL, SP, #USR_Stack_Size
-
-                ENDIF
 
 
 ; Enter the C code
@@ -418,12 +288,6 @@ MEMMAP          EQU     0xE01FC040      ; Memory Mapping Control
                 BX      R0
 
 
-                IF      :DEF:__MICROLIB
-
-                EXPORT  __heap_base
-                EXPORT  __heap_limit
-
-                ELSE
 ; User Initial Stack & Heap
                 AREA    |.text|, CODE, READONLY
 
@@ -436,7 +300,6 @@ __user_initial_stackheap
                 LDR     R2, = (Heap_Mem +      Heap_Size)
                 LDR     R3, = Stack_Mem
                 BX      LR
-                ENDIF
 
 
                 END
