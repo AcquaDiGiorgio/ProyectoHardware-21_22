@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <inttypes.h>
+#include "eventos.h"
 
 #define MAX_INTERRUPTIONS 32  /* the maximal number of processes in the system */
 
@@ -10,13 +11,13 @@
  * holding all process relevant informations 
 */
 struct interruption{
-	uint8_t id;                    /* ID of the process */
+	event_t id;                    /* ID of the process */
 	uint32_t auxData;
 	int ready;
 };
 
 static struct interruption interruptionlist[MAX_INTERRUPTIONS];
-void cola_guardar_eventos(uint8_t idEvento, uint32_t auxData);
+void cola_guardar_eventos(event_t idEvento, uint32_t auxData);
 void leer_evento(void);
 int hay_evento(void);
 void scheduler(void);

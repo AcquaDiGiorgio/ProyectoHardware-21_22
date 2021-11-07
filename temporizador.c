@@ -52,7 +52,6 @@ unsigned int temporizador_periodo(int periodo){
 }
 
 void timer_ISR(void) __irq {
-	timer0_count++;
 	cola_guardar_eventos(TIMER_0, 0);
 }
 

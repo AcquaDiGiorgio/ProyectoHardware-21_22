@@ -30,7 +30,7 @@ void crear_alarma_periodica(uint8_t evento, int retardo){
 
 // PRE: id del evento a gestionar, la periodicidad de la alama y su retardo
 // POST: Crea los Datos auxilires de una alama
-uint32_t returnAuxData(int evento, int perioica, int retardo){
+uint32_t returnAuxData(event_t evento, int perioica, int retardo){
 	uint32_t retVal = evento;
 	retVal = ( retVal << 1 ) | perioica;
 	retVal = ( retVal << 23 ) | retardo;

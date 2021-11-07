@@ -5,7 +5,7 @@
 static volatile int aLeer = 0;
 static volatile int actual = 0;
 
-void cola_guardar_eventos(uint8_t idEvento, uint32_t auxData)
+void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 {
 	if(interruptionlist[actual].ready != 1)
 	{
@@ -16,12 +16,13 @@ void cola_guardar_eventos(uint8_t idEvento, uint32_t auxData)
 		return;
 	}
 	//ILUMINAR EL LED DE OVERFLOW
+	while(1){}
 }
 
 void leer_evento()
 { 
 	
-	uint8_t id = interruptionlist[aLeer].id;
+	event_t id = interruptionlist[aLeer].id;
 	uint32_t auxData = interruptionlist[aLeer].auxData;
 	interruptionlist[aLeer].ready = 0;
 	

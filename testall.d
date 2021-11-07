@@ -1,3 +1,9 @@
 .\testall.o: testAll.c
 .\testall.o: C:\Keil_v5\ARM\INC\Philips\LPC210x.H
 .\testall.o: temporizador.h
+.\testall.o: cola.h
+.\testall.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\testall.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
+.\testall.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\testall.o: eventos.h
+.\testall.o: gestor_alarmas.h
