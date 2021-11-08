@@ -24,8 +24,8 @@ void eint_init (void) {
 	PINSEL1 		 = PINSEL1 & 0x0FFFFFFF;				//Sets bits 0 and 1 to 0
 	PINSEL1 		 = PINSEL1 | 0xA0000000;				//Enable the EXTINT1 and EXTINT2 interrupt
 	
-	VICVectCntl2 = 0x20 | 14;
-	VICVectCntl3 = 0x20 | 15;
+	VICVectCntl2 = 0x20 | 15;
+	VICVectCntl3 = 0x20 | 16;
 	
   VICIntEnable = VICIntEnable | 0x0000C000;    // Enable EXTINT1 and EXINT2 Interrupt
 }
@@ -42,6 +42,7 @@ int button_nueva_pulsacion_2(){
 //Resetea la variable correspondiente a 0
 void button_clear_nueva_pulsacion_1(){
 	nueva_pulsacion_eint1 = 0;
+	// Activar Interrupts
 }
 
 void button_clear_nueva_pulsacion_2(){
