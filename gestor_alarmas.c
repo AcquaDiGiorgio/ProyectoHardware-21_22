@@ -8,7 +8,7 @@ void crear_alarma_unica(event_t evento, int retardo){
 	int i;
 	for (i = 0; i < TOT_ALARMAS; i++){
 		if(alarmas[i].active == OFF){
-			uint32_t auxData = returnAuxData(evento,UNICA,retardo);
+			uint32_t auxData = returnAuxData(evento,ALRM_UNICA,retardo);
 			alarmas[i].auxData = auxData;
 			alarmas[i].active = ON;
 			return;
@@ -21,7 +21,7 @@ void crear_alarma_periodica(event_t evento, int retardo){
 	int i;
 	for (i = 0; i < TOT_ALARMAS; i++){
 		if(alarmas[i].active == OFF){		
-			uint32_t auxData = returnAuxData(evento,PERIODICA,retardo);
+			uint32_t auxData = returnAuxData(evento,ALRM_PERIODICA,retardo);
 			alarmas[i].auxData = auxData;
 			alarmas[i].active = ON;
 			return;

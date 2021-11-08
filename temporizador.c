@@ -1,17 +1,13 @@
-// ...ID... ............auxData...............
-// -------- -------- - -----------------------
-// ID				Evento   P Retardo
 #include <LPC210X.H>
 #include "eventos.h"
 #include "cola.h"
 
 #define DEFAULT 0x20
 
-void timer_ISR(void) __irq;
+void timer0_ISR(void) __irq;
 void timer1_ISR(void) __irq;
 
 static volatile unsigned int timer1_count = 0;
-static volatile unsigned int timer0_count = 0;
 
 void temporizador_iniciar(void){
 	T1MR0 = 0xFFFFFFFF - 0x1;                     // Timer1 interrumpe cada 286331 ms = 4294967295 - 1 counts
@@ -22,7 +18,7 @@ void temporizador_iniciar(void){
 	T0MCR = 3;																		// Timer0 interrumpe y reinicia al llegar a T0MR0
 	T0TCR = 1;																		// Timer0 Enable
 	
-	VICVectAddr0 = (unsigned long)timer_ISR;
+	VICVectAddr0 = (unsigned long)timer0_ISR;
 	VICVectAddr1 = (unsigned long)timer1_ISR;
 	
 	VICVectCntl0 = DEFAULT | 4;
@@ -51,7 +47,7 @@ unsigned int temporizador_periodo(int periodo){
 	return 0;
 }
 
-void timer_ISR(void) __irq {
+void timer0_ISR(void) __irq {
 	cola_guardar_eventos(TIMER_0, NO_AUX_DATA);
 	T0IR = 1;                              				// Clear interrupt flag
 	VICVectAddr = 0;                       				// Acknowledge Interrupt

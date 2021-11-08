@@ -11,9 +11,10 @@
  * holding all process relevant informations 
 */
 struct interruption{
-	event_t id;                    /* ID of the process */
-	uint32_t auxData;
-	int ready;
+	int ready;						// Preparao para ser ejecutado
+	event_t id;           // ID del evento
+	uint32_t auxData;			// Datos auxiliares del Evento
+	int marcaTemporal;		// Momento en el que se ha creado la Interrupción
 };
 
 static struct interruption interruptionlist[MAX_INTERRUPTIONS];
