@@ -5,6 +5,6 @@
 
 int main (void) {
 	temporizador_iniciar();
-	crear_alarma_unica(5,500);
+	crear_alarma_unica(EXT_INT,100);
 	scheduler();
 }

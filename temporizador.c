@@ -52,9 +52,13 @@ unsigned int temporizador_periodo(int periodo){
 }
 
 void timer_ISR(void) __irq {
-	cola_guardar_eventos(TIMER_0, 0);
+	cola_guardar_eventos(TIMER_0, NO_AUX_DATA);
+	T0IR = 1;                              				// Clear interrupt flag
+	VICVectAddr = 0;                       				// Acknowledge Interrupt
 }
 
 void timer1_ISR(void) __irq{
 	timer1_count++;
+	T1IR = 1;                              				// Clear interrupt flag
+	VICVectAddr = 0;                       				// Acknowledge Interrupt
 }

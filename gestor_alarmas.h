@@ -17,17 +17,17 @@
 	static volatile struct alarma_t alarmas[TOT_ALARMAS] = {{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
 
 	//Creación de Alarmas
-	void crear_alarma_unica(uint8_t evento, int retardo);
-	void crear_alarma_periodica(uint8_t evento, int retardo);
+	void crear_alarma_unica(event_t evento, int retardo);
+	void crear_alarma_periodica(event_t evento, int retardo);
 
 	//Get información de una alarma
-	uint32_t returnAuxData(int evento, int perioica, int retardo);
+	uint32_t returnAuxData(event_t evento, int perioica, int retardo);
 	int getRetardo(uint32_t auxData);
-	int getEvento(uint32_t auxData);
+	uint8_t getEvento(uint32_t auxData);
 	int esPeriodica(uint32_t auxData);
 
 	//Gestión de alarmas y sus eventos
 	void gestionar_alarmas(void);
-	void gestionar_alarma(int idAlarma, uint32_t auxData);
+	void gestionar_alarma(int idAlarma);
 
 #endif

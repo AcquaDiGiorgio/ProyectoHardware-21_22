@@ -4,23 +4,24 @@
 #define ON 1
 #define OFF 0
 
-void crear_alarma_unica(uint8_t evento, int retardo){
+void crear_alarma_unica(event_t evento, int retardo){
 	int i;
 	for (i = 0; i < TOT_ALARMAS; i++){
 		if(alarmas[i].active == OFF){
-			uint32_t auxData = returnAuxData(evento,0,retardo);
+			uint32_t auxData = returnAuxData(evento,UNICA,retardo);
 			alarmas[i].auxData = auxData;
 			alarmas[i].active = ON;
 			return;
 		}
 	}
+	// Todas las alarmas ocupadas
 }
 
-void crear_alarma_periodica(uint8_t evento, int retardo){
+void crear_alarma_periodica(event_t evento, int retardo){
 	int i;
 	for (i = 0; i < TOT_ALARMAS; i++){
 		if(alarmas[i].active == OFF){		
-			uint32_t auxData = returnAuxData(evento,1,retardo);
+			uint32_t auxData = returnAuxData(evento,PERIODICA,retardo);
 			alarmas[i].auxData = auxData;
 			alarmas[i].active = ON;
 			return;
@@ -41,7 +42,7 @@ int getRetardo(uint32_t auxData){
 	return auxData & 0x7FFFFF;
 }
 
-int getEvento(uint32_t auxData){
+uint8_t getEvento(uint32_t auxData){
 	return (auxData >> 24) & 0xFF;
 }
 
@@ -57,8 +58,8 @@ void gestionar_alarmas(){
 	for(i = 0; i < TOT_ALARMAS; i++){
 		if(alarmas[i].active == ON){
 			alarmas[i].elapsedTime++;
-			if(alarmas[i].elapsedTime == getRetardo(alarmas[i].auxData)){
-				gestionar_alarma(i, alarmas[i].auxData);
+			if(alarmas[i].elapsedTime >= getRetardo(alarmas[i].auxData)){
+				gestionar_alarma(i);
 			}
 		}
 	}
@@ -67,13 +68,16 @@ void gestionar_alarmas(){
 // PRE: id de un Evento a gestionar y los datos de la alarma ejecutada
 // POST: gestiona el evento anclado a la alrma ejecutada y si es periódica
 // 			 la reinicia
-void gestionar_alarma(int idAlarma, uint32_t auxData){
+void gestionar_alarma(int idAlarma){
 	// GUARDAMOS EL EVENTO QUE SE TIENE QUE GESTIONAR
+	uint32_t auxData = alarmas[idAlarma].auxData;
+	
 	cola_guardar_eventos(SET_ALARMA, getEvento(auxData));
 	
 	// SI ES PERIÓDICA, LA REINICIAMOS
 	if (esPeriodica(auxData) == 1){
 		alarmas[idAlarma].elapsedTime = 0;
+	// SINO, LA DESACTIVAMOS
 	}else{
 		alarmas[idAlarma].active = 0;
 	}

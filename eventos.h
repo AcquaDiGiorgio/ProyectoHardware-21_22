@@ -11,4 +11,8 @@ typedef enum { // 1 byte size max
 	EXT_INT 		= 0x02
 }event_t;
 
+#define NO_AUX_DATA 0x0
+#define UNICA 0
+#define PERIODICA 1
+
 #endif //EVENTOS_H

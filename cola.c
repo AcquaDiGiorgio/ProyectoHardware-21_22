@@ -13,6 +13,9 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 		interruptionlist[actual].auxData = auxData;
 		interruptionlist[actual].ready = 1;
 		actual++;
+		if (actual == MAX_INTERRUPTIONS){
+			actual = 0;
+		}
 		return;
 	}
 	//ILUMINAR EL LED DE OVERFLOW
@@ -35,18 +38,20 @@ void leer_evento()
 	{
 		case SET_ALARMA:
 			// Gestionar evento de la alarma
+			while(1){}
 			break;
 		
 		case TIMER_0:
-			//gestionar_alarmas();
+			gestionar_alarmas();
 		  break;
-		/*
-		case :
+		
+		case EXT_INT:
+			// NPI	
 			break;
 		
-		case :
+		default:
 			break;
-		*/
+		
 	}
 }
 
