@@ -26,6 +26,7 @@ void actualizar_estado_energia(void){
 void PM_power_down (void)  {
   EXTWAKE = 7; // EXTINT0,EXTINT1 and EXTINT2 will awake the processor
 	PCON |= 0x02; 
+	Switch_to_PLL(); //Configura PLL
 }
 
 void PM_idle (void)  {
