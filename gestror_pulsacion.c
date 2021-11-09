@@ -51,11 +51,19 @@ void button_clear_nueva_pulsacion_2(){
 
 //Funcion que se ejecuta cuando se produce la interrupcion
 void eint1_ISR (void) __irq {
-	nueva_pulsacion_eint1 = 1;
-	VICIntEnClr = 0x00004000; //deshabilitamos eint1
+	if(nueva_pulsacion_eint1==0){
+		nueva_pulsacion_eint1 = 1;
+		EXTINT =  EXTINT | 2;
+		VICIntEnClr = 0x00004000; //deshabilitamos eint1
+		//VICVectAddr = 0;
+	}
 }
 
 void eint2_ISR (void) __irq {
-	nueva_pulsacion_eint2 = 1;
-	VICIntEnClr = 0x00008000; //deshabilitamos eint2
+	if(nueva_pulsacion_eint2==0){
+		nueva_pulsacion_eint2 = 1;
+		EXTINT =  EXTINT | 4;
+		VICIntEnClr = 0x00008000; //deshabilitamos eint2
+		//VICVectAddr = 0;
+	}
 }
