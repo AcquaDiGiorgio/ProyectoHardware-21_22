@@ -13,12 +13,18 @@
 		int elapsedTime;
 		uint32_t auxData;
 	};
+	
+	enum id_alarma{
+		GPIO_REFRESH 	= 1,
+		POW_DOWN 			= 2,
+		PULSACION 		= 3
+	};
 
 	static volatile struct alarma_t alarmas[TOT_ALARMAS] = {{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
 
 	//Creación de Alarmas
-	void crear_alarma_unica(event_t evento, int retardo);
-	void crear_alarma_periodica(event_t evento, int retardo);
+	void crear_alarma_unica(int id, event_t evento, int retardo);
+	void crear_alarma_periodica(int id, event_t evento, int retardo);
 
 	//Get información de una alarma
 	uint32_t returnAuxData(event_t evento, int perioica, int retardo);

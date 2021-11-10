@@ -497,9 +497,9 @@
               <FilePath>.\temporizador.h</FilePath>
             </File>
             <File>
-              <FileName>timer0.h</FileName>
+              <FileName>gestor_pulsacion.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\timer0.h</FilePath>
+              <FilePath>.\gestor_pulsacion.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -540,11 +540,6 @@
               <FileName>temporizador.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\temporizador.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\timer0.c</FilePath>
             </File>
             <File>
               <FileName>testAll.c</FileName>

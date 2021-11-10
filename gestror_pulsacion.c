@@ -1,5 +1,6 @@
-//#include "botones.h"
 #include <LPC210X.H>                            // LPC21XX Peripheral Registers
+#include "eventos.h"
+#include "cola.h"
 
 // variable que se activa al detectar una nueva pulsación
 static volatile int nueva_pulsacion_eint2 = 0;
@@ -11,23 +12,22 @@ void eint2_ISR(void) __irq;
 
 //Funcion para inicializar los botones
 void eint_init (void) {
-	nueva_pulsacion_eint1 = 0; 									//Indicamos que no ha habido interupcion
-	nueva_pulsacion_eint2 = 0;
 	EXTINT = EXTINT | 6;        								// clear interrupt flag    
  	
 	// configuration of the IRQ slot number 2 of the VIC for EXTINT0
 	VICVectAddr2 = (unsigned long)eint1_ISR;    // set interrupt vector in 0
 	VICVectAddr3 = (unsigned long)eint2_ISR;    // set interrupt vector in 0
   
-	// 0x20 bit 5 enables vectored IRQs. 
-	// 14 is the number of the interrupt assigned. Number 14 is the EINT0 (see table 40 of the LPC2105 user manual 
-	PINSEL1 		 = PINSEL1 & 0x0FFFFFFF;				//Sets bits 0 and 1 to 0
-	PINSEL1 		 = PINSEL1 | 0xA0000000;				//Enable the EXTINT1 and EXTINT2 interrupt
+	PINSEL0 		 = PINSEL0 & 0x0FFFFFFF;				//Sets bits 0 and 1 to 0
+	PINSEL0 		 = PINSEL0 | 0xA0000000;				//Enable the EXTINT1 and EXTINT2 interrupt
 	
-	VICVectCntl2 = 0x20 | 15;
-	VICVectCntl3 = 0x20 | 16;
+	VICVectCntl2 = VICVectCntl2 & 0xFFFFFFC0;
+	VICVectCntl2 = VICVectCntl2 | 0x20 | 15;
 	
-  VICIntEnable = VICIntEnable | 0x0000C000;    // Enable EXTINT1 and EXINT2 Interrupt
+	VICVectCntl3 = VICVectCntl3 & 0xFFFFFFC0;
+	VICVectCntl3 = VICVectCntl3 | 0x20 | 16;
+	
+  VICIntEnable = VICIntEnable | 0x00018000;    // Enable EXTINT1 and EXINT2 Interrupt
 }
 
 //Devuelve el valor de la variable para detectar una nueva pulsacion
@@ -42,28 +42,27 @@ int button_nueva_pulsacion_2(){
 //Resetea la variable correspondiente a 0
 void button_clear_nueva_pulsacion_1(){
 	nueva_pulsacion_eint1 = 0;
-	// Activar Interrupts
+	VICIntEnClr = VICIntEnClr & 0xFFFF7FFF;
 }
 
 void button_clear_nueva_pulsacion_2(){
 	nueva_pulsacion_eint2 = 0;
+	VICIntEnClr = VICIntEnClr & 0xFFFEFFFF;
 }
 
 //Funcion que se ejecuta cuando se produce la interrupcion
 void eint1_ISR (void) __irq {
-	if(nueva_pulsacion_eint1==0){
-		nueva_pulsacion_eint1 = 1;
-		EXTINT =  EXTINT | 2;
-		VICIntEnClr = 0x00004000; //deshabilitamos eint1
-		//VICVectAddr = 0;
-	}
+	nueva_pulsacion_eint1 = 1;
+	EXTINT =  EXTINT | 2;
+	VICIntEnClr = VICIntEnClr | 0x00008000; //deshabilitamos eint1
+	VICVectAddr = 0;
+	cola_guardar_eventos(EXT_INT_1,0);
 }
 
 void eint2_ISR (void) __irq {
-	if(nueva_pulsacion_eint2==0){
-		nueva_pulsacion_eint2 = 1;
-		EXTINT =  EXTINT | 4;
-		VICIntEnClr = 0x00008000; //deshabilitamos eint2
-		//VICVectAddr = 0;
-	}
+	nueva_pulsacion_eint2 = 1;
+	EXTINT =  EXTINT | 4;
+	VICIntEnClr = VICIntEnClr | 0x00010000; //deshabilitamos eint2
+	VICVectAddr = 0;
+	cola_guardar_eventos(EXT_INT_2,0);
 }

@@ -4,4 +4,9 @@
 .\cola.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
 .\cola.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\cola.o: eventos.h
+.\cola.o: temporizador.h
+.\cola.o: gestor_pulsacion.h
+.\cola.o: C:\Keil_v5\ARM\INC\Philips\LPC210X.H
 .\cola.o: gestor_alarmas.h
+.\cola.o: gpio_control.h
+.\cola.o: gestor_energia.h

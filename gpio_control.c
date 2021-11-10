@@ -6,14 +6,16 @@
 poder llamar al resto de funciones de la biblioteca */
 void GPIO_iniciar (void) {
 	IOCLR = IOCLR | 0xFFFFFFFF;
+	GPIO_marcar_salida(0,14);
+	GPIO_marcar_salida(30,1);
 }
 
 /* La función devuelve un
 entero con el valor de los bits indicados */
-int32_t GPIO_leer (int bit_inicial, int num_bits) {
+int GPIO_leer (int bit_inicial, int num_bits) {
 	if((num_bits+bit_inicial) <= 32){
 		int32_t mascara = 0x0;
-		int32_t dato = IOSET; //Recoge los datos de IOSET
+		int32_t dato    = IOPIN; //Recoge los datos de IOSET
 		int i;
 		for(i = 0; i<num_bits; i++){ //Bucle que genera la mascara para seleccionar el dato
 			mascara = mascara << 1;

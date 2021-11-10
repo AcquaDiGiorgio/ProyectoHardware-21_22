@@ -10,7 +10,6 @@
 ".\gpio_control.o"
 ".\sudoku_2021.o"
 ".\temporizador.o"
-".\timer0.o"
 ".\testall.o"
 --strict --scatter ".\keil_reversi.sct"
 --summary_stderr --info summarysizes -o .\keil_reversi.axf

@@ -142,7 +142,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDARM</Key>
-          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)(108=981,215,1138,335,0)(106=994,204,1272,558,0)(105=849,53,1087,335,0)(80=700,201,1366,687,0)(104=53,65,459,563,0)(100=781,586,1364,768,0)(113=220,244,718,767,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=-1,-1,-1,-1,0)(116=790,303,1076,593,0)</Name>
+          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)(108=981,215,1138,335,0)(106=994,204,1272,558,0)(105=849,53,1087,335,0)(80=700,201,1366,687,0)(104=53,65,369,484,0)(100=754,311,1337,493,1)(113=220,244,718,767,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=-1,-1,-1,-1,0)(116=790,303,1076,593,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -287,7 +287,7 @@
 
   <Group>
     <GroupName>Header</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -406,8 +406,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\timer0.h</PathWithFileName>
-      <FilenameWithoutPath>timer0.h</FilenameWithoutPath>
+      <PathWithFileName>.\gestor_pulsacion.h</PathWithFileName>
+      <FilenameWithoutPath>gestor_pulsacion.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -506,18 +506,6 @@
     <File>
       <GroupNumber>4</GroupNumber>
       <FileNumber>22</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\timer0.c</PathWithFileName>
-      <FilenameWithoutPath>timer0.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>23</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

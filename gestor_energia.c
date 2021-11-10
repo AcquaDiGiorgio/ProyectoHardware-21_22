@@ -2,12 +2,7 @@
 #include <LPC210X.H>                            // LPC21XX Peripheral Registers
 #include <stdint.h>
 
-static volatile int estado_energia;
-
-//Inicializa los estados para gestinar la energia
-void crear_gestor_energia(){
-	estado_energia = MODO_NORMAL;
-}
+static volatile int estado_energia = MODO_NORMAL;
 
 //Funcion para actualizar los estados
 void actualizar_estado_energia(void){   
@@ -26,7 +21,7 @@ void actualizar_estado_energia(void){
 void PM_power_down (void)  {
   EXTWAKE = 7; // EXTINT0,EXTINT1 and EXTINT2 will awake the processor
 	PCON |= 0x02; 
-	Switch_to_PLL(); //Configura PLL
+	//Switch_to_PLL(); //Configura PLL
 }
 
 void PM_idle (void)  {

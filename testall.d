@@ -7,3 +7,5 @@
 .\testall.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\testall.o: eventos.h
 .\testall.o: gestor_alarmas.h
+.\testall.o: gpio_control.h
+.\testall.o: gestor_pulsacion.h

@@ -3,30 +3,46 @@
 
 #define ON 1
 #define OFF 0
+#define ALRM_UNICA 0
+#define ALRM_PERIODICA 1
+#define DYNAMIC_ID 4
 
-void crear_alarma_unica(event_t evento, int retardo){
-	int i;
-	for (i = 0; i < TOT_ALARMAS; i++){
-		if(alarmas[i].active == OFF){
-			uint32_t auxData = returnAuxData(evento,ALRM_UNICA,retardo);
-			alarmas[i].auxData = auxData;
-			alarmas[i].active = ON;
-			return;
+void crear_alarma_unica(int id, event_t evento, int retardo){
+	if (id == 0){
+		int i;
+		for (i = DYNAMIC_ID; i < TOT_ALARMAS; i++){
+			if(alarmas[i].active == OFF){
+				uint32_t auxData = returnAuxData(evento,ALRM_UNICA,retardo);
+				alarmas[i].auxData = auxData;
+				alarmas[i].active = ON;
+				return;
+			}
 		}
+	}else{
+		uint32_t auxData = returnAuxData(evento,ALRM_UNICA,retardo);
+		alarmas[id-1].auxData = auxData;
+		alarmas[id-1].active = ON;
 	}
 	// Todas las alarmas ocupadas
 }
 
-void crear_alarma_periodica(event_t evento, int retardo){
-	int i;
-	for (i = 0; i < TOT_ALARMAS; i++){
-		if(alarmas[i].active == OFF){		
-			uint32_t auxData = returnAuxData(evento,ALRM_PERIODICA,retardo);
-			alarmas[i].auxData = auxData;
-			alarmas[i].active = ON;
-			return;
+void crear_alarma_periodica(int id, event_t evento, int retardo){
+	if (id == 0){
+		int i;
+		for (i = DYNAMIC_ID; i < TOT_ALARMAS; i++){
+			if(alarmas[i].active == OFF){
+				uint32_t auxData = returnAuxData(evento,ALRM_PERIODICA,retardo);
+				alarmas[i].auxData = auxData;
+				alarmas[i].active = ON;
+				return;
+			}
 		}
+	}else{
+		uint32_t auxData = returnAuxData(evento,ALRM_PERIODICA,retardo);
+		alarmas[id-1].auxData = auxData;
+		alarmas[id-1].active = ON;
 	}
+	// Todas las alarmas ocupadas
 }
 
 // PRE: id del evento a gestionar, la periodicidad de la alama y su retardo
@@ -79,6 +95,6 @@ void gestionar_alarma(int idAlarma){
 		alarmas[idAlarma].elapsedTime = 0;
 	// SINO, LA DESACTIVAMOS
 	}else{
-		alarmas[idAlarma].active = 0;
+		alarmas[idAlarma].active = OFF;
 	}
 }
