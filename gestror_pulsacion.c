@@ -42,12 +42,10 @@ int button_nueva_pulsacion_2(){
 //Resetea la variable correspondiente a 0
 void button_clear_nueva_pulsacion_1(){
 	nueva_pulsacion_eint1 = 0;
-	VICIntEnClr = VICIntEnClr & 0xFFFF7FFF;
 }
 
 void button_clear_nueva_pulsacion_2(){
 	nueva_pulsacion_eint2 = 0;
-	VICIntEnClr = VICIntEnClr & 0xFFFEFFFF;
 }
 
 //Funcion que se ejecuta cuando se produce la interrupcion
@@ -66,3 +64,62 @@ void eint2_ISR (void) __irq {
 	VICVectAddr = 0;
 	cola_guardar_eventos(EXT_INT_2,0);
 }
+
+/******************************************************************************************/
+uint8_t boton1_pulsado()	{
+	if( (EXTINT & 0x2) != 0 ) return 1;
+	else return 0;
+}
+
+uint8_t boton2_pulsado()	{
+	if( (EXTINT & 0x4) != 0 ) return 1;
+	else return 0;
+}
+
+void boton1_clear()	{
+	EXTINT =  EXTINT | 2;
+}
+
+void boton2_clear()	{
+	EXTINT =  EXTINT | 4;
+}
+
+void boton1_reactivate()	{
+	VICIntEnable = VICIntEnable | 0x00008000;
+}
+
+void boton2_reactivate()	{
+	VICIntEnable = VICIntEnable | 0x00010000;
+}
+/***************************************************************************************/
+typedef enum {
+	NO_PULSADO = 0,
+	PULSADO = 1
+} estado;
+
+estado procesando_eint1 = NO_PULSADO;
+uint32_t periodo_espera = 50;
+
+int gestionando_eint1()	{
+	return procesando_eint0;
+}
+
+int gestion_eint0_pulsado(event_t evento)	{
+	if(procesando_eint1 == PULSADO && evento == event_alarma)	{
+		if(boton1_pulsado() == 1)	{
+			temporizador_alarma(periodo_espera);
+			boton1_clear();
+		}
+		else	{
+			clear_nueva_pulsacion_1();
+			boton1_reactivate();
+			procesando_eint1 = NO_PULSADO;	// Cambio estado
+		}
+	}
+	else if(evento == event_eint1)	{
+		procesando_eint1 = PULSADO;		// Cambio estado
+		temporizador_alarma(periodo_espera);
+	}
+	return gestionando_eint1();
+}
+/********************************************************************************************************/
