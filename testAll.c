@@ -11,7 +11,7 @@ int main (void) {
 	eint_init();
 	
 	crear_alarma_periodica(GPIO_REFRESH,EV_GPIO,200);
-	// crear_alarma_unica(POW_DOWN,EV_POWER,15000);
+	crear_alarma_unica(POW_DOWN,EV_POWER,15000);
 	crear_alarma_periodica(PULSACION,CHECK_PULS,100);
 	scheduler();
 }

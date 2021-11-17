@@ -497,9 +497,24 @@
               <FilePath>.\temporizador.h</FilePath>
             </File>
             <File>
+              <FileName>boton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\boton.h</FilePath>
+            </File>
+            <File>
               <FileName>gestor_pulsacion.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\gestor_pulsacion.h</FilePath>
+            </File>
+            <File>
+              <FileName>Gestor_IO.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Gestor_IO.h</FilePath>
+            </File>
+            <File>
+              <FileName>sudoku_p2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\sudoku_p2.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -522,11 +537,6 @@
               <FilePath>.\gestor_energia.c</FilePath>
             </File>
             <File>
-              <FileName>gestror_pulsacion.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\gestror_pulsacion.c</FilePath>
-            </File>
-            <File>
               <FileName>gpio_control.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\gpio_control.c</FilePath>
@@ -545,6 +555,26 @@
               <FileName>testAll.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\testAll.c</FilePath>
+            </File>
+            <File>
+              <FileName>boton.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\boton.c</FilePath>
+            </File>
+            <File>
+              <FileName>gestor_pulsacion.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor_pulsacion.c</FilePath>
+            </File>
+            <File>
+              <FileName>Gestor_IO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Gestor_IO.c</FilePath>
+            </File>
+            <File>
+              <FileName>sudoku_p2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sudoku_p2.c</FilePath>
             </File>
           </Files>
         </Group>

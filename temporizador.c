@@ -10,7 +10,7 @@ void timer1_ISR(void) __irq;
 static volatile unsigned int timer1_count = 0;
 
 void temporizador_iniciar(void){
-	T1MR0 = 0xFFFFFFFF - 0x1;                     // Timer1 interrumpe cada 286331 ms = 4294967295 - 1 counts
+	T1MR0 = 0x77359400 - 0x1;                     // Timer1 interrumpe cada 0,016 us (1 ciclo) * 2.000.000.000 ciclos = 32.000.000 us
 	T1MCR = 3;                     								// Timer1 interrumpe y reinicia al llegar a T1MR0
 	T1TCR = 1;                             				// Timer1 Enable
 	
@@ -33,9 +33,9 @@ void temporizador_empezar(){
 }
 
 
-unsigned long temporizador_leer(){
-	 // Veces interrumpido * maxCount (ms) + Count actual (ms)
-	 return timer1_count * 0xFFFFFFFF + T1TC ;
+uint64_t temporizador_leer(){
+	 // Veces interrumpido * maxCount (us) + Count actual (us)
+	 return timer1_count * 32000000 + (T1TC % 63);
 }
 
 void temporizador_parar(){
@@ -48,7 +48,7 @@ unsigned int temporizador_periodo(int periodo){
 }
 
 void timer0_ISR(void) __irq {
-	cola_guardar_eventos(TIMER_0, NO_AUX_DATA);
+	cola_guardar_eventos(EV_TIMER_0, NO_AUX_DATA);
 	T0IR = 1;                              				// Clear interrupt flag
 	VICVectAddr = 0;                       				// Acknowledge Interrupt
 }

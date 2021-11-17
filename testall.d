@@ -9,3 +9,4 @@
 .\testall.o: gestor_alarmas.h
 .\testall.o: gpio_control.h
 .\testall.o: gestor_pulsacion.h
+.\testall.o: boton.h

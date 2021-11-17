@@ -1,13 +1,13 @@
-//#include "botones.h"
+#ifndef GESTION_PULSACION_H
+#define GESTION_PULSACION_H
+
+#include <stdlib.h>
+#include <inttypes.h>
 #include <LPC210X.H>                            // LPC21XX Peripheral Registers
+#include "boton.h"
+#include "eventos.h"
 
-//Funcion para inicializar los botones
-void eint_init (void);
+void gestion_eint1(event_t evento);
+void gestion_eint2(event_t evento);
 
-//Devuelve el valor de la variable para detectar una nueva pulsacion
-int button_nueva_pulsacion_1(void);
-int button_nueva_pulsacion_2(void);
-
-//Resetea la variable correspondiente a 0
-void button_clear_nueva_pulsacion_1(void);
-void button_clear_nueva_pulsacion_2(void);
+#endif //GESTION_PULSACION_H

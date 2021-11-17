@@ -22,6 +22,7 @@ void crear_alarma_unica(int id, event_t evento, int retardo){
 		uint32_t auxData = returnAuxData(evento,ALRM_UNICA,retardo);
 		alarmas[id-1].auxData = auxData;
 		alarmas[id-1].active = ON;
+		return;
 	}
 	// Todas las alarmas ocupadas
 }
@@ -41,6 +42,7 @@ void crear_alarma_periodica(int id, event_t evento, int retardo){
 		uint32_t auxData = returnAuxData(evento,ALRM_PERIODICA,retardo);
 		alarmas[id-1].auxData = auxData;
 		alarmas[id-1].active = ON;
+		return;
 	}
 	// Todas las alarmas ocupadas
 }
@@ -97,4 +99,9 @@ void gestionar_alarma(int idAlarma){
 	}else{
 		alarmas[idAlarma].active = OFF;
 	}
+}
+
+void inicializarAlarmasDefault(void){
+	crear_alarma_unica(POW_DOWN,EV_POWER,15000);
+	crear_alarma_periodica(PULSACION,EV_CHECK_PULS,100);
 }

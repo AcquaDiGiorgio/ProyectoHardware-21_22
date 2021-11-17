@@ -34,9 +34,23 @@ celda_poner_valor(CELDA *celdaptr, uint8_t val)
 
 /* *****************************************************************************
  * extrae el valor almacenado en los 16 bits de una celda */
-__inline static uint8_t
-celda_leer_valor(CELDA celda)
+__inline static uint8_t celda_leer_valor(CELDA celda)
 {
     return (celda & 0x000F);
+}
+
+__inline static void elimnar_candidatos(CELDA celda)
+{
+    celda = celda & 0x007F;
+}
+
+__inline static uint16_t celda_leer_candidatos(CELDA celda)
+{
+    return ((celda & 0xFF80 ) >> 7) & 0x01FF;
+}
+
+__inline static uint8_t celda_es_pista(CELDA celda)
+{
+		return (celda & 0x0010 ) >> 4;
 }
 #endif // CELDA_H

@@ -12,16 +12,18 @@ F (.\gpio_control.h)(0x618BA6C4)()
 F (.\sudoku_2021.h)(0x614B0BBC)()
 F (.\tableros.h)(0x614B0B86)()
 F (.\temporizador.h)(0x6182793A)()
-F (.\gestor_pulsacion.h)(0x618BB171)()
-F (.\cola.c)(0x618BBAA8)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\cola.o --omf_browse .\cola.crf --depend .\cola.d)
+F (.\boton.h)(0x6194C6BD)()
+F (.\gestor_pulsacion.h)(0x6194D678)()
+F (.\cola.c)(0x6194D7F8)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\cola.o --omf_browse .\cola.crf --depend .\cola.d)
 I (cola.h)(0x6189149F)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F2F9C)
 I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
 I (eventos.h)(0x618B911D)
 I (temporizador.h)(0x6182793A)
-I (gestor_pulsacion.h)(0x618BB171)
+I (gestor_pulsacion.h)(0x6194D678)
 I (C:\Keil_v5\ARM\INC\Philips\LPC210X.H)(0x559D2F68)
+I (boton.h)(0x6194C6BD)
 I (gestor_alarmas.h)(0x618B8F03)
 I (gpio_control.h)(0x618BA6C4)
 I (gestor_energia.h)(0x618B8C75)
@@ -36,20 +38,13 @@ F (.\gestor_energia.c)(0x618BB13D)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_
 I (gestor_energia.h)(0x618B8C75)
 I (C:\Keil_v5\ARM\INC\Philips\LPC210X.H)(0x559D2F68)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
-F (.\gestror_pulsacion.c)(0x618BB619)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\gestror_pulsacion.o --omf_browse .\gestror_pulsacion.crf --depend .\gestror_pulsacion.d)
-I (C:\Keil_v5\ARM\INC\Philips\LPC210X.H)(0x559D2F68)
-I (eventos.h)(0x618B911D)
-I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
-I (cola.h)(0x6189149F)
-I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F2F9C)
 F (.\gpio_control.c)(0x618BB93E)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\gpio_control.o --omf_browse .\gpio_control.crf --depend .\gpio_control.d)
 I (gpio_control.h)(0x618BA6C4)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F2F9C)
 I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
 I (C:\Keil_v5\ARM\INC\Philips\LPC210X.H)(0x559D2F68)
-F (.\sudoku_2021.c)(0x6189055D)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\sudoku_2021.o --omf_browse .\sudoku_2021.crf --depend .\sudoku_2021.d)
+F (.\sudoku_2021.c)(0x6194D86D)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\sudoku_2021.o --omf_browse .\sudoku_2021.crf --depend .\sudoku_2021.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x599F2F9C)
 I (sudoku_2021.h)(0x614B0BBC)
 I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
@@ -62,7 +57,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
 I (cola.h)(0x6189149F)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F2F9C)
-F (.\testAll.c)(0x618BB273)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\testall.o --omf_browse .\testall.crf --depend .\testall.d)
+F (.\testAll.c)(0x6194D6D5)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\testall.o --omf_browse .\testall.crf --depend .\testall.d)
 I (C:\Keil_v5\ARM\INC\Philips\LPC210x.H)(0x559D2F68)
 I (temporizador.h)(0x6182793A)
 I (cola.h)(0x6189149F)
@@ -72,4 +67,22 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
 I (eventos.h)(0x618B911D)
 I (gestor_alarmas.h)(0x618B8F03)
 I (gpio_control.h)(0x618BA6C4)
-I (gestor_pulsacion.h)(0x618BB171)
+I (gestor_pulsacion.h)(0x6194D678)
+I (boton.h)(0x6194C6BD)
+F (.\boton.c)(0x6194D691)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\boton.o --omf_browse .\boton.crf --depend .\boton.d)
+I (C:\Keil_v5\ARM\INC\Philips\LPC210X.H)(0x559D2F68)
+I (boton.h)(0x6194C6BD)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F2F9C)
+I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
+I (eventos.h)(0x618B911D)
+I (cola.h)(0x6189149F)
+I (gestor_pulsacion.h)(0x6194D678)
+F (.\gestor_pulsacion.c)(0x6194D66A)(-c --cpu ARM7TDMI -D__EVAL -g -O3-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\gestor_pulsacion.o --omf_browse .\gestor_pulsacion.crf --depend .\gestor_pulsacion.d)
+I (boton.h)(0x6194C6BD)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F2F9C)
+I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
+I (C:\Keil_v5\ARM\INC\Philips\LPC210X.H)(0x559D2F68)
+I (eventos.h)(0x618B911D)
+I (gestor_pulsacion.h)(0x6194D678)

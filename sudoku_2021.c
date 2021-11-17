@@ -122,6 +122,17 @@ cuadricula_candidatos_verificar(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS],
     return correcto;
 }
 
+int introducirValorCelda(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS],
+	int fila, int columna, int valor){
+		cuadricula[fila][columna] = valor;
+	}
+	
+
+int eliminarValorCelda(CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS],
+	int fila, int columna, int valor){
+		cuadricula[fila][columna] = 0;
+	}	
+	
 /* ************************************************************************
  * programa principal del juego que recibe el tablero
  */

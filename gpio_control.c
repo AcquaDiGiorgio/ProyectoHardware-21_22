@@ -6,8 +6,6 @@
 poder llamar al resto de funciones de la biblioteca */
 void GPIO_iniciar (void) {
 	IOCLR = IOCLR | 0xFFFFFFFF;
-	GPIO_marcar_salida(0,14);
-	GPIO_marcar_salida(30,1);
 }
 
 /* La función devuelve un

@@ -6,10 +6,11 @@
 ".\cola.o"
 ".\gestor_alarmas.o"
 ".\gestor_energia.o"
-".\gestror_pulsacion.o"
 ".\gpio_control.o"
 ".\sudoku_2021.o"
 ".\temporizador.o"
 ".\testall.o"
+".\boton.o"
+".\gestor_pulsacion.o"
 --strict --scatter ".\keil_reversi.sct"
 --summary_stderr --info summarysizes -o .\keil_reversi.axf

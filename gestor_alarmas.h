@@ -17,7 +17,8 @@
 	enum id_alarma{
 		GPIO_REFRESH 	= 1,
 		POW_DOWN 			= 2,
-		PULSACION 		= 3
+		PULSACION 		= 3,
+		LED_ERROR			= 4,
 	};
 
 	static volatile struct alarma_t alarmas[TOT_ALARMAS] = {{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
@@ -36,4 +37,5 @@
 	void gestionar_alarmas(void);
 	void gestionar_alarma(int idAlarma);
 
+	void inicializarAlarmasDefault(void);
 #endif
