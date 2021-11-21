@@ -8,6 +8,19 @@ void GPIO_iniciar (void) {
 	IOCLR = IOCLR | 0xFFFFFFFF;
 }
 
+void GPIO_clear_salida(int bit_inicial, int num_bits)
+{
+	if((num_bits+bit_inicial) <= 32){
+		int32_t mascara = 0x0;
+		int i;
+		for(i = 0; i<num_bits; i++){ //Bucle que genera la mascara para seleccionar el dato
+			mascara = mascara << 1;
+			mascara = mascara | 0x1;
+		}
+		IOCLR = IOCLR | mascara;
+	}
+}
+
 /* La función devuelve un
 entero con el valor de los bits indicados */
 int GPIO_leer (int bit_inicial, int num_bits) {
@@ -45,26 +58,29 @@ void GPIO_escribir (int bit_inicial, int num_bits, int32_t valor) {
 /* Los bits indicados se utilizarán
 como pines de entrada*/
 void GPIO_marcar_entrada (int bit_inicial, int num_bits) {
-		if((num_bits+bit_inicial) <= 32){
+	if((num_bits+bit_inicial) <= 32)
+	{
 		int32_t mascara = 0x0;
 		int i;
-		for(i=0; i<num_bits; i++){ //Bucle que genera la mascara
+		for(i=0; i<num_bits; i++) //Bucle que genera la mascara
+		{
 			mascara = mascara << 1;
 			mascara = mascara | 0x1;
 		}
 		mascara = mascara << bit_inicial; //Desplazamos la mascara hasta su posicion
-		mascara =  ~ mascara;
-		IODIR = IODIR & mascara; //Activamos los pines para salida
+		IODIR = IODIR & (~mascara); //Activamos los pines para estrada
 	}
 }
 
 /* Los bits indicados se utilizarán
 como pines de salida*/
 void GPIO_marcar_salida (int bit_inicial, int num_bits)  {
-	if((num_bits+bit_inicial) <= 32){
+	if((num_bits+bit_inicial) <= 32)
+	{
 		int32_t mascara = 0x0;
 		int i;
-		for(i = 0; i<num_bits; i++){ //Bucle que genera la mascara
+		for(i = 0; i<num_bits; i++) //Bucle que genera la mascara
+		{
 			mascara = mascara << 1;
 			mascara = mascara | 0x1;
 		}

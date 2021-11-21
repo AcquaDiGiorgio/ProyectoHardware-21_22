@@ -24,8 +24,7 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 		}
 		return;
 	}
-	//ILUMINAR EL LED DE OVERFLOW
-	while(1){}
+	overflow();
 }
 
 void leer_evento()
@@ -39,13 +38,11 @@ void leer_evento()
 		aLeer = 0;
 	}
 	
-	
-	
 	switch (id)
 	{
 		case SET_ALARMA:
 			// Gestionar evento de la alarma
-			switch(auxData){
+			switch(auxData){ // dependiendo de sus datos auxiliares
 				case EV_GPIO:
 					refrescarSalidas();
 					break;
@@ -97,7 +94,7 @@ void scheduler()
 		if(hay_evento() == 1){
 			leer_evento();
 		}else{
-			//actualizar_estado_energia();
+			PM_idle();
 		}		
 	}
 }

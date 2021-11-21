@@ -27,9 +27,13 @@ typedef uint16_t CELDA;
 static CELDA cuadricula[NUM_FILAS][NUM_COLUMNAS];
 
 void candidatos_propagar(uint8_t fila, uint8_t columna);
+int candidatos_actualizar(void);
 void introducirValorCelda(uint8_t fila, uint8_t columna, int valor);
 void eliminarValorCelda(uint8_t fila, uint8_t columna);
 uint8_t leer_celda(uint8_t fila, uint8_t columna);
 uint16_t leer_candidatos(uint8_t fila, uint8_t columna);
 uint8_t es_pista(uint8_t fila, uint8_t columna);
+int comprobar_una_celda(uint8_t fila, uint8_t columna);
+void sudokuReiniciar(void);
+
 #endif /* SUDOKU_P2_H */

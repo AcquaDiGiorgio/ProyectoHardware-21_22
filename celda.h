@@ -39,7 +39,7 @@ __inline static uint8_t celda_leer_valor(CELDA celda)
     return (celda & 0x000F);
 }
 
-__inline static void elimnar_candidatos(CELDA celda)
+__inline static void eliminar_candidatos(CELDA celda)
 {
     celda = celda & 0x007F;
 }
@@ -52,5 +52,10 @@ __inline static uint16_t celda_leer_candidatos(CELDA celda)
 __inline static uint8_t celda_es_pista(CELDA celda)
 {
 		return (celda & 0x0010 ) >> 4;
+}
+
+__inline static void marcar_error(CELDA *celda_ptr)
+{
+		*celda_ptr = *celda_ptr	| 0x20;
 }
 #endif // CELDA_H

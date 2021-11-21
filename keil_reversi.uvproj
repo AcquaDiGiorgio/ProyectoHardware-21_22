@@ -429,26 +429,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Assembly</GroupName>
-          <Files>
-            <File>
-              <FileName>candidatos_actualizar_arm.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\candidatos_actualizar_arm.s</FilePath>
-            </File>
-            <File>
-              <FileName>candidatos_actualizar_arm_c.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\candidatos_actualizar_arm_c.s</FilePath>
-            </File>
-            <File>
-              <FileName>candidatos_propagar_arm.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\candidatos_propagar_arm.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Header</GroupName>
           <Files>
             <File>

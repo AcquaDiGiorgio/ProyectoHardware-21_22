@@ -9,5 +9,5 @@
 .\cola.o: C:\Keil_v5\ARM\INC\Philips\LPC210X.H
 .\cola.o: boton.h
 .\cola.o: gestor_alarmas.h
-.\cola.o: gpio_control.h
+.\cola.o: gestor_IO.h
 .\cola.o: gestor_energia.h

@@ -1,8 +1,5 @@
 --cpu ARM7TDMI
 ".\startup.o"
-".\candidatos_actualizar_arm.o"
-".\candidatos_actualizar_arm_c.o"
-".\candidatos_propagar_arm.o"
 ".\cola.o"
 ".\gestor_alarmas.o"
 ".\gestor_energia.o"
@@ -12,5 +9,7 @@
 ".\testall.o"
 ".\boton.o"
 ".\gestor_pulsacion.o"
+".\gestor_io.o"
+".\sudoku_p2.o"
 --strict --scatter ".\keil_reversi.sct"
 --summary_stderr --info summarysizes -o .\keil_reversi.axf
