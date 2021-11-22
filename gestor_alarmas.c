@@ -13,6 +13,7 @@ void crear_alarma_unica(int id, event_t evento, int retardo){
 		for (i = DYNAMIC_ID; i < TOT_ALARMAS; i++){
 			if(alarmas[i].active == OFF){
 				uint32_t auxData = returnAuxData(evento,ALRM_UNICA,retardo);
+				alarmas[i].elapsedTime = 0;
 				alarmas[i].auxData = auxData;
 				alarmas[i].active = ON;
 				return;
@@ -21,6 +22,7 @@ void crear_alarma_unica(int id, event_t evento, int retardo){
 	}else{
 		uint32_t auxData = returnAuxData(evento,ALRM_UNICA,retardo);
 		alarmas[id-1].auxData = auxData;
+		alarmas[id-1].elapsedTime = 0;
 		alarmas[id-1].active = ON;
 		return;
 	}

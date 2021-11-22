@@ -142,7 +142,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDARM</Key>
-          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)(108=981,215,1138,335,0)(106=994,204,1272,558,0)(105=849,53,1087,335,0)(80=700,201,1366,687,0)(104=53,65,369,484,0)(100=1095,254,1678,436,1)(113=220,244,718,767,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=-1,-1,-1,-1,0)(116=790,303,1076,593,0)</Name>
+          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=1007,137,1338,465,1)(108=1006,142,1163,262,0)(106=994,204,1214,508,0)(105=849,53,1087,335,0)(80=700,201,1366,687,0)(104=53,65,369,484,0)(100=311,158,894,340,1)(113=220,244,718,767,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=218,233,735,620,0)(116=790,303,1076,593,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -155,30 +155,14 @@
           <Number>0</Number>
           <Type>0</Type>
           <LineNumber>236</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>4648</Address>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>4736</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\sudoku_p2.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>253</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
           <Filename>.\sudoku_p2.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>

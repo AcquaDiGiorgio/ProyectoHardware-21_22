@@ -14,7 +14,7 @@ void temporizador_iniciar(void){
 	T1MCR = 3;                     								// Timer1 interrumpe y reinicia al llegar a T1MR0
 	T1TCR = 1;                             				// Timer1 Enable
 	
-	T0MR0 = 150000 - 1;														// Timer0 interrumpe cada 1 ms = 15000 - 1 counts
+	T0MR0 = 15000 - 1;														// Timer0 interrumpe cada 1 ms = 15000 - 1 counts
 	T0MCR = 3;																		// Timer0 interrumpe y reinicia al llegar a T0MR0
 	T0TCR = 1;																		// Timer0 Enable
 	

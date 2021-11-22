@@ -52,7 +52,7 @@ void refrescarSalidas(void){
 	estadoActual = GPIO_leer(16,14);
 	if (estadoActual != estadoAnterior){
 		estadoAnterior = estadoActual;
-		//crear_alarma_unica(POW_DOWN,EV_POWER,15000);
+		crear_alarma_unica(POW_DOWN,EV_POWER,15000);
 	}
 }
 
@@ -105,7 +105,7 @@ void eliminarValor(void){
 
 void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor){
 	if(fila == columna == valor == 0){
-		// PowerDown o Idle
+		PM_power_down(); // PowerDown o Idle
 		sudokuReiniciar();
 	}
 }
