@@ -1,9 +1,10 @@
 .\boton.o: boton.c
 .\boton.o: C:\Keil_v5\ARM\INC\Philips\LPC210X.H
 .\boton.o: boton.h
-.\boton.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\boton.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
 .\boton.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\boton.o: constantes_comunes.h
 .\boton.o: eventos.h
 .\boton.o: cola.h
+.\boton.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\boton.o: gestor_pulsacion.h

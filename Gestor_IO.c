@@ -5,6 +5,7 @@
 #include "sudoku_p2.h"
 #include "temporizador.h"
 #include "gestor_energia.h"
+#include "constantes_comunes.h"
 
 uint32_t estadoAnterior = 0x0;
 
@@ -14,7 +15,7 @@ void initIO(void){
 	GPIO_iniciar();
 	
 	// Creamos la alarma que refresca la GPIO
-	crear_alarma_periodica(GPIO_REFRESH,EV_GPIO,200);
+	crear_alarma_periodica(GPIO_REFRESH,EV_GPIO_REF,200);
 	
 	// Marcamos Salidas
 	GPIO_marcar_salida(0,14);
@@ -73,7 +74,9 @@ void escribirValor(void)
 	checkFinPartida(fila+1,columna+1,valor);
 	
 	// Si es pista no hacemos nada
-	if (!es_pista(fila,columna)){
+	if (es_pista(fila,columna) == FALSE && 
+		estado_energia_actual() == DESPIERTO)
+	{
 		// Si no es pista lo introducimos
 		introducirValorCelda(fila,columna,valor);
 		candidatos_actualizar();
@@ -84,6 +87,10 @@ void escribirValor(void)
 			// Creamos una alarma que apague el led
 			crear_alarma_unica(LED_ERROR,EV_LED_ERR,1000);
 		}			
+	}
+	else if (estado_energia_actual() == DORMIDO)
+	{
+		actualizar_estado_energia(NULL_EVENT);
 	}
 	
 	fin = temporizador_leer() - ini; // fin cuenta del tiempo de escritura
@@ -101,9 +108,15 @@ void eliminarValor(void){
 	 
 	checkFinPartida(fila+1,columna+1,valor);
 	
-	if (!es_pista(fila,columna)){
+	if (es_pista(fila,columna) == FALSE && 
+		estado_energia_actual() == DESPIERTO)
+	{
 		eliminarValorCelda(fila,columna);
 		candidatos_actualizar();
+	}
+	else if (estado_energia_actual() == DORMIDO)
+	{
+		actualizar_estado_energia(NULL_EVENT);
 	}
 	
 	fin = temporizador_leer() - ini; // fin cuenta del tiempo de eliminación
@@ -111,7 +124,7 @@ void eliminarValor(void){
 
 void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor){
 	if(fila == columna == valor == 0){
-		actualizar_estado_energia(); // PowerDown o Idle
+		PM_power_down(); // PowerDown o Idle
 		sudokuReiniciar();
 	}
 }
@@ -124,5 +137,5 @@ void overflow(void)
 {
 	GPIO_escribir(30,1,1);
 	while(1)	
-		actualizar_estado_energia(); // PowerDown o Idle
+		PM_power_down(); // PowerDown o Idle
 }

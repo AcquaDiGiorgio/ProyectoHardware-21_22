@@ -6,6 +6,7 @@
 #include "temporizador.h"
 #include "boton.h"
 #include "gestor_IO.h"
+#include "constantes_comunes.h"
 
 // Cuadrícula a utilizar
 // Para cambiarla, modificar cuadricula_C_C por el tablero deseado
@@ -232,33 +233,27 @@ int celda_correcta(uint8_t fila, uint8_t columna)
    return TRUE;
 }
 
-__inline void 
-introducirValorCelda(uint8_t fila, uint8_t columna, int valor)
+void introducirValorCelda(uint8_t fila, uint8_t columna, int valor)
 {
 		cuadricula[fila][columna] = valor;
 }
 	
 
-__inline void 
-eliminarValorCelda(uint8_t fila, uint8_t columna)
+void eliminarValorCelda(uint8_t fila, uint8_t columna)
 {
 		cuadricula[fila][columna] = 0;
 }	
-
-__inline uint8_t 
-leer_celda(uint8_t fila, uint8_t columna)
+uint8_t leer_celda(uint8_t fila, uint8_t columna)
 {
 	return celda_leer_valor(cuadricula[fila][columna]);
 }
 
-__inline uint16_t 
-leer_candidatos(uint8_t fila, uint8_t columna)
+uint16_t leer_candidatos(uint8_t fila, uint8_t columna)
 {
 	return celda_leer_candidatos(cuadricula[fila][columna]);
 }
 
-__inline uint8_t 
-es_pista(uint8_t fila, uint8_t columna)
+uint8_t es_pista(uint8_t fila, uint8_t columna)
 {
 	return celda_es_pista(cuadricula[fila][columna]);
 }

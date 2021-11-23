@@ -496,6 +496,11 @@
               <FileType>5</FileType>
               <FilePath>.\sudoku_p2.h</FilePath>
             </File>
+            <File>
+              <FileName>constantes_comunes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\constantes_comunes.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

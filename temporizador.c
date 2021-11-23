@@ -48,7 +48,7 @@ unsigned int temporizador_periodo(int periodo){
 }
 
 void timer0_ISR(void) __irq {
-	cola_guardar_eventos(EV_TIMER_0, NO_AUX_DATA);	// Metemos en la cola el evento sin AuxData
+	cola_guardar_eventos(SET_TIMER_0, NO_AUX_DATA);	// Metemos en la cola el evento sin AuxData
 	T0IR = 1;                              					// Clear interrupt flag
 	VICVectAddr = 0;                       					// Acknowledge Interrupt
 }

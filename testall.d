@@ -10,3 +10,4 @@
 .\testall.o: gpio_control.h
 .\testall.o: gestor_pulsacion.h
 .\testall.o: boton.h
+.\testall.o: constantes_comunes.h

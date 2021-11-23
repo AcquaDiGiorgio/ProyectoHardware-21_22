@@ -1,31 +1,32 @@
 #include "gestor_energia.h"
+#include "constantes_comunes.h"
 #include <LPC210X.H>                            // LPC21XX Peripheral Registers
 #include <stdint.h>
 
-static volatile int estado_energia = DESPIERTA;
+static volatile int estado_energia = DESPIERTO;
 
 //Devuelve el estado de energia actual del sistema
 int estado_energia_actual(void){
 	return estado_energia;
 }
 
-void actualizar_estado_energia(void)
-{	
-	switch(estado_energia)
+void actualizar_estado_energia(event_t evento)
+{	 
+	int value = estado_energia;
+	switch(evento)
 	{
-		case DESPIERTA:								// Se viene de tener el procesador despierto
-			estado_energia = DORMIDA;		// Se pone a dormida
-			PM_power_down();						// Se duerme
+		case EV_POWER:
+			value = DORMIDO;		// Se pone a dormida
+			//PM_power_down();						// Se duerme
 			break;
 		
-		case DORMIDA:									// Se viene de tener el procesador dormido				
-			estado_energia = DESPIERTA;	// Se pone a despierta
-			PM_wakeup();								// Se despierta
-			break;
-		
-		default:
+		default:		
+			value = DESPIERTO;	// Se pone a despierta
+			//PM_wakeup();								// Se despierta
 			break;
 	}
+	
+	estado_energia = value;
 }
 
 int obterner_estado_enegia(void)
@@ -35,7 +36,7 @@ int obterner_estado_enegia(void)
 
 void PM_power_down (void)  
 {
-  actualizar_estado_energia();
+  actualizar_estado_energia(EV_POWER);
 	EXTWAKE = 6; 			// EXTINT1 y EXTINT2 despertarán al procesador
 	PCON |= 0x02; 		// Se pone al procesador en modo PowerDown
 	Switch_to_PLL(); 	// Se reconfigura el PLL

@@ -3,6 +3,7 @@
 #include "eventos.h"
 #include "cola.h"
 #include "gestor_pulsacion.h"
+#include "constantes_comunes.h"
 
 // variable que se activa al detectar una nueva pulsación
 static volatile int nueva_pulsacion_eint2 = 0;
@@ -15,7 +16,7 @@ void eint2_ISR(void) __irq;
 //Funcion para inicializar los botones
 void eint_init (void) {
 	EXTINT = EXTINT | 6;        								// clear interrupt flag    
- 	
+	
 	// configuration of the IRQ slot number 2 of the VIC for EXTINT0
 	VICVectAddr2 = (unsigned long)eint1_ISR;    // set interrupt vector in 0
 	VICVectAddr3 = (unsigned long)eint2_ISR;    // set interrupt vector in 0
@@ -56,8 +57,8 @@ void eint1_ISR (void) __irq {
 	EXTINT = EXTINT | 2;
 	VICIntEnClr = VICIntEnClr | 0x00008000; //deshabilitamos eint1
 	VICVectAddr = 0;
-	gestion_eint1(EV_EXT_INT_1);
-	cola_guardar_eventos(EV_EXT_INT_1,0);
+	gestion_eint1(SET_EXT_INT_1);
+	cola_guardar_eventos(SET_EXT_INT_1,0);
 }
 
 void eint2_ISR (void) __irq {
@@ -65,20 +66,20 @@ void eint2_ISR (void) __irq {
 	EXTINT = EXTINT | 4;
 	VICIntEnClr = VICIntEnClr | 0x00010000; //deshabilitamos eint2
 	VICVectAddr = 0;
-	gestion_eint2(EV_EXT_INT_2);
-	cola_guardar_eventos(EV_EXT_INT_2,0);
+	gestion_eint2(SET_EXT_INT_2);
+	cola_guardar_eventos(SET_EXT_INT_2,0);
 }
 
 /******************************************************************************************/
 //Devuelve si el boton correspondiente esta pulsado o no
-uint8_t boton1_pulsado()	{
-	if( (EXTINT & 0x2) != 0 ) return 1;
-	else return 0;
+boolean boton1_pulsado()	{
+	if( (EXTINT & 0x2) != 0 ) return TRUE;
+	else return FALSE;
 }
 
-uint8_t boton2_pulsado()	{
-	if( (EXTINT & 0x4) != 0 ) return 1;
-	else return 0;
+boolean boton2_pulsado()	{
+	if( (EXTINT & 0x4) != 0 ) return TRUE;
+	else return FALSE;
 }
 
 //Limpia la interrupcion del boton

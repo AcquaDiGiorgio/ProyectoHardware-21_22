@@ -12,4 +12,5 @@
 .\sudoku_p2.o: temporizador.h
 .\sudoku_p2.o: boton.h
 .\sudoku_p2.o: C:\Keil_v5\ARM\INC\Philips\LPC210X.H
+.\sudoku_p2.o: constantes_comunes.h
 .\sudoku_p2.o: gestor_IO.h

@@ -6,8 +6,8 @@
 .\gestor_io.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\gestor_io.o: eventos.h
 .\gestor_io.o: gestor_alarmas.h
-.\gestor_io.o: cola.h
 .\gestor_io.o: sudoku_p2.h
 .\gestor_io.o: celda.h
 .\gestor_io.o: temporizador.h
 .\gestor_io.o: gestor_energia.h
+.\gestor_io.o: constantes_comunes.h

@@ -8,6 +8,7 @@
 .\cola.o: gestor_pulsacion.h
 .\cola.o: C:\Keil_v5\ARM\INC\Philips\LPC210X.H
 .\cola.o: boton.h
+.\cola.o: constantes_comunes.h
 .\cola.o: gestor_alarmas.h
 .\cola.o: gestor_IO.h
 .\cola.o: gestor_energia.h

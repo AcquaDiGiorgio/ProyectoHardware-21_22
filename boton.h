@@ -1,9 +1,9 @@
 #ifndef BOTON_H
 #define BOTON_H
 
-#include <stdlib.h>
 #include <inttypes.h>
 #include <LPC210X.H>                            // LPC21XX Peripheral Registers
+#include "constantes_comunes.h"
 
 //Funcion para inicializar los botones
 void eint_init (void);
@@ -17,8 +17,8 @@ void button_clear_nueva_pulsacion_1(void);
 void button_clear_nueva_pulsacion_2(void);
 
 //Devuelve si el boton correspondiente esta pulsado o no
-uint8_t boton1_pulsado(void);
-uint8_t boton2_pulsado(void);
+boolean boton1_pulsado(void);
+boolean boton2_pulsado(void);
 
 //Limpia la interrupcion del boton
 void boton1_clear(void);
