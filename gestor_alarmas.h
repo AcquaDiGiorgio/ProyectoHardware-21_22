@@ -3,32 +3,28 @@
 
 	#include <inttypes.h>
 	#include "eventos.h"
+	#include "constantes_comunes.h"
 
 	#define TOT_ALARMAS 8 		// Máximo número de alarmas
-	#define ON 1 							// Alarma activa
-	#define OFF 0 						// Alarma apagada
-	#define ALRM_UNICA 0			// Alarma que solo se debe ejcutar 1 vez
-	#define ALRM_PERIODICA 1	// Alarma que se debe reiniciar tras su ejecución
-	#define DYNAMIC_ID 4			// Mínimo índice de una alarma no predifinida por el sistema
 
 	// Tipo de una alma
 	struct alarma_t{
-		int active; 			// Se recomienda usar ON/OFF
-		int elapsedTime;  // Marca cuanto tiempo ha pasado en ms
-		uint32_t auxData; // Información auxiliar de la alrma
+		boolean active; 				// Alarma activa o no
+		int elapsedTime; 			 	// Marca cuanto tiempo ha pasado en ms
+		uint32_t auxData; 			// Información auxiliar de la alrma
 	};
 	
 	// Id de alarmas predefinidas por el sistema
-	enum id_alarma{
-		GPIO_REFRESH 	= 1,	// Alarma que refrescará las salidas de la GPIO
-		POW_DOWN 			= 2,	// Alarma que pondrá el sistema a modo Power Down
-		PULSACION 		= 3,	// Alarma que comprobará si ha habido una nueva pulsación
-		LED_ERROR			= 4,	// Alarma que bajará el led de error
+	enum {
+		GPIO_REFRESH 	= 1,			// Alarma que refrescará las salidas de la GPIO
+		POW_DOWN 			= 2,			// Alarma que pondrá el sistema a modo Power Down
+		PULSACION 		= 3,			// Alarma que comprobará si ha habido una nueva pulsación
+		LED_ERROR			= 4,			// Alarma que bajará el led de error
 	};
 
 	// Vector de alarmas
 	static volatile struct alarma_t 
-		alarmas[TOT_ALARMAS] = {{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
+		alarmas[TOT_ALARMAS] = {{FALSE,0,0},{FALSE,0,0},{FALSE,0,0},{FALSE,0,0},{FALSE,0,0},{FALSE,0,0},{FALSE,0,0}};
 
 	// Creación de Alarmas
 	void crear_alarma_unica(int id, event_t evento, int retardo);

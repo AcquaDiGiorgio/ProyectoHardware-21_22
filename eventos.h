@@ -1,5 +1,6 @@
 #ifndef EVENTOS_H
 #define EVENTOS_H
+	
 	#define NO_AUX_DATA 0x00000000 // El evento a introducir no tiene AuxData
 
 	// Definición de los IDs de los Eventos Posibles

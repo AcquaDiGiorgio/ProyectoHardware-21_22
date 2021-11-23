@@ -462,11 +462,6 @@
               <FilePath>.\gpio_control.h</FilePath>
             </File>
             <File>
-              <FileName>sudoku_2021.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\sudoku_2021.h</FilePath>
-            </File>
-            <File>
               <FileName>tableros.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\tableros.h</FilePath>
@@ -527,19 +522,9 @@
               <FilePath>.\gpio_control.c</FilePath>
             </File>
             <File>
-              <FileName>sudoku_2021.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sudoku_2021.c</FilePath>
-            </File>
-            <File>
               <FileName>temporizador.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\temporizador.c</FilePath>
-            </File>
-            <File>
-              <FileName>testAll.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\testAll.c</FilePath>
             </File>
             <File>
               <FileName>boton.c</FileName>

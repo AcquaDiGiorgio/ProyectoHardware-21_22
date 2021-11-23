@@ -1,10 +1,6 @@
 #ifndef GESTION_PULSACION_H
 #define GESTION_PULSACION_H
 
-	#include <stdlib.h>
-	#include <inttypes.h>
-	#include <LPC210X.H>
-	#include "boton.h"
 	#include "eventos.h"
 
 	// Maquinas de estados para las interrupciones externes 1 y 2

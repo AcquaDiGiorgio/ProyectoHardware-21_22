@@ -1,12 +1,10 @@
-#include <stddef.h>
 #include "sudoku_p2.h"
 #include "tableros.h"
 #include "cola.h"
-#include "gestor_alarmas.h"
 #include "temporizador.h"
-#include "boton.h"
+#include "gestor_alarmas.h"
 #include "gestor_IO.h"
-#include "constantes_comunes.h"
+#include "boton.h"
 
 // Cuadrícula a utilizar
 // Para cambiarla, modificar cuadricula_C_C por el tablero deseado
@@ -81,21 +79,6 @@ int candidatos_actualizar(void)
 		}
 	}
 	return celdas_vacias;
-} 
-
-static int
-cuadricula_candidatos_verificar(CELDA solucion[NUM_FILAS][NUM_COLUMNAS])
-{
-    int correcto = 1;
-    uint8_t i;
-    uint8_t j;
-
-    for(i=0; i < NUM_FILAS && 1 == correcto; ++i) {
-       for(j=0; j < NUM_FILAS && 1 == correcto; ++j) {
-					correcto = cuadricula[i][j] == solucion[i][j];
-       }
-    }
-    return correcto;
 }
 
 /* Función que comprueba que todos los valores de todas las celdas
@@ -107,7 +90,7 @@ cuadricula_candidatos_verificar(CELDA solucion[NUM_FILAS][NUM_COLUMNAS])
  * celdas que contiene cada x [Filas|Colunmnas|Cuadrados]. En este tipo de
  * sudoku se puede simplificar el coste a O(n*(9^3-3)) = O(726n). 
  */
-int todas_las_celdas_correctas()
+boolean todas_las_celdas_correctas()
 {
     
 		uint8_t j, i, k, init_i, init_j, end_i, end_j;
@@ -180,7 +163,7 @@ int todas_las_celdas_correctas()
  * Función con poco coste computacional (constante) y usada en esta
  * práctica 2
  */
-int celda_correcta(uint8_t fila, uint8_t columna)
+boolean celda_correcta(uint8_t fila, uint8_t columna)
 {
 		uint8_t j, i, init_i, init_j, end_i, end_j;
     const uint8_t init_region[] = {0, 3, 6};
@@ -269,15 +252,24 @@ void sudokuReiniciar(void)
 		for (j = 0; j < 9; ++j){
 			// Si no es pista
 			if(es_pista(i, j) == FALSE)
-			{
-				// Le quitamos el valor
-				celda_poner_valor(&cuadricula[i][j],0);
+			{				
+				celda_poner_valor(&cuadricula[i][j],0); // Le quitamos el valor
 			}	
 		}
 	}
 	
 	// Actualizamos los candidatos
 	candidatos_actualizar();
+}
+
+boolean celdaAccesible(uint8_t fila, uint8_t columna)
+{
+	boolean retVal = FALSE;
+	
+	if(fila <= 8 && columna <= 8)
+		retVal = TRUE;
+	
+	return retVal;
 }
 
 int main (void) {

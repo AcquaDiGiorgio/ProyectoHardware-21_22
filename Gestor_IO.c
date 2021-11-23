@@ -10,7 +10,8 @@
 uint32_t estadoAnterior = 0x0;
 
 //Inicializa el gestor IO
-void initIO(void){
+void initIO(void)
+{
 	// Iniciamos la GPIO
 	GPIO_iniciar();
 	
@@ -22,10 +23,11 @@ void initIO(void){
 	GPIO_marcar_salida(30,1);
 }
 
-void refrescarSalidas(void){
+void refrescarSalidas(void)
+{
 	uint32_t estadoActual;
 	uint32_t candidatos;
-	uint32_t fila, columna, valor;
+	uint8_t fila, columna, valor;
 	
 	GPIO_clear_salida(0, 14);
 	
@@ -50,11 +52,12 @@ void refrescarSalidas(void){
 			GPIO_escribir(13,1,1);
 	}
 	
-	// Comprobamos el estado anterior de las entradas
-	estadoActual = GPIO_leer(16,14);
-	if (estadoActual != estadoAnterior){
+	// Comprobamos el estado anterior de toda la GPIO
+	estadoActual = GPIO_leer(0,32);
+	if (estadoActual != estadoAnterior)
+	{
 		estadoAnterior = estadoActual;
-		crear_alarma_unica(POW_DOWN,EV_POWER,15000);
+		crear_alarma_unica(POW_DOWN,EV_POWER,15 * SEGUNDO);
 	}
 }
 
@@ -62,6 +65,7 @@ void escribirValor(void)
 {
 	uint64_t ini, fin; 					// Variables para el contador de tiempo
 	uint8_t fila,columna,valor; // Variables leidas de la GPIO
+	boolean accesible;
 	
 	ini = temporizador_leer(); 	// Inicio cuenta del tiempo de escritura
 	
@@ -71,21 +75,24 @@ void escribirValor(void)
 	valor   = GPIO_leer(24,4);
 	
 	// Miramos si ha pedido terminar
-	checkFinPartida(fila+1,columna+1,valor);
+	//checkFinPartida(fila+1,columna+1,valor+1);
+	
+	accesible = celdaAccesible(fila, columna);
 	
 	// Si es pista no hacemos nada
-	if (es_pista(fila,columna) == FALSE && 
-		estado_energia_actual() == DESPIERTO)
+	if (accesible == TRUE && es_pista(fila,columna) == FALSE 
+				&& estado_energia_actual() == DESPIERTO)
 	{
 		// Si no es pista lo introducimos
 		introducirValorCelda(fila,columna,valor);
 		candidatos_actualizar();
+		
 		// Si la jugada es errónea, encendemos el led
 		if(celda_correcta(fila,columna) == FALSE)
 		{
 			GPIO_escribir(13,1,1);
 			// Creamos una alarma que apague el led
-			crear_alarma_unica(LED_ERROR,EV_LED_ERR,1000);
+			crear_alarma_unica(LED_ERROR,EV_LED_ERR,1 * SEGUNDO);
 		}			
 	}
 	else if (estado_energia_actual() == DORMIDO)
@@ -96,24 +103,31 @@ void escribirValor(void)
 	fin = temporizador_leer() - ini; // fin cuenta del tiempo de escritura
 }
 
-void eliminarValor(void){	
+void eliminarValor(void)
+{	
 	uint64_t ini, fin;
 	uint8_t fila,columna,valor;
+	boolean accesible;
 	
 	ini = temporizador_leer(); // inicio cuenta del tiempo de eliminación
 	
-	fila = GPIO_leer(16,4)-1;
+	fila    = GPIO_leer(16,4)-1;
 	columna = GPIO_leer(20,4)-1;
-	valor = GPIO_leer(24,4);
-	 
-	checkFinPartida(fila+1,columna+1,valor);
+	valor   = GPIO_leer(24,4);
 	
-	if (es_pista(fila,columna) == FALSE && 
-		estado_energia_actual() == DESPIERTO)
+	// Miramos si ha pedido terminar
+	//checkFinPartida(fila+1,columna+1,valor+1);
+	
+	accesible = celdaAccesible(fila, columna);
+	
+	// Si no es una pista y además el procesador viene de un estado despierto
+	if (accesible == TRUE && es_pista(fila,columna) == FALSE 
+				&& estado_energia_actual() == DESPIERTO)
 	{
 		eliminarValorCelda(fila,columna);
 		candidatos_actualizar();
 	}
+	// Si el procesador viene de estar dormido
 	else if (estado_energia_actual() == DORMIDO)
 	{
 		actualizar_estado_energia(NULL_EVENT);
@@ -122,14 +136,20 @@ void eliminarValor(void){
 	fin = temporizador_leer() - ini; // fin cuenta del tiempo de eliminación
 }
 
-void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor){
-	if(fila == columna == valor == 0){
-		PM_power_down(); // PowerDown o Idle
+// Esta función no funciona y no sabemos el porqué. 
+// Cuando le insertas un valor de fila, columna y/o fila distinto de 0, accede
+// igualmente a sudokuReiniciar() y PM_power_down()
+void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
+{
+	if(fila == 0 && columna == 0 && valor == 0)
+	{
 		sudokuReiniciar();
+		PM_power_down();		
 	}
 }
 
-void quitarLedErr(void){
+void quitarLedErr(void)
+{
 	GPIO_escribir(13,1,0);
 }
 

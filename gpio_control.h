@@ -1,7 +1,6 @@
 #ifndef GPIO_CONTROL_H
 #define GPIO_CONTROL_H
 
-	#include <stdlib.h>
 	#include <inttypes.h>
 
 	// Inicialización de la GPIO (Limpieza)
