@@ -56,26 +56,31 @@ void refrescarSalidas(void){
 	}
 }
 
-void escribirValor(void){
-	uint64_t ini, fin;
-	uint8_t fila,columna,valor;
-	int error;
+void escribirValor(void)
+{
+	uint64_t ini, fin; 					// Variables para el contador de tiempo
+	uint8_t fila,columna,valor; // Variables leidas de la GPIO
 	
-	ini = temporizador_leer(); // inicio cuenta del tiempo de escritura
+	ini = temporizador_leer(); 	// Inicio cuenta del tiempo de escritura
 	
-	fila = GPIO_leer(16,4)-1;
+	// Leemos la fila, columna y valor de la GPIO
+	fila    = GPIO_leer(16,4)-1;
 	columna = GPIO_leer(20,4)-1;
-	valor = GPIO_leer(24,4);
+	valor   = GPIO_leer(24,4);
 	
+	// Miramos si ha pedido terminar
 	checkFinPartida(fila+1,columna+1,valor);
 	
+	// Si es pista no hacemos nada
 	if (!es_pista(fila,columna)){
+		// Si no es pista lo introducimos
 		introducirValorCelda(fila,columna,valor);
 		candidatos_actualizar();
-		error = comprobar_una_celda(fila,columna);
-		if(error == 1)
+		// Si la jugada es errónea, encendemos el led
+		if(celda_correcta(fila,columna) == FALSE)
 		{
 			GPIO_escribir(13,1,1);
+			// Creamos una alarma que apague el led
 			crear_alarma_unica(LED_ERROR,EV_LED_ERR,1000);
 		}			
 	}

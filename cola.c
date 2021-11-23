@@ -1,7 +1,6 @@
 #include "cola.h"
 #include "temporizador.h"
 #include "gestor_pulsacion.h"
-#include "eventos.h"
 #include "gestor_alarmas.h"
 #include "gestor_IO.h"
 #include "gestor_energia.h"
@@ -43,7 +42,7 @@ void leer_evento()
 		case SET_ALARMA:
 			// Gestionar evento de la alarma
 			switch(auxData){ // dependiendo de sus datos auxiliares
-				case EV_GPIO:
+				case EV_GPIO_REF:
 					refrescarSalidas();
 					break;
 				
@@ -65,15 +64,15 @@ void leer_evento()
 			}
 			break;
 		
-		case EV_TIMER_0:
+		case SET_TIMER_0:
 			gestionar_alarmas();
 		  break;
 		
-		case EV_EXT_INT_1:
+		case SET_EXT_INT_1:
 			escribirValor();
 			break;
 		
-		case EV_EXT_INT_2:
+		case SET_EXT_INT_2:
 			eliminarValor();
 			break;
 		

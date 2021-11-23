@@ -2,36 +2,47 @@
 #include <LPC210X.H>                            // LPC21XX Peripheral Registers
 #include <stdint.h>
 
+static volatile int estado_energia = DESPIERTA;
 
-
-static volatile int estado_energia = MODO_NORMAL;
-
-//Funcion para actualizar los estados
-void actualizar_estado_energia(void){   
-	if (estado_energia == MODO_NORMAL){
-		estado_energia = MODO_IDLE;
-		PM_idle();
+void actualizar_estado_energia(void)
+{	
+	switch(estado_energia)
+	{
+		case DESPIERTA:								// Se viene de tener el procesador despierto
+			estado_energia = DORMIDA;		// Se pone a dormida
+			PM_power_down();						// Se duerme
+			break;
+		
+		case DORMIDA:									// Se viene de tener el procesador dormido				
+			estado_energia = DESPIERTA;	// Se pone a despierta
+			PM_wakeup();								// Se despierta
+			break;
+		
+		default:
+			break;
 	}
-	else{
-		PM_wakeup();
-		estado_energia = MODO_NORMAL;
-	}
 }
 
-// Set the processor into power down state 
-// The watchdog cannot wake up the processor from power down
-void PM_power_down (void)  {
-  EXTWAKE = 6; // EXTINT0,EXTINT1 and EXTINT2 will awake the processor
-	PCON |= 0x02; 
-	Switch_to_PLL(); //Configura PLL
+int obterner_estado_enegia(void)
+{
+	return estado_energia;
 }
 
-void PM_idle (void)  {
-	PCON |= 0x01; 
+void PM_power_down (void)  
+{
+  actualizar_estado_energia();
+	EXTWAKE = 6; 			// EXTINT1 y EXTINT2 despertarán al procesador
+	PCON |= 0x02; 		// Se pone al procesador en modo PowerDown
+	Switch_to_PLL(); 	// Se reconfigura el PLL
 }
 
-//Despierta al procesador
-void PM_wakeup (void) {
+void PM_idle (void)  
+{
+	PCON |= 0x01; 		// Se pone al procesador en modo Idle
+}
+
+void PM_wakeup (void)
+{
 	EXTWAKE = EXTWAKE & 0x0F8;
 	PCON = PCON & 0xFC; //Despierta al procesador
 }

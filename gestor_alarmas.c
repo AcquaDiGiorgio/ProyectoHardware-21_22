@@ -1,11 +1,8 @@
 #include <inttypes.h>
 #include "gestor_alarmas.h"
+#include "cola.h"
 
-#define ON 1
-#define OFF 0
-#define ALRM_UNICA 0
-#define ALRM_PERIODICA 1
-#define DYNAMIC_ID 4
+
 
 void crear_alarma_unica(int id, event_t evento, int retardo){
 	if (id == 0){
@@ -70,7 +67,7 @@ int esPeriodica(uint32_t auxData){
 	return (auxData >> 23) & 0x1; // No creo que esté bien
 }
 
-// PRE: True
+// PRE:  True
 // POST: suma 1 en el contador de la alarmas activas y las gestiona si es
 // 			 necesario
 void gestionar_alarmas(){
@@ -104,6 +101,5 @@ void gestionar_alarma(int idAlarma){
 }
 
 void inicializarAlarmasDefault(void){
-	crear_alarma_unica(POW_DOWN,EV_POWER,15000);
 	crear_alarma_periodica(PULSACION,EV_CHECK_PULS,100);
 }
