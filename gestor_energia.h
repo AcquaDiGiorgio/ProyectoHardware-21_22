@@ -3,8 +3,7 @@
 
 enum {
 	MODO_POWER_DOWN = 0,
-	MODO_AFTER_POWER_DOWN = 1,
-	MODO_NORMAL = 2
+	MODO_NORMAL = 1
 };
 
 int estado_energia_actual(void);
