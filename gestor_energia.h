@@ -2,10 +2,13 @@
 #define GESTOR_ENERGIA_H
 
 enum {
-	MODO_IDLE = 0,
-	MODO_NORMAL = 1
+	MODO_POWER_DOWN = 0,
+	MODO_AFTER_POWER_DOWN = 1,
+	MODO_NORMAL = 2
 };
 
+int estado_energia_actual(void);
+void actualizar_estado_energia(void);
 void PM_power_down (void);
 void PM_idle (void);
 void PM_wakeup (void);

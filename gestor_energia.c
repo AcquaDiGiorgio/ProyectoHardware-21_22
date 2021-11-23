@@ -2,18 +2,21 @@
 #include <LPC210X.H>                            // LPC21XX Peripheral Registers
 #include <stdint.h>
 
-
-
 static volatile int estado_energia = MODO_NORMAL;
 
-//Funcion para actualizar los estados
+//Devuelve el estado de energia actual del sistema
+int estado_energia_actual(void){
+	return estado_energia;
+}
+
+//Funcion para actualizar los estados (MAQUINA DE ESTADOS)
 void actualizar_estado_energia(void){   
 	if (estado_energia == MODO_NORMAL){
-		estado_energia = MODO_IDLE;
-		PM_idle();
+		estado_energia = MODO_POWER_DOWN;
+		PM_power_down();
 	}
-	else{
-		PM_wakeup();
+	else { //estado_energia == MODO_POWER_DOWN
+		//PM_wakeup();
 		estado_energia = MODO_NORMAL;
 	}
 }

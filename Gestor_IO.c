@@ -8,6 +8,7 @@
 
 uint32_t estadoAnterior = 0x0;
 
+//Inicializa el gestor IO
 void initIO(void){
 	// Iniciamos la GPIO
 	GPIO_iniciar();
@@ -105,7 +106,7 @@ void eliminarValor(void){
 
 void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor){
 	if(fila == columna == valor == 0){
-		PM_power_down(); // PowerDown o Idle
+		actualizar_estado_energia(); // PowerDown o Idle
 		sudokuReiniciar();
 	}
 }
@@ -118,5 +119,5 @@ void overflow(void)
 {
 	GPIO_escribir(30,1,1);
 	while(1)	
-		PM_power_down();
+		actualizar_estado_energia(); // PowerDown o Idle
 }
