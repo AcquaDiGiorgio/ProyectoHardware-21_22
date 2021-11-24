@@ -59,8 +59,8 @@ void button_clear_nueva_pulsacion_2()
 void eint1_ISR (void) __irq
 {
 	nueva_pulsacion_eint1 = 1;
-	EXTINT = EXTINT | 2;
 	VICIntEnClr = VICIntEnClr | 0x00008000; //deshabilitamos eint1
+	EXTINT = EXTINT | 2;
 	VICVectAddr = 0;
 	gestion_eint1(SET_EXT_INT_1);
 	cola_guardar_eventos(SET_EXT_INT_1,0);
@@ -69,8 +69,8 @@ void eint1_ISR (void) __irq
 void eint2_ISR (void) __irq
 {
 	nueva_pulsacion_eint2 = 1;
-	EXTINT = EXTINT | 4;
 	VICIntEnClr = VICIntEnClr | 0x00010000; //deshabilitamos eint2
+	EXTINT = EXTINT | 4;
 	VICVectAddr = 0;
 	gestion_eint2(SET_EXT_INT_2);
 	cola_guardar_eventos(SET_EXT_INT_2,0);

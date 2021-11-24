@@ -20,6 +20,7 @@
 		POW_DOWN 			= 2,			// Alarma que pondrá el sistema a modo Power Down
 		PULSACION 		= 3,			// Alarma que comprobará si ha habido una nueva pulsación
 		LED_ERROR			= 4,			// Alarma que bajará el led de error
+		LATIDO				= 5
 	};
 
 	// Vector de alarmas

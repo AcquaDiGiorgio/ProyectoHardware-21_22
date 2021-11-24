@@ -142,7 +142,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDARM</Key>
-          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=959,27,1290,355,0)(108=885,175,1042,295,0)(106=994,204,1214,508,0)(105=849,53,1087,335,0)(80=700,201,1366,687,0)(104=53,65,369,484,0)(100=669,223,1252,405,1)(113=220,244,718,767,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=218,233,735,620,0)(116=790,303,1076,593,0)</Name>
+          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=959,27,1290,355,0)(108=885,175,1042,295,0)(106=994,204,1214,508,0)(105=1073,456,1263,700,1)(80=428,358,939,768,0)(104=53,65,369,484,0)(100=838,166,1421,348,1)(113=220,244,718,767,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=218,233,735,620,0)(116=790,303,1076,593,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -154,9 +154,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>283</LineNumber>
+          <LineNumber>281</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>6104</Address>
+          <Address>6200</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -165,39 +165,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\sudoku_p2.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>106</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>912</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\cola.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\cola.c\106</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>280</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\sudoku_p2.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\keil_reversi\sudoku_p2.c\281</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>

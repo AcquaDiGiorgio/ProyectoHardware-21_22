@@ -74,6 +74,10 @@ void leer_evento()
 					quitarLedErr();
 					break;
 				
+				case EV_LATIDO:
+					latidoLed();
+					break;
+				
 				default:
 					break;
 			}

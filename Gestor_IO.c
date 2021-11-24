@@ -9,6 +9,7 @@
 
 volatile uint32_t estadoAnterior = 0x0;
 volatile boolean cambiandoLed = FALSE;
+volatile boolean latido_on = FALSE;
 
 //Inicializa el gestor IO
 void initIO(void)
@@ -21,7 +22,7 @@ void initIO(void)
 	
 	// Marcamos Salidas
 	GPIO_marcar_salida(0,14);
-	GPIO_marcar_salida(30,1);
+	GPIO_marcar_salida(30,2);
 }
 
 void refrescarSalidas(void)
@@ -66,7 +67,7 @@ void refrescarSalidas(void)
 	}
 	
 	// Comprobamos el estado anterior de toda la GPIO
-	estadoActual = GPIO_leer(0,32);
+	estadoActual = GPIO_leer(0,31);
 	if (estadoActual != estadoAnterior)
 	{
 		estadoAnterior = estadoActual;
@@ -144,7 +145,7 @@ void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
 	if(fila == 0 && columna == 0 && valor == 0)
 	{
 		sudokuReiniciar();
-		PM_power_down();		
+		PM_power_down();
 	}
 }
 
@@ -157,6 +158,22 @@ void quitarLedErr(void)
 void reiniciarEstadoAnterior(void)
 {
 	estadoAnterior = 0;
+}
+
+void latidoLed(void)
+{
+	switch(latido_on)	
+	{
+		case TRUE:
+			GPIO_clear_salida(31,1);
+			latido_on = FALSE;
+			break;
+		
+		case FALSE:
+			GPIO_escribir(31,1,1);
+			latido_on = TRUE;
+			break;
+	}
 }
 
 void overflow(void)

@@ -26,5 +26,6 @@
 	void overflow(void);
 	
 	void reiniciarEstadoAnterior(void);
+	void latidoLed(void);
 
 #endif //GESTOR_IO_H
