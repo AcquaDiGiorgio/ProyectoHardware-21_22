@@ -15,17 +15,9 @@ void temporizador_iniciar(void)
 	T1MCR = 3;                     								// Timer1 interrumpe y reinicia al llegar a T1MR0
 	T1TCR = 1;                             				// Timer1 Enable
 	
-	T0MR0 = 15000 - 1;														// Timer0 interrumpe cada 1 ms = 15000 - 1 counts
-	T0MCR = 3;																		// Timer0 interrumpe y reinicia al llegar a T0MR0
-	T0TCR = 1;																		// Timer0 Enable
 	
-	VICVectAddr0 = (unsigned long)timer0_ISR;			// Función que se llamará cuando llegue la interrupción timer0
 	VICVectAddr1 = (unsigned long)timer1_ISR;			// Función que se llamará cuando llegue la interrupción timer0
-	
-	VICVectCntl0 = DEFAULT | 4;
 	VICVectCntl1 = DEFAULT | 5;
-	
-	VICIntEnable = VICIntEnable | 0x00000010;			// Encendemos ambos sólo timer0
 }
 
 
@@ -47,9 +39,19 @@ void temporizador_parar()
 	timer1_count = 0;
 }
 
-unsigned int temporizador_periodo(int periodo)
+void temporizador_periodo(int periodo)
 {
-	return 0;
+	int cuentas;
+	cuentas = periodo * 15000;
+	T0MR0 = cuentas - 1;													// Timer0 interrumpe cada 'periodo' ms = 'cuentas' - 1 counts
+	T0MCR = 3;																		// Timer0 interrumpe y reinicia al llegar a T0MR0
+	T0TCR = 1;																		// Timer0 Enable
+	
+	VICVectAddr0 = (unsigned long)timer0_ISR;			// Función que se llamará cuando llegue la interrupción timer0
+	
+	VICVectCntl0 = DEFAULT | 4;
+
+	VICIntEnable = VICIntEnable | 0x00000010;			// Encendemos sólo timer0
 }
 
 void timer0_ISR(void) __irq

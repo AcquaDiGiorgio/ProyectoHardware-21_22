@@ -29,7 +29,7 @@ void refrescarSalidas(void)
 	uint32_t candidatos;
 	uint8_t fila, columna, valor;
 	
-	GPIO_clear_salida(0, 14);
+	GPIO_clear_salida(0, 13);
 	
 	// Obtenemos la fila y columna pedida
 	fila = GPIO_leer(16,4)-1;
@@ -75,7 +75,7 @@ void escribirValor(void)
 	valor   = GPIO_leer(24,4);
 	
 	// Miramos si ha pedido terminar
-	//checkFinPartida(fila+1,columna+1,valor+1);
+	checkFinPartida(fila+1,columna+1,valor);
 	
 	accesible = celdaAccesible(fila, columna);
 	
@@ -116,7 +116,7 @@ void eliminarValor(void)
 	valor   = GPIO_leer(24,4);
 	
 	// Miramos si ha pedido terminar
-	//checkFinPartida(fila+1,columna+1,valor+1);
+	checkFinPartida(fila+1,columna+1,valor);
 	
 	accesible = celdaAccesible(fila, columna);
 	
@@ -136,9 +136,6 @@ void eliminarValor(void)
 	fin = temporizador_leer() - ini; // fin cuenta del tiempo de eliminación
 }
 
-// Esta función no funciona y no sabemos el porqué. 
-// Cuando le insertas un valor de fila, columna y/o fila distinto de 0, accede
-// igualmente a sudokuReiniciar() y PM_power_down()
 void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
 {
 	if(fila == 0 && columna == 0 && valor == 0)
@@ -150,12 +147,11 @@ void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
 
 void quitarLedErr(void)
 {
-	GPIO_escribir(13,1,0);
+	GPIO_clear_salida(13,1);
 }
 
 void overflow(void)
 {
 	GPIO_escribir(30,1,1);
-	while(1)	
-		PM_power_down(); // PowerDown o Idle
+	end_execution_error();
 }

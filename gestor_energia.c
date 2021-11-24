@@ -41,8 +41,11 @@ void PM_idle (void)
 	PCON |= 0x01; 					// Se pone al procesador en modo Idle
 }
 
-void PM_wakeup (void)
+void end_execution_error(void)
 {
-	EXTWAKE = EXTWAKE & 0x0F8;
-	PCON = PCON & 0xFC; 		//Despierta al procesador
+	while (1)								// While 1 por si acaso
+	{
+		EXTWAKE = 0; 					// Ni EXTINT0 ni EXTINT1 ni EXTINT2 despertarán al procesador
+		PCON |= 0x02; 				// Se pone al procesador en modo PowerDown
+	}
 }

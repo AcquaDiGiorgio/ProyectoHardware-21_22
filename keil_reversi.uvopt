@@ -142,7 +142,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDARM</Key>
-          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=1107,211,1438,539,0)(108=1006,142,1163,262,0)(106=994,204,1214,508,0)(105=849,53,1087,335,0)(80=700,201,1366,687,0)(104=53,65,369,484,0)(100=1193,182,1776,364,1)(113=220,244,718,767,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=218,233,735,620,0)(116=790,303,1076,593,0)</Name>
+          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=1035,211,1366,539,0)(108=1006,142,1163,262,0)(106=994,204,1214,508,0)(105=849,53,1087,335,0)(80=700,201,1366,687,0)(104=53,65,369,484,0)(100=597,214,1180,396,1)(113=220,244,718,767,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=218,233,735,620,0)(116=790,303,1076,593,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -156,13 +156,29 @@
           <Type>0</Type>
           <LineNumber>281</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>4932</Address>
+          <Address>5832</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\sudoku_p2.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\keil_reversi\sudoku_p2.c\281</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>282</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
           <Filename>.\sudoku_p2.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
@@ -536,6 +552,14 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+  </Group>
+
+  <Group>
+    <GroupName>New Group</GroupName>
+    <tvExp>0</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
   </Group>
 
 </ProjectOpt>

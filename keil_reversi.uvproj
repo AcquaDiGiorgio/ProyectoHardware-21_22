@@ -352,7 +352,7 @@
           <Cads>
             <interw>0</interw>
             <Optim>4</Optim>
-            <oTime>0</oTime>
+            <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>0</OneElfS>
             <Strict>0</Strict>
@@ -547,6 +547,9 @@
               <FilePath>.\sudoku_p2.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>New Group</GroupName>
         </Group>
       </Groups>
     </Target>

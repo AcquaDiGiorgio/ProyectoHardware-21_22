@@ -20,6 +20,7 @@ void GPIO_clear_salida(int bit_inicial, int num_bits)
 			mascara = mascara << 1;
 			mascara = mascara | 0x1;
 		}
+		mascara = mascara << bit_inicial;
 		IOCLR = IOCLR | mascara;
 	}
 }
