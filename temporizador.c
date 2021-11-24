@@ -54,6 +54,33 @@ void temporizador_periodo(int periodo)
 	VICIntEnable = VICIntEnable | 0x00000010;			// Encendemos sólo timer0
 }
 
+void RTC_init(void)
+{
+	PREINT	= 0x726; // 60 MHz / x - 1 en Hex
+	PREFRAC = 0x700;
+	CCR 		= 0x01;
+}
+
+uint8_t RTC_leer_minutos(void)
+{
+	return (CTIME0 & 0x3F00) >> 8;
+}
+
+uint8_t RTC_leer_segundos(void)
+{
+	return (CTIME0 & 0x3F);
+}
+
+void WD_init(void)
+{
+
+}
+
+void WD_feed(void)
+{
+
+}
+
 void timer0_ISR(void) __irq
 {
 	cola_guardar_eventos(SET_TIMER_0, NO_AUX_DATA);	// Metemos en la cola el evento sin AuxData
