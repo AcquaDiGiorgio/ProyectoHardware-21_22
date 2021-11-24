@@ -65,7 +65,7 @@ int candidatos_actualizar(void)
 	
 	for (i = 0; i < 9; ++i){
 		for (j = 0; j < 9; ++j){
-				eliminar_candidatos(cuadricula[i][j]);	
+				eliminar_candidatos(&cuadricula[i][j]);	
 		}
 	}
 	
@@ -255,11 +255,9 @@ void sudokuReiniciar(void)
 			{				
 				celda_poner_valor(&cuadricula[i][j],0); // Le quitamos el valor
 			}	
+			eliminar_candidatos(&cuadricula[i][j]); // Le quitamos los candidatos
 		}
-	}
-	
-	// Actualizamos los candidatos
-	candidatos_actualizar();
+	}	
 }
 
 boolean celdaAccesible(uint8_t fila, uint8_t columna)

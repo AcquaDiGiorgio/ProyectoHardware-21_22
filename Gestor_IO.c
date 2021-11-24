@@ -7,7 +7,8 @@
 #include "gestor_energia.h"
 #include "constantes_comunes.h"
 
-uint32_t estadoAnterior = 0x0;
+volatile uint32_t estadoAnterior = 0x0;
+volatile boolean cambiandoLed = FALSE;
 
 //Inicializa el gestor IO
 void initIO(void)
@@ -27,9 +28,18 @@ void refrescarSalidas(void)
 {
 	uint32_t estadoActual;
 	uint32_t candidatos;
-	uint8_t fila, columna, valor;
+	uint8_t fila, columna, valor, pista;
 	
-	GPIO_clear_salida(0, 13);
+	switch(cambiandoLed)
+	{
+		case TRUE:
+			GPIO_clear_salida(0, 13);
+			break;
+		
+		case FALSE:
+			GPIO_clear_salida(0, 14);
+			break;
+	}
 	
 	// Obtenemos la fila y columna pedida
 	fila = GPIO_leer(16,4)-1;
@@ -47,6 +57,9 @@ void refrescarSalidas(void)
 		
 		// Marcamos los candidatos de la celda en la salida
 		GPIO_escribir(4,9,candidatos);
+		
+		// Escribimos el valor de la pista de esta celda en error
+		GPIO_escribir(13,1,pista);
 		
 		if (es_pista(fila,columna))
 			GPIO_escribir(13,1,1);
@@ -80,8 +93,7 @@ void escribirValor(void)
 	accesible = celdaAccesible(fila, columna);
 	
 	// Si es pista no hacemos nada
-	if (accesible == TRUE && es_pista(fila,columna) == FALSE 
-				&& estado_energia_actual() == DESPIERTO)
+	if (accesible == TRUE && es_pista(fila,columna) == FALSE)
 	{
 		// Si no es pista lo introducimos
 		introducirValorCelda(fila,columna,valor);
@@ -90,14 +102,11 @@ void escribirValor(void)
 		// Si la jugada es errónea, encendemos el led
 		if(celda_correcta(fila,columna) == FALSE)
 		{
+			cambiandoLed = TRUE;
 			GPIO_escribir(13,1,1);
 			// Creamos una alarma que apague el led
 			crear_alarma_unica(LED_ERROR,EV_LED_ERR,1 * SEGUNDO);
 		}			
-	}
-	else if (estado_energia_actual() == DORMIDO)
-	{
-		actualizar_estado_energia(NULL_EVENT);
 	}
 	
 	fin = temporizador_leer() - ini; // fin cuenta del tiempo de escritura
@@ -121,16 +130,10 @@ void eliminarValor(void)
 	accesible = celdaAccesible(fila, columna);
 	
 	// Si no es una pista y además el procesador viene de un estado despierto
-	if (accesible == TRUE && es_pista(fila,columna) == FALSE 
-				&& estado_energia_actual() == DESPIERTO)
+	if (accesible == TRUE && es_pista(fila,columna) == FALSE)
 	{
 		eliminarValorCelda(fila,columna);
 		candidatos_actualizar();
-	}
-	// Si el procesador viene de estar dormido
-	else if (estado_energia_actual() == DORMIDO)
-	{
-		actualizar_estado_energia(NULL_EVENT);
 	}
 	
 	fin = temporizador_leer() - ini; // fin cuenta del tiempo de eliminación
@@ -148,6 +151,12 @@ void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
 void quitarLedErr(void)
 {
 	GPIO_clear_salida(13,1);
+	cambiandoLed = FALSE;
+}
+
+void reiniciarEstadoAnterior(void)
+{
+	estadoAnterior = 0;
 }
 
 void overflow(void)

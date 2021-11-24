@@ -23,9 +23,13 @@ void gestion_eint1(event_t evento)
 	{
 		if( boton1_pulsado() == FALSE && button_nueva_pulsacion_1() == TRUE ) // Botón bajado
 		{	
-				button_clear_nueva_pulsacion_1(); 													// Indicamos que no hay pulsacion
-				boton1_reactivate();																				// Reactivamos las interrupciones
-				procesando_eint1 = NO_PULSADO;															// Cambio estado	
+			button_clear_nueva_pulsacion_1(); 													// Indicamos que no hay pulsacion
+			boton1_reactivate();																				// Reactivamos las interrupciones
+			procesando_eint1 = NO_PULSADO;															// Cambio estado	
+		}
+		else
+		{
+			boton1_clear(); // Se intenta bajar
 		}
 	}
 }
@@ -44,6 +48,10 @@ void gestion_eint2(event_t evento)
 				button_clear_nueva_pulsacion_2(); 													//Indicamos que no hay pulsacion
 				boton2_reactivate();																				// Reactivamos las interrupciones
 				procesando_eint2 = NO_PULSADO;															// Cambio estado
+		}
+		else
+		{
+			boton2_clear(); // Se intenta bajar
 		}
 	}
 }
