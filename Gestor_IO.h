@@ -24,5 +24,8 @@
 	
 	// Ha habido overflow en alguna parte del sistema (encer led)
 	void overflow(void);
+	
+	void reiniciarEstadoAnterior(void);
+	void latidoLed(void);
 
 #endif //GESTOR_IO_H

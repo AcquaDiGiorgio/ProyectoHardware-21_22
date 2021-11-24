@@ -65,7 +65,7 @@ int candidatos_actualizar(void)
 	
 	for (i = 0; i < 9; ++i){
 		for (j = 0; j < 9; ++j){
-				eliminar_candidatos(cuadricula[i][j]);	
+				eliminar_candidatos(&cuadricula[i][j]);	
 		}
 	}
 	
@@ -254,11 +254,10 @@ void sudokuReiniciar(void)
 			if(es_pista(i, j) == FALSE)
 			{				
 				celda_poner_valor(&cuadricula[i][j],0); // Le quitamos el valor
-			}	
+			}
 		}
 	}
-	
-	// Actualizamos los candidatos
+
 	candidatos_actualizar();
 }
 

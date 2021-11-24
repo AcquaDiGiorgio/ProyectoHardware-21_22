@@ -15,7 +15,8 @@
 		EV_GPIO_REF		= 0x05,		// El evento requiere refrescar las salidas de la IO
 		EV_POWER			= 0x06,		// El evento requiere que se entre en modo PowerDown
 		EV_CHECK_PULS	= 0x07,		// El evento requiere comprobar si elgún botón está pulsado
-		EV_LED_ERR		= 0x08		// El evento requiere apagar el led de error de la IO
+		EV_LED_ERR		= 0x08,		// El evento requiere apagar el led de error de la IO
+		EV_LATIDO			= 0x09
 	}event_t;
 
 #endif //EVENTOS_H

@@ -4,7 +4,7 @@
 
 #define ALRM_UNICA 0			// Alarma que solo se debe ejcutar 1 vez
 #define ALRM_PERIODICA 1	// Alarma que se debe reiniciar tras su ejecución
-#define DYNAMIC_ID 4			// Mínimo índice de una alarma no predifinida por el sistema
+#define DYNAMIC_ID 5			// Mínimo índice de una alarma no predifinida por el sistema
 
 void crear_alarma_unica(int id, event_t evento, int retardo)
 {
@@ -129,4 +129,5 @@ void gestionar_alarma(int idAlarma)
 void inicializarAlarmasDefault(void)
 {
 	crear_alarma_periodica(PULSACION,EV_CHECK_PULS,100);
+	crear_alarma_periodica(LATIDO,EV_LATIDO,200);
 }

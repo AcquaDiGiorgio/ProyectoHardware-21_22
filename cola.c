@@ -62,6 +62,7 @@ void leer_evento()
 				
 				case EV_POWER:				// Poner el procesador en modo Power Down
 					PM_power_down();
+					reiniciarEstadoAnterior();
 					break;
 				
 				case EV_CHECK_PULS:		// Comprobar la pulsación de los botones
@@ -71,6 +72,10 @@ void leer_evento()
 				
 				case EV_LED_ERR:			// Apagar el led de error de la GPIO
 					quitarLedErr();
+					break;
+				
+				case EV_LATIDO:
+					latidoLed();
 					break;
 				
 				default:
@@ -85,12 +90,36 @@ void leer_evento()
 		
 		// Gestionar interrupción externa 1
 		case SET_EXT_INT_1:
-			escribirValor();
+			switch(estado_energia_actual())
+			{
+				case DESPIERTO:
+					escribirValor();
+					break;
+					
+				case DORMIDO:
+					actualizar_estado_energia(NULL_EVENT);
+					break;
+				
+				default:
+					break;
+			}			
 			break;
 	
 		// Gestionar interrupción externa 2
 		case SET_EXT_INT_2:
-			eliminarValor();
+			switch(estado_energia_actual())
+			{
+				case DESPIERTO:
+					eliminarValor();
+					break;
+					
+				case DORMIDO:
+					actualizar_estado_energia(NULL_EVENT);
+					break;
+				
+				default:
+					break;
+			}			
 			break;
 		
 		default:
