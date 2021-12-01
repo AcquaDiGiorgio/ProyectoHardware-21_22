@@ -53,7 +53,7 @@ F_Bit           EQU     0x40            ; when F bit is set, FIQ is disabled
 UND_Stack_Size  EQU     0x00000000
 SVC_Stack_Size  EQU     0x00000400
 ABT_Stack_Size  EQU     0x00000000
-FIQ_Stack_Size  EQU     0x00000000
+FIQ_Stack_Size  EQU     0x00000080
 IRQ_Stack_Size  EQU     0x00000080
 USR_Stack_Size  EQU     0x00000400
 
@@ -161,6 +161,8 @@ Vectors         LDR     PC, Reset_Addr
                 LDR     PC, [PC, #-0x0FF0]     ; Vector from VicVectAddr
                 LDR     PC, FIQ_Addr
 
+				IMPORT	SWI_Handler
+
 Reset_Addr      DCD     Reset_Handler
 Undef_Addr      DCD     Undef_Handler
 SWI_Addr        DCD     SWI_Handler
@@ -171,7 +173,6 @@ IRQ_Addr        DCD     IRQ_Handler
 FIQ_Addr        DCD     FIQ_Handler
 
 Undef_Handler   B       Undef_Handler
-SWI_Handler     B       SWI_Handler
 PAbt_Handler    B       PAbt_Handler
 DAbt_Handler    B       DAbt_Handler
 IRQ_Handler     B       IRQ_Handler
@@ -270,16 +271,15 @@ MEMMAP          EQU     0xE01FC040      ; Memory Mapping Control
                 MOV     SP, R0
                 SUB     R0, R0, #IRQ_Stack_Size
 
-;  Enter User Mode and set its Stack Pointer
-                MSR     CPSR_c, #Mode_USR
-                MOV     SP, R0
-                SUB     SL, SP, #USR_Stack_Size
-
 ;  Enter Supervisor Mode and set its Stack Pointer
                 MSR     CPSR_c, #Mode_SVC:OR:I_Bit:OR:F_Bit
                 MOV     SP, R0
                 SUB     R0, R0, #SVC_Stack_Size
 
+;  Enter User Mode and set its Stack Pointer
+                MSR     CPSR_c, #Mode_USR
+                MOV     SP, R0
+                SUB     SL, SP, #USR_Stack_Size
 
 ; Enter the C code
 

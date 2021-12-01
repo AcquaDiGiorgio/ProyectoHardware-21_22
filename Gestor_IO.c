@@ -81,7 +81,7 @@ void escribirValor(void)
 	uint8_t fila,columna,valor; // Variables leidas de la GPIO
 	boolean accesible;
 	
-	ini = temporizador_leer(); 	// Inicio cuenta del tiempo de escritura
+	ini = clock_gettime(); 	// Inicio cuenta del tiempo de escritura
 	
 	// Leemos la fila, columna y valor de la GPIO
 	fila    = GPIO_leer(16,4)-1;
@@ -110,7 +110,7 @@ void escribirValor(void)
 		}			
 	}
 	
-	fin = temporizador_leer() - ini; // fin cuenta del tiempo de escritura
+	fin = clock_gettime() - ini; // fin cuenta del tiempo de escritura
 }
 
 void eliminarValor(void)
@@ -119,7 +119,7 @@ void eliminarValor(void)
 	uint8_t fila,columna,valor;
 	boolean accesible;
 	
-	ini = temporizador_leer(); // inicio cuenta del tiempo de eliminación
+	ini = clock_gettime(); // inicio cuenta del tiempo de eliminación
 	
 	fila    = GPIO_leer(16,4)-1;
 	columna = GPIO_leer(20,4)-1;
@@ -137,7 +137,7 @@ void eliminarValor(void)
 		candidatos_actualizar();
 	}
 	
-	fin = temporizador_leer() - ini; // fin cuenta del tiempo de eliminación
+	fin = clock_gettime() - ini; // fin cuenta del tiempo de eliminación
 }
 
 void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)

@@ -7,6 +7,9 @@
 void timer0_ISR(void) __irq;
 void timer1_ISR(void) __irq;
 
+void __swi(0xFF) enable_isr (void);
+void __swi(0xFE) disable_isr (void);
+
 static volatile unsigned int timer1_count = 0;
 
 void temporizador_iniciar(void)
@@ -27,10 +30,14 @@ void temporizador_empezar()
 }
 
 
-uint64_t temporizador_leer()
+uint64_t temporizador_leer(void)
 {
 	 // Veces interrumpido * maxCount (us) + Count actual (us)
 	 return timer1_count * 32000000 + (T1TC % 63);
+}
+
+uint64_t __SWI_0 (void){
+	return temporizador_leer();
 }
 
 void temporizador_parar()
@@ -92,8 +99,10 @@ void WD_init(int sec)
 // Alimenta al watchdog timer
 void WD_feed(void)
 {
+	disable_isr();
 	WDFEED = 0xAA;						   
 	WDFEED = 0x55;
+	enable_isr();
 }
 
 

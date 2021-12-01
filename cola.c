@@ -9,30 +9,63 @@
 static volatile int aLeer = 0;		// Evento que toca procesar
 static volatile int actual = 0;		// Índice al cual se le va a introducir un nuevo evento
 
+void __swi(0xFF) enable_isr (void);
+void __swi(0xFE) disable_isr (void);
+
 void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 {
+	disable_isr();						// Deshabilitamos interrupciones
+	
+	int indiceAux = actual;		// Creamos un índice auxiliar
+	actual++;									// aumentamos el índice
+	if (actual == MAX_EVENTS)	// Si hemos llegado al final de la cola, ponemos el índice al 0
+		actual = 0;
+	
+	enable_isr();							// Rehabilitamos interrupciones
+	
 	// Comprobamos que donde queremos introducir el evento, no hay otro esperando a ser leído
-	if(eventList[actual].ready != TRUE)
+	if(eventList[indiceAux].ready != TRUE)
 	{
 		// Preparamos el evento
-		eventList[actual].id = idEvento;
-		eventList[actual].auxData = auxData;
-		eventList[actual].marcaTemporal = temporizador_leer(); 
-		eventList[actual].ready = TRUE;
+		eventList[indiceAux].id = idEvento;
+		eventList[indiceAux].auxData = auxData;
+		eventList[indiceAux].marcaTemporal = clock_gettime(); 
+		eventList[indiceAux].ready = TRUE;
 		
-		// aumentamos el índice
-		actual++;
-		
-		// Si hemos llegado al final de la cola, ponemos el índice al 0
-		if (actual == MAX_EVENTS)
-		{
-			actual = 0;
-		}
 		return; // Salimos de la función
 	}
 	
 	// Si hay un evento en ese espacio, saltamos un error
 	overflow();
+}
+
+void tratar_alarma(uint32_t auxData){
+	switch(auxData){ 				// La acción a realizar depende de sus datos auxiliares
+		case EV_GPIO_REF:			// Refrescar las salidas de la GPIO
+			refrescarSalidas();
+			break;
+		
+		case EV_POWER:				// Poner el procesador en modo Power Down
+			PM_power_down();
+			reiniciarEstadoAnterior();
+			break;
+		
+		case EV_CHECK_PULS:		// Comprobar la pulsación de los botones
+			gestion_eint1(EV_CHECK_PULS);
+			gestion_eint2(EV_CHECK_PULS);
+			break;
+		
+		case EV_LED_ERR:			// Apagar el led de error de la GPIO
+			quitarLedErr();
+			break;
+		
+		case EV_LATIDO:				// Apagar el led del latido de la GPIO
+			latidoLed();
+			break;
+		
+		default:
+			break;
+	}
 }
 
 void leer_evento()
@@ -55,32 +88,7 @@ void leer_evento()
 	{
 		case SET_ALARMA:
 			// Gestionar evento de la alarma
-			switch(auxData){ 			// La acción a realizar depende de sus datos auxiliares
-				case EV_GPIO_REF:			// Refrescar las salidas de la GPIO
-					refrescarSalidas();
-					break;
-				
-				case EV_POWER:				// Poner el procesador en modo Power Down
-					PM_power_down();
-					reiniciarEstadoAnterior();
-					break;
-				
-				case EV_CHECK_PULS:		// Comprobar la pulsación de los botones
-					gestion_eint1(EV_CHECK_PULS);
-					gestion_eint2(EV_CHECK_PULS);
-					break;
-				
-				case EV_LED_ERR:			// Apagar el led de error de la GPIO
-					quitarLedErr();
-					break;
-				
-				case EV_LATIDO:
-					latidoLed();
-					break;
-				
-				default:
-					break;
-			}
+			tratar_alarma(auxData);
 			break;
 		
 		// Gestionar el evento de timer0

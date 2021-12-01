@@ -548,6 +548,16 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>System Calls</GroupName>
+          <Files>
+            <File>
+              <FileName>SWI.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\SWI.s</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>

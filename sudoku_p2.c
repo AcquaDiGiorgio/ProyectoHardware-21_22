@@ -272,11 +272,12 @@ boolean celdaAccesible(uint8_t fila, uint8_t columna)
 }
 
 int main (void) {
-	temporizador_iniciar();
-	temporizador_periodo(1);
+	temporizador_iniciar();		
+	temporizador_periodo(1);	// Timer0
 	initIO();
 	eint_init();
 	inicializarAlarmasDefault();
+	crear_alarma_unica(0,EV_TEST,1*SEGUNDO);
 	candidatos_actualizar();
 	scheduler();
 }
