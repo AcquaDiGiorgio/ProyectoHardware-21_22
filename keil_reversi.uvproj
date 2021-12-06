@@ -496,6 +496,11 @@
               <FileType>5</FileType>
               <FilePath>.\constantes_comunes.h</FilePath>
             </File>
+            <File>
+              <FileName>gestor_comandos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gestor_comandos.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -545,6 +550,11 @@
               <FileName>sudoku_p2.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sudoku_p2.c</FilePath>
+            </File>
+            <File>
+              <FileName>gestor_comandos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor_comandos.c</FilePath>
             </File>
           </Files>
         </Group>

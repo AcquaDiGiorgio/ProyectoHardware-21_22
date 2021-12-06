@@ -9,7 +9,7 @@
 	
 	// Iniciación, lectura y parada del timer1
 	void temporizador_empezar(void);
-	uint64_t temporizador_leer(void);
+	uint64_t clock_gettime(void);
 	void temporizador_parar(void);
 
 #endif //TEMPORIZADOR_H
