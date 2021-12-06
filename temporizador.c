@@ -88,23 +88,26 @@ uint8_t RTC_leer_segundos(void)
   Watchdog (WD) 
 */
 
+// Alimenta al watchdog timer
+void WD_feed(void)
+{
+	disable_isr(); // Desactivar interrupciones
+	WDFEED = 0xAA;						   
+	WDFEED = 0x55;
+	enable_isr(); //Activar interrupciones
+}
+
 // Inicializa el watchdog timer para que resetee el procesador
 // dentro de sec segundos su no se le "alimenta"
 void WD_init(int sec)
 {
-	WDTC  = 0x4000000;			// Set watchdog time out value
-	WDMOD = 0x03;                            /* Enable watchdog timer (bit 0) and reset (bit 1).  */ 
+	// Asigna el periodo
+	WDTC = sec * 14999 * 250;
+	WDMOD = 0x3;
+	// Se debe alimentar una primera vez para ponerlo en marcha
+	WD_feed();
 
 }
-// Alimenta al watchdog timer
-void WD_feed(void)
-{
-	disable_isr();
-	WDFEED = 0xAA;						   
-	WDFEED = 0x55;
-	enable_isr();
-}
-
 
 void timer0_ISR(void) __irq
 {

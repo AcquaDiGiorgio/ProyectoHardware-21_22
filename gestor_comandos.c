@@ -1,15 +1,19 @@
 #include <LPC210X.H>
-#include "gestor_comandos.h"
 #include <inttypes.h>
+#include "gestor_comandos.h"
 #include "constantes_comunes.h"
 
-#define MAX_COMMAND_SIZE 4
-volatile char comando[MAX_COMMAND_SIZE];
+#define MAX_COMMAND_SIZE 5
+#define WRITE_BUFFER_SIZE 10
+
+volatile char comando[WRITE_BUFFER_SIZE];
 int posicion_actual = 0;
 
+
+// Limpia el buffer por completo
 void reiniciar_comando(void)
 {
-	for(int i = 0; i < MAX_COMMAND_SIZE; i++)
+	for(int i = 0; i < WRITE_BUFFER_SIZE; i++)
 	{
 		comando[i] = '\0';
 	}
@@ -23,8 +27,12 @@ void reiniciar_comando(void)
 //
 void recibir_caracter(char chr)
 {
-	if (chr == '#')																	// Principio de un comando
+	comando[posicion_actual] = chr; //Se escribe el caracter en el buffer
+	posicion_actual ++;
+	
+	if (chr == '!')																	// Final de un comando
 	{
+		detectar_comando();
 		reiniciar_comando();
 	}
 	else if (posicion_actual >= MAX_COMMAND_SIZE)		// Comando muy grande
@@ -32,56 +40,105 @@ void recibir_caracter(char chr)
 		reiniciar_comando();
 		lanzar_error(OVERSIZED_COMMAND);
 	}
-	else if (chr == '!')														// Fin del comando
-	{
-		detectar_comando();
-		reiniciar_comando();
-	}
-	else
-	{
-		comando[posicion_actual] = chr;
-		posicion_actual++;
+}
+
+//
+//Devuelve true si el comando es valido y se corresponde con #RST!
+//
+boolean detectar_reset(int pos_limit){
+	//El comando es valido si la posicion es mayor o igual a 4
+	if((pos_limit - MAX_COMMAND_SIZE-1) >= 0){
+		
+		//Las posiciones tienen que coincidir
+		if(comando[pos_limit-4] == '#' && comando[pos_limit-3] == 'R' && comando[pos_limit-2] == 'S' && comando[pos_limit-1] == 'T'){
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+		
+	} else {
+		return FALSE;
 	}
 }
 
-void detectar_comando(void)
-{
-	int int_val;
-	int int_command[MAX_COMMAND_SIZE];
-	boolean error = FALSE;
-	
-	if (comando[0] == 'R' && comando[1] == 'S' && comando[2] == 'T') 			// Comando RESET (RST)
-	{
-		reiniciar_partida();
-	}
-	else if (comando[0] == 'N' && comando[1] == 'E' && comando[2] == 'W')	// Comando NEW
-	{
-		nueva_partida();
-	}
-	else																																	// Comando Numérico
-	{		
-		for (int i = 0; i < MAX_COMMAND_SIZE && error == FALSE; i++)
-		{
-			int_val = to_uint(comando[i]); 	// Cambio el valor char a int
-			if (int_val == -1)							// Si no es un número entero positivo
-			{
-				error = TRUE;
-			}
-			else
-			{	
-				int_command[i] = int_val;
-			}
+//
+//Devuelve true si el comando es valido y se corresponde con #NEW!
+//
+boolean detectar_new(int pos_limit){
+	//El comando es valido si la posicion es mayor o igual a 4
+	if((pos_limit - MAX_COMMAND_SIZE-1) >= 0){
+		
+		//Las posiciones tienen que coincidir
+		if(comando[pos_limit-4] == '#' && comando[pos_limit-3] == 'N' && comando[pos_limit-2] == 'E' && comando[pos_limit-1] == 'W'){
+			return TRUE;
+		} else {
+			return FALSE;
 		}
 		
-		if (error == FALSE)
-		{
-			introducir_jugada(int_command);
+	} else {
+		return FALSE;
+	}
+}
+
+//
+//Devuelve true si el comando es valido y se corresponde con #FCVS!
+//
+boolean detectar_jugada(int pos_limit){
+	//El comando es valido si la posicion es mayor o igual a 5
+	if((pos_limit - MAX_COMMAND_SIZE) >= 0){
+		
+		//Las posiciones tienen que coincidir
+		if(comando[pos_limit-5] == '#'){
+			//Comprobamos que todos los valores son correctos
+			int fila = to_uint(comando[pos_limit-4]), columna = to_uint(comando[pos_limit-3]), valor = to_uint(comando[pos_limit-2]), checksum = to_uint(comando[pos_limit-1]);
+			if( (0 < fila <= 9) &&  (0 < columna <= 9) && (0 < valor <= 9) && ((fila+columna+valor % 8) == checksum)){
+				return TRUE;
+			}
+			else{
+				return FALSE;
+			}
+		} else {
+			return FALSE;
 		}
-		else
-		{
-			lanzar_error(NOT_A_COMMAND);
+		
+	} else {
+		return FALSE;
+	}
+}
+//
+// Si se escribe el final de un comando "!"
+// entonces se detecta el comando, si el comando no existe entonces hay un error
+//
+void detectar_comando(void)
+{
+	int int_command[MAX_COMMAND_SIZE];
+	
+	int fin_comando;
+	boolean escribirVector = FALSE;
+	boolean error = FALSE;
+
+	//Obtenemos el inidice de fin de comando
+	for(int i=0; i<WRITE_BUFFER_SIZE; i++) {
+		if(comando[i] == '!'){
+				fin_comando = i;
 		}
 	}
+	
+	//Comprobamos el tipo de jugada que es
+	if(detectar_reset(fin_comando)) { //Si es un reset, reiniciamos partida
+		reiniciar_partida();
+		
+	} else if (detectar_new(fin_comando)){ //Si es un new, iniciamos nueva partida
+		nueva_partida();
+		
+	} else if (detectar_jugada(fin_comando)) { //Si es una nueva jugada, intriducimos la jugada
+		introducir_jugada(int_command);
+		
+	} else { //SI el comando no existe, limpiamos el vector y lanzamos un error
+		reiniciar_comando();
+		lanzar_error(NOT_A_COMMAND);
+	}
+	
 }
 
 //

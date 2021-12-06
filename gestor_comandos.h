@@ -7,6 +7,8 @@
 		BAD_CHECKSUM
 	}command_err;
 
+	void init_serial (void); /* Initialize Serial Interface       */
+		
 	void preparar_nuevo_comando(void);
 	void recibir_caracter(char chr);
 	void detectar_comando(void);
