@@ -5,6 +5,7 @@
 #include "gestor_alarmas.h"
 #include "gestor_IO.h"
 #include "boton.h"
+#include "uart0.h"
 
 // Cuadrícula a utilizar
 // Para cambiarla, modificar cuadricula_C_C por el tablero deseado
@@ -275,9 +276,9 @@ int main (void) {
 	temporizador_iniciar();		
 	temporizador_periodo(1);	// Timer0
 	initIO();
+	init_serial();
 	eint_init();
 	inicializarAlarmasDefault();
-	crear_alarma_unica(0,EV_TEST,1*SEGUNDO);
 	candidatos_actualizar();
 	scheduler();
 }

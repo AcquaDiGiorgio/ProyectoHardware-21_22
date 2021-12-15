@@ -15,9 +15,11 @@ void __swi(0xFE) disable_isr (void);
 
 void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 {
+	int indiceAux;
+		
 	disable_isr();						// Deshabilitamos interrupciones
 	
-	int indiceAux = actual;		// Creamos un índice auxiliar
+	indiceAux = actual;		// Creamos un índice auxiliar
 	actual++;									// aumentamos el índice
 	if (actual == MAX_EVENTS)	// Si hemos llegado al final de la cola, ponemos el índice al 0
 		actual = 0;

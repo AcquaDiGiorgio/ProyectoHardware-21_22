@@ -9,3 +9,4 @@
 .\cola.o: gestor_alarmas.h
 .\cola.o: gestor_IO.h
 .\cola.o: gestor_energia.h
+.\cola.o: gestor_comandos.h

@@ -60,11 +60,11 @@ SWI_Cnt			EQU    (SWI_End-SWI_Table)/4
 SWI_Count       DCD     SWI_Cnt
 
 ;	Import SWI FUNCTIONS
-;				IMPORT  __SWI_0
+				IMPORT  __SWI_0
 
 SWI_Table
 ;	RTX KERNEL SWI FUNCTIONS
-;               DCD     __SWI_0
+               DCD     __SWI_0
 
 SWI_End
 

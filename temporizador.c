@@ -10,6 +10,8 @@ void timer1_ISR(void) __irq;
 void __swi(0xFF) enable_isr (void);
 void __swi(0xFE) disable_isr (void);
 
+//uint64_t __swi(0x00) clock_gettime (void);
+
 static volatile unsigned int timer1_count = 0;
 
 void temporizador_iniciar(void)

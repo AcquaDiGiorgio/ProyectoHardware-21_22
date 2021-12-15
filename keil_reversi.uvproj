@@ -501,6 +501,16 @@
               <FileType>5</FileType>
               <FilePath>.\gestor_comandos.h</FilePath>
             </File>
+            <File>
+              <FileName>UART0.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\UART0.h</FilePath>
+            </File>
+            <File>
+              <FileName>gestor_output.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gestor_output.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -555,6 +565,16 @@
               <FileName>gestor_comandos.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\gestor_comandos.c</FilePath>
+            </File>
+            <File>
+              <FileName>UART0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UART0.c</FilePath>
+            </File>
+            <File>
+              <FileName>gestor_output.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor_output.c</FilePath>
             </File>
           </Files>
         </Group>
