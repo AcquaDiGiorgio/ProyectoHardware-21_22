@@ -67,7 +67,7 @@ void rsi_uart0(void) __irq
 		if( U0LSR & 0x01 ) 								//U0RBR contains valid data
 		{			
 			char_to_uart(U0RBR);			
-			cola_guardar_eventos(SET_UART, U0RBR);
+			cola_guardar_eventos(SET_UART_SEND_CHR, U0RBR);
 		}	
 	}
 	else if ( U0IIR == 0x02 )

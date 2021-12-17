@@ -51,11 +51,17 @@ __inline static uint16_t celda_leer_candidatos(CELDA celda)
 
 __inline static uint8_t celda_es_pista(CELDA celda)
 {
-		return (celda & 0x0010 ) >> 4;
+		return (celda & 0x0010) >> 4;
 }
 
-__inline static void marcar_error(CELDA *celda_ptr)
+__inline static void celda_marcar_error(CELDA *celda_ptr)
 {
 		*celda_ptr = *celda_ptr	| 0x20;
 }
+
+__inline static uint8_t celda_hay_error(CELDA celda)
+{
+		return (celda & 0x0020) >> 5;
+}	
+
 #endif // CELDA_H

@@ -45,5 +45,6 @@
 	
 	// Check de si la celda a acceder está en el rango de celdas
 	boolean celdaAccesible(uint8_t fila, uint8_t columna);
+	uint8_t hay_error(uint8_t fila, uint8_t columna);
 
 #endif /* SUDOKU_P2_H */

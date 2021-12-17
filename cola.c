@@ -5,6 +5,8 @@
 #include "gestor_IO.h"
 #include "gestor_energia.h"
 #include "gestor_comandos.h"
+#include "uart0.h"
+#include "gestor_output.h"
 
 // Índices del vector de eventos
 static volatile int aLeer = 0;		// Evento que toca procesar
@@ -134,10 +136,16 @@ void leer_evento()
 			break;
 		
 		// Gestionar entrada de la UART
-		case SET_UART:
+		case SET_UART_SEND_CHR:
 			recibir_caracter(auxData);
 			break;
+		
+		case SET_CHAR:
+			char_to_uart(auxData);
 
+		case SET_UART_CHR_DISP:
+			pintar_siguiente_caracter();
+		
 		default:
 			break;
 		

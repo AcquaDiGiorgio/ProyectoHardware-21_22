@@ -177,7 +177,7 @@ boolean celda_correcta(uint8_t fila, uint8_t columna)
 			{
 				if(valor == celda_leer_valor(cuadricula[i][columna]))
 				{
-					marcar_error(&cuadricula[fila][columna]);
+					celda_marcar_error(&cuadricula[fila][columna]);
 					return FALSE;
 				} 
 			}				
@@ -189,7 +189,7 @@ boolean celda_correcta(uint8_t fila, uint8_t columna)
 			{
 				if(valor == celda_leer_valor(cuadricula[fila][j]))
 				{
-					marcar_error(&cuadricula[fila][columna]);
+					celda_marcar_error(&cuadricula[fila][columna]);
 					return FALSE;
 				} 
 			}	
@@ -207,7 +207,7 @@ boolean celda_correcta(uint8_t fila, uint8_t columna)
 				{
 					if(valor == celda_leer_valor(cuadricula[i][j]))
 					{
-						marcar_error(&cuadricula[fila][columna]);
+						celda_marcar_error(&cuadricula[fila][columna]);
 						return FALSE;
 					} 
 				}	
@@ -222,7 +222,6 @@ void introducirValorCelda(uint8_t fila, uint8_t columna, int valor)
 		cuadricula[fila][columna] = valor;
 }
 	
-
 void eliminarValorCelda(uint8_t fila, uint8_t columna)
 {
 		cuadricula[fila][columna] = 0;
@@ -240,6 +239,11 @@ uint16_t leer_candidatos(uint8_t fila, uint8_t columna)
 uint8_t es_pista(uint8_t fila, uint8_t columna)
 {
 	return celda_es_pista(cuadricula[fila][columna]);
+}
+
+uint8_t hay_error(uint8_t fila, uint8_t columna)
+{
+	return celda_hay_error(cuadricula[fila][columna]);
 }
 	
 void sudokuReiniciar(void)
