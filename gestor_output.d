@@ -1,2 +1,9 @@
 .\gestor_output.o: gestor_output.c
 .\gestor_output.o: gestor_output.h
+.\gestor_output.o: sudoku_p2.h
+.\gestor_output.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
+.\gestor_output.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\gestor_output.o: celda.h
+.\gestor_output.o: constantes_comunes.h
+.\gestor_output.o: cola.h
+.\gestor_output.o: eventos.h

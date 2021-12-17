@@ -60,19 +60,17 @@ interUart_t detectar_interrupcion(uint8_t IIR)
 /* **************************************************************  */
 void rsi_uart0(void) __irq
 {
-	int i;
-
-	if ( U0IIR == 0x04 )
+	if ( U0IIR == 0x04 )								// BRB intrruption
 	{
-		if( U0LSR & 0x01 ) 								//U0RBR contains valid data
+		if( U0LSR & 0x01 ) 								// U0RBR contains valid data
 		{			
 			char_to_uart(U0RBR);			
 			cola_guardar_eventos(SET_UART_SEND_CHR, U0RBR);
 		}	
 	}
-	else if ( U0IIR == 0x02 )
+	else if ( U0IIR == 0x02 )						// THRE Interruption
 	{
-		
+			cola_guardar_eventos(SET_UART_CHR_DISP, NO_AUX_DATA);
 	}
 	
 	VICVectAddr = 0;

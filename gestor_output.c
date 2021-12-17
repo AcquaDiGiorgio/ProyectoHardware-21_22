@@ -66,7 +66,7 @@ void inicializar_tablero()
 			{
 				chr = ' ';					// Estamos en un espacio vacío
 				
-				if(i % 2 == 0)			// Se estamos en una casilla pista/error sobreescribimos
+				if(i % 2 != 0)			// Se estamos en una casilla pista/error sobreescribimos
 				{
 					if (es_pista(fila, columna) == TRUE)
 					{
@@ -82,9 +82,9 @@ void inicializar_tablero()
 			{
 				chr = ' ';					// Estamos en un espacio vacío
 				
-				if(i % 2 != 0)			// Si estamos en una casilla número sobreescribimos
+				if(i % 2 == 0)			// Si estamos en una casilla número sobreescribimos
 				{
-					chr = to_uint(leer_celda(fila,columna));
+					chr = leer_celda(fila,columna); // TODO: Pasar a string
 				}
 			}
 			
@@ -93,6 +93,8 @@ void inicializar_tablero()
 		
 		filas[i][LEN_FILA-1] = '|';
 	}
+	
+	concat_tablero();
 }
 
 void concat_fila(int ini, int *pos_ptr)
@@ -124,13 +126,11 @@ void concat_cuadrante(int cuad, int *pos_ptr)
 					}
 			}
 	}	
-	
-	concat_tablero();
 }
 
 void concat_tablero()
 {
-	int i, pos, fila = 2;
+	int i, pos = 0, fila = 2;
 	
 	for (i = 0; i < LEN_FILA; i++)
 	{
@@ -141,6 +141,10 @@ void concat_tablero()
 	for (i = 0; i < 3; i++)
 	{
 			concat_cuadrante(i, &pos);
+			if (i != 2)
+			{	
+					tableroCompleto[pos] = hardRow[i];
+			}
 	}
 	
 	for (i = 0; i < LEN_FILA; i++)
@@ -164,11 +168,11 @@ void pintar_siguiente_caracter()
 				terminado = TRUE;
 			}
 			
-			cola_guardar_eventos();
+			cola_guardar_eventos(SET_CHAR, chr);
 			
 	}
 	else
 	{
-	
+			terminado = FALSE;
 	}
 }

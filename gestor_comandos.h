@@ -16,6 +16,5 @@
 	void nueva_partida(void);
 	void introducir_jugada(int[]);
 	void lanzar_error(command_err err);
-	int to_uint(char);
 
 #endif //GESTOR_COMANDOS_H
