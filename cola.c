@@ -142,9 +142,11 @@ void leer_evento()
 		
 		case SET_CHAR:
 			char_to_uart(auxData);
+			break;
 
 		case SET_UART_CHR_DISP:
 			pintar_siguiente_caracter();
+			break;
 		
 		default:
 			break;

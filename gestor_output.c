@@ -2,35 +2,58 @@
 #include "sudoku_p2.h"
 #include "cola.h"
 
-#define LEN_FILA 				28
+#define LEN_FILA 				29
 #define TOT_FILAS 			18
 #define FILAS_POR_CUAD 	3
-#define TOT_CHARS 			784 // 28*28
+#define TOT_CHARS 			812 // 28*28 812
+#define MAX_VALORES  9
 
+static const char leyenda[] = {'L','E','Y','E','N','D','A',':','\n',
+																'\t','A','c','a','b','a','r',' ','l','a',' ','p','a','r','t','i','d','a',':',' ','#','R','S','T','!','\n',
+																'\t','N','u','e','v','a',' ','p','a','r','t','i','d','a',':',' ','#','N','E','W','!','\n',
+																'\t','J','u','g','a','d','a',':',' ','#','F','C','V','S','!','\n'};
+
+																			
 static const char topRow[LEN_FILA] = {'/','-','-','+','-','-','+','-','-',
 																			'+','-','-','+','-','-','+','-','-',
-																			'+','-','-','+','-','-','+','-','-','\\'};
+																			'+','-','-','+','-','-','+','-','-','\\','\n'};
 
 static const char midRow[LEN_FILA] = {'+','-','-','+','-','-','+','-','-',
 																			'#','-','-','+','-','-','+','-','-',
-																			'#','-','-','+','-','-','+','-','-','+'};
+																			'#','-','-','+','-','-','+','-','-','+','\n'};
 
 static const char lowRow[LEN_FILA] = {'\\','-','-','+','-','-','+','-','-',
 																			 '+','-','-','+','-','-','+','-','-',
-																			 '+','-','-','+','-','-','+','-','-','/'};
+																			 '+','-','-','+','-','-','+','-','-','/','\n'};
 
 static const char hardRow[LEN_FILA] = {'+','#','#','#','#','#','#','#','#',
 																			 '+','#','#','#','#','#','#','#','#',
-																			 '+','#','#','#','#','#','#','#','#','+'};
+																			 '+','#','#','#','#','#','#','#','#','+','\n'};
+
+static const int listaTipo[MAX_VALORES] = {1,4,7,10,13,16,19,22,25};
 
 static volatile int sigchar = 0;
 
 static volatile char filas[TOT_FILAS][LEN_FILA];
-	
-static volatile char tableroCompleto[TOT_CHARS];
+
+static volatile char tableroCompleto[TOT_CHARS];	//Vector que guarda el tablero completo del sudoku
 																			 
 static volatile boolean terminado = FALSE;
-																			 
+
+//Devuelve true si valor esta en la listaTipo
+int inListTipo(int valor){
+	int x;
+  for(x=0; x<MAX_VALORES; x++){
+		if(listaTipo[x]==valor){
+			return TRUE;
+    }
+	}
+    return FALSE;
+}
+
+//													
+//Inicializa el tablero para presentarlo por pantalla
+//
 void inicializar_tablero()
 {
 	int i, j, fila = 0, columna;
@@ -62,11 +85,11 @@ void inicializar_tablero()
 			{
 				chr = '|';
 			}
-			else if (j % 2 == 0)	
+			else if (i % 2 != 0)	
 			{
 				chr = ' ';					// Estamos en un espacio vacío
 				
-				if(i % 2 != 0)			// Se estamos en una casilla pista/error sobreescribimos
+				if(!inListTipo(j))			// Se estamos en una casilla pista/error sobreescribimos
 				{
 					if (es_pista(fila, columna) == TRUE)
 					{
@@ -82,7 +105,7 @@ void inicializar_tablero()
 			{
 				chr = ' ';					// Estamos en un espacio vacío
 				
-				if(i % 2 == 0)			// Si estamos en una casilla número sobreescribimos
+				if(inListTipo(j))			// Si estamos en una casilla número sobreescribimos
 				{
 					chr = leer_celda(fila,columna); // TODO: Pasar a string
 				}
@@ -91,62 +114,77 @@ void inicializar_tablero()
 			filas[i][j] = chr;
 		}
 		
-		filas[i][LEN_FILA-1] = '|';
+		filas[i][LEN_FILA-2] = '|';
+		filas[i][LEN_FILA-1] = '\n';
 	}
 	
 	concat_tablero();
+	
+	pintar_siguiente_caracter();
 }
 
-void concat_fila(int ini, int *pos_ptr)
-{
-	int fila, i;
-	for (fila = ini; fila < ini + 2; fila++)
-	{
-			for (i = 0; i < LEN_FILA; i++)
-			{
-				tableroCompleto[*pos_ptr] = filas[fila][i];
-				*pos_ptr = *pos_ptr + 1;
-			}			
-	}
-}
-
-void concat_cuadrante(int cuad, int *pos_ptr)
-{
-	int fila = 0, i;
-	for (fila = 0; fila < 3; fila++)
-	{
-			concat_fila(cuad*FILAS_POR_CUAD + fila, pos_ptr);
-			
-			if (fila != 2)
-			{	
-					for (i = 0; i < LEN_FILA; i++)
-					{
-						tableroCompleto[*pos_ptr] = midRow[i];
-						*pos_ptr = *pos_ptr + 1;
-					}
-			}
-	}	
-}
-
+//
+//Concatena el cuadrante entero
+//
 void concat_tablero()
 {
-	int i, pos = 0, fila = 2;
+    int fila_recorrida = 0;
+	int i,x, pos = 0;
 	
+	//Añade la topRow al vector principal
 	for (i = 0; i < LEN_FILA; i++)
 	{
 			tableroCompleto[pos] = topRow[i];
 			pos++;
 	}
 	
+	//Añade una hardRow para que quede mas bonito
+	for (x = 0; x < LEN_FILA; x++)
+	{
+			tableroCompleto[pos] = hardRow[x];
+			pos++;
+  }
+	
+	//Añade las tres filas de cudarantes del sudoku
 	for (i = 0; i < 3; i++)
 	{
-			concat_cuadrante(i, &pos);
+	        int fila = 0, i,x;
+					//Añade las tres filas de un cuadrante
+	        for (fila = 0; fila < 3; fila++)
+	        {		
+								//Añade los datos de un cuadrante
+	             for (x=0; x<2 ;x++)
+	             {
+			           for (i = 0; i < LEN_FILA; i++)
+			           {
+			        	    tableroCompleto[pos] = filas[fila_recorrida][i];
+				            pos = pos + 1;
+		    	        }
+		            	fila_recorrida++;
+	             }
+			
+							//Si la fila no es la ultima del cuadrante, añade la midRow
+		        	if (fila != 2)
+		        	{	
+			        		for (i = 0; i < LEN_FILA; i++)
+		        			{
+			        			tableroCompleto[pos] = midRow[i];
+			        			pos = pos + 1;
+			        		}
+			        }
+	        }	
+	    //Añadimos la hardRow cuando se termina el cuadrante
 			if (i != 2)
 			{	
-					tableroCompleto[pos] = hardRow[i];
+			    for (x = 0; x < LEN_FILA; x++)
+	        {
+			        tableroCompleto[pos] = hardRow[x];
+			        pos++;
+          }
 			}
 	}
 	
+	//Añade la fila lowRow
 	for (i = 0; i < LEN_FILA; i++)
 	{
 			tableroCompleto[pos] = lowRow[i];
@@ -155,10 +193,11 @@ void concat_tablero()
 	
 }
 
+//Envia el vector de caracteres del tablero a la uart
 void pintar_siguiente_caracter()
 {
 	char chr;
-	if (! terminado)
+	if (!terminado)
 	{
 			chr = tableroCompleto[sigchar];
 			sigchar++;
@@ -166,6 +205,7 @@ void pintar_siguiente_caracter()
 			if (sigchar == TOT_CHARS)
 			{
 				terminado = TRUE;
+				sigchar = 0;
 			}
 			
 			cola_guardar_eventos(SET_CHAR, chr);

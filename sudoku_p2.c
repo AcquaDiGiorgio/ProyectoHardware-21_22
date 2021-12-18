@@ -6,6 +6,7 @@
 #include "gestor_IO.h"
 #include "boton.h"
 #include "uart0.h"
+#include "gestor_output.h"
 
 // Cuadrícula a utilizar
 // Para cambiarla, modificar cuadricula_C_C por el tablero deseado
@@ -284,5 +285,8 @@ int main (void) {
 	eint_init();
 	inicializarAlarmasDefault();
 	candidatos_actualizar();
+	//---
+	inicializar_tablero();
+	//--
 	scheduler();
 }

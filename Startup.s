@@ -145,6 +145,8 @@ MAMTIM_Val      EQU     0x00000004
                 AREA    RESET, CODE, READONLY
                 ARM
 
+				EXTERN timer0_ISR
+				PRESERVE8 {TRUE}
 
 ; Exception Vectors
 ;  Mapped to Address 0.
@@ -176,7 +178,7 @@ Undef_Handler   B       Undef_Handler
 PAbt_Handler    B       PAbt_Handler
 DAbt_Handler    B       DAbt_Handler
 IRQ_Handler     B       IRQ_Handler
-FIQ_Handler     B       FIQ_Handler
+FIQ_Handler     B       timer0_ISR
 
 
 ; Reset Handler

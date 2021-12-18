@@ -39,7 +39,7 @@ void char_to_uart(char chr)
 	U0THR = chr;
 	// Gestion interrupciones
 }
-
+/*
 interUart_t detectar_interrupcion(uint8_t IIR)
 {
 		
@@ -53,7 +53,7 @@ interUart_t detectar_interrupcion(uint8_t IIR)
 	}
 	
 	return INTER_UNKNOWN;
-}
+}*/
 
 /* **************************************************************  */
 /* Funcion que se ejecuta cuando se produce la interrupcion       */
@@ -68,7 +68,7 @@ void rsi_uart0(void) __irq
 			cola_guardar_eventos(SET_UART_SEND_CHR, U0RBR);
 		}	
 	}
-	else if ( U0IIR == 0x02 )						// THRE Interruption
+	else //if ( U0IIR == 0x02 )						// THRE Interruption
 	{
 			cola_guardar_eventos(SET_UART_CHR_DISP, NO_AUX_DATA);
 	}

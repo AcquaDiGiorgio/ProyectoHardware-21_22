@@ -10,6 +10,9 @@
 volatile char comando[MAX_COMMAND_SIZE];
 int posicion_actual = 0;
 
+//
+//El vector de caracteres lo vacia
+//
 void reiniciar_comando(void)
 {
 	int i;
@@ -49,6 +52,9 @@ void recibir_caracter(char chr)
 	}
 }
 
+//
+//Detecta si los caracteres en el vector representan a un comando valido
+//
 void detectar_comando(void)
 {
 	int int_val, i;
@@ -91,14 +97,15 @@ void detectar_comando(void)
 
 void reiniciar_partida(void)
 {
-	char string[] = "RP\n";
-	string_to_uart(string,3);
+	//char string[] = "RP\n";
+	char_to_uart('G');
+	//string_to_uart(string,3);
 }
 
 void nueva_partida(void)
 {
-	char string[] = "NW\n";
-	string_to_uart(string,3);
+	//char string[] = "NW\n";
+	//string_to_uart(string,3);
 }
 
 void introducir_jugada(int info[])
