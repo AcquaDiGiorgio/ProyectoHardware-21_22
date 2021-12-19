@@ -8,5 +8,6 @@
 	void concat_tablero(void);
 
 	void pintar(void);
+	int to_string(int val);
 
 #endif //GESTOR_OUTPUT_H

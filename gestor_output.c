@@ -5,14 +5,15 @@
 #include "uart0.h"
 	
 #define LEN_FILA 				29
-#define TOT_FILAS 			18
+#define TOT_FILAS 			9
 #define FILAS_POR_CUAD 	3
 #define TOT_CUADRANTES  3
-#define TOT_CHARS 			812 // 28*28 812
+#define TOT_CHARS 			551 // 19 * 29
 #define MAX_VALORES  		9
 #define NEW_LINE				0x0A
 #define TAB							0x09
 #define LEYENDA_SIZE		0
+#define LEN_COMANDO 		10
 
 //static const int leyenda[LEYENDA_SIZE] = {'L','E','Y','E','N','D','A',':',NEW_LINE,
 //																					TAB,'A','c','a','b','a','r',' ','l','a',' ',
@@ -22,21 +23,23 @@
 //																					TAB,'J','u','g','a','d','a',':',' ','#','F','C','V','S','!',NEW_LINE};
 
 																			
-static const int topRow[LEN_FILA] = {'+','-','-','+','-','-','+','-','-',
-																			'+','-','-','+','-','-','+','-','-',
-																			'+','-','-','+','-','-','+','-','-','+',NEW_LINE};
+static const int topRow[LEN_FILA] = {'#','#','#','#','#','#','#','#','#',
+																		 '#','#','#','#','#','#','#','#','#',
+																		 '#','#','#','#','#','#','#','#','#',NEW_LINE};
 
 static const int midRow[LEN_FILA] = {'+','-','-','+','-','-','+','-','-',
-																			'#','-','-','+','-','-','+','-','-',
-																			'#','-','-','+','-','-','+','-','-','+',NEW_LINE};
+																		 '#','-','-','+','-','-','+','-','-',
+																		 '#','-','-','+','-','-','+','-','-','+',NEW_LINE};
 
-static const int lowRow[LEN_FILA] = {'+','-','-','+','-','-','+','-','-',
-																			 '+','-','-','+','-','-','+','-','-',
-																			 '+','-','-','+','-','-','+','-','-','+',NEW_LINE};
+static const int lowRow[LEN_FILA] = {'#','#','#','#','#','#','#','#','#',
+																		 '#','#','#','#','#','#','#','#','#',
+																		 '#','#','#','#','#','#','#','#','#','#',NEW_LINE};
 
 static const int hardRow[LEN_FILA] = {'+','#','#','#','#','#','#','#','#',
-																			 '+','#','#','#','#','#','#','#','#',
-																			 '+','#','#','#','#','#','#','#','#','+',NEW_LINE};
+																			'+','#','#','#','#','#','#','#','#',
+																			'+','#','#','#','#','#','#','#','#','+',NEW_LINE};
+
+static const int comando[LEN_COMANDO] = {NEW_LINE,'C','o','m','a','n','d','o',':',' '};
 
 static const int listaTipo[MAX_VALORES] = {1,4,7,10,13,16,19,22,25};
 
@@ -64,67 +67,51 @@ int inListTipo(int valor){
 //
 void inicializar_tablero()
 {
-	int i, j, fila = 0, columna;
-	int chr;
+	int fila, j, columna;
+	int chr, num;
 	
-	for (i = 0; i < TOT_FILAS; i++)
+	for (fila = 0; fila < TOT_FILAS; fila++)
 	{
-		filas[i][0] = '|';
-		
-		if (i % 2 == 0)
-		{
-			fila++;
-		}
-		
+		filas[fila][0] = '|';
 		columna = 0;
 		
 		for (j = 1; j < LEN_FILA-1; j++)
 		{
-			if ((j - 1) % 2 == 0)
+			if ((j - 1) % 3 == 0)
 			{
 				columna++;
-			}
-				
+			}				
 			
-			if (j % 9 == 0)						// Estamos en un separador de cuadrante
+			if (j % 9 == 0)							// Estamos en un separador de cuadrante
 			{
 				chr = '#';
 			}
-			else if (j % 3 == 0)			// Estamos en un separador de fila
+			else if (j % 3 == 0)				// Estamos en un separador de fila
 			{
 				chr = '|';
 			}
-			else if (i % 2 != 0)			// Estamos en un espacio vacío
+			else if ((j - 1) % 3 == 0)		// Estamos en un espacio vacío
 			{
-				chr = ' ';							
-				
-				if(!inListTipo(j))			// Se estamos en una casilla pista/error sobreescribimos
-				{
-					if (es_pista(fila, columna) == TRUE)
-					{
-						chr = 'P';
-					}
-					else if (hay_error(fila,columna) == TRUE)
-					{
-						chr = 'E';
-					}			
-				}
+				chr = to_string(leer_celda(fila,columna));
 			}
 			else									
 			{
-				chr = ' ';					// Estamos en un espacio vacío
-				
-				if(inListTipo(j))			// Si estamos en una casilla número sobreescribimos
+				chr = ' ';	
+				if(es_pista(fila,columna) == TRUE)
 				{
-					chr = leer_celda(fila,columna); // TODO: Pasar a string
+					chr = 'P';
+				}
+				else if (hay_error(fila,columna) == TRUE)
+				{	
+					chr = 'E';
 				}
 			}
 			
-			filas[i][j] = chr;
+			filas[fila][j] = chr;
 		}
 		
-		filas[i][LEN_FILA-2] = '|';
-		filas[i][LEN_FILA-1] = '\n';
+		filas[fila][LEN_FILA-2] = '|';
+		filas[fila][LEN_FILA-1] = NEW_LINE;
 	}
 	
 	concat_tablero();
@@ -132,57 +119,106 @@ void inicializar_tablero()
 	cola_guardar_eventos(SET_CHAR, chr);
 }
 
+int to_string(int val)
+{
+	int retVal = ' ';
+	switch(val)
+	{
+		case 0:			
+			retVal = ' ';
+			break;
+		
+		case 1:
+			retVal = '1';
+			break;
+			
+		case 2:
+			retVal = '2';
+			break;
+			
+		case 3:
+			retVal = '3';
+			break;
+			
+		case 4:
+			retVal = '4';
+			break;
+			
+		case 5:
+			retVal = '5';
+			break;
+			
+		case 6:
+			retVal = '6';
+			break;
+			
+		case 7:
+			retVal = '7';
+			break;
+			
+		case 8:
+			retVal = '8';
+			break;
+			
+		case 9:
+			retVal = '9';
+			break;
+	}
+	
+	return retVal;
+}
+
 void concat_tablero()
 {
-	int i, j, cuadrante, fila, ini, pos;
-	pos = 0;
-	
-	for (i = 0; i < LEN_FILA; i++)
-	{
-			tableroCompleto[pos] = topRow[i];
-			pos++;
-	}
-	
-	for (cuadrante = 0; cuadrante < 3; cuadrante++)	// Recorro los 3 cuadrantes
-	{
-			
-			for (fila = 0; fila < 3; fila++)						// Recorro las 3 filas de este cuadrante
-			{
-					ini = cuadrante*FILAS_POR_CUAD + fila;
-					
-					for (i = ini; i < ini + 2; i++)			
-					{
-							for (j = 0; j < LEN_FILA; j++)
-							{
-								tableroCompleto[pos] = filas[i][j];
-								pos++;
-							}			
-					}
-					
-					if (fila != 2)
-					{	
-							for (i = 0; i < LEN_FILA; i++)
-							{
-									tableroCompleto[pos] = midRow[i];
-									pos = pos + 1;
-							}
-					}
-			}	
+		int i, j, cuadrante, fila, ini, pos;
+		pos = 0;
 		
-			if (cuadrante != 2)
-			{	
-					for (i = 0; i < LEN_FILA; i++){
-							tableroCompleto[pos] = hardRow[i];
+		for (i = 0; i < LEN_FILA; i++)										// Guardo la fila de arriba
+		{
+				tableroCompleto[pos] = topRow[i];
+				pos++;
+		}
+		
+		for (cuadrante = 0; cuadrante < 3; cuadrante++)		// Recorro los 3 cuadrantes
+		{				
+				for (fila = 0; fila < 3; fila++)							// Recorro las 3 filas de este cuadrante
+				{
+						for (j = 0; j < LEN_FILA; j++)
+						{
+							tableroCompleto[pos] = filas[fila][j];	// Guardo la info de esta fila
 							pos++;
-					}					
-			}
-	}
-	
-	for (i = 0; i < LEN_FILA; i++)
-	{
-			tableroCompleto[pos] = lowRow[i];
+						}			
+						
+						for (i = 0; i < LEN_FILA && fila < 2; i++)
+						{
+								tableroCompleto[pos] = midRow[i];			// Dibujo el separador de filas
+								pos = pos + 1;
+						}
+						
+				}
+				
+				for (i = 0; i < LEN_FILA && cuadrante < 2; i++){
+						tableroCompleto[pos] = hardRow[i];
+						pos++;
+				}			
+		}
+		
+		for (i = 0; i < LEN_FILA; i++)
+		{
+				tableroCompleto[pos] = lowRow[i];
+				pos++;
+		}
+		
+		for (i = 0; i < LEN_COMANDO; i++)
+		{
+			tableroCompleto[pos] = comando[i];
 			pos++;
-	}
+		}
+}
+
+void esperar_comando(void)
+{
+
 }
 
 void pintar(void){
@@ -192,7 +228,7 @@ void pintar(void){
 			chr = tableroCompleto[sigchar];
 			sigchar++;
 			
-			if (sigchar == TOT_CHARS) // sigchar == TOT_CHARS
+			if (sigchar == TOT_CHARS+LEN_COMANDO) // sigchar == TOT_CHARS
 			{
 				terminado = TRUE;
 				sigchar = 0;

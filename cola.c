@@ -41,7 +41,8 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 		eventList[indiceAux].marcaTemporal = clock_gettime(); 
 		eventList[indiceAux].ready = TRUE;
 		
-		enable_isr();											// Rehabilitamos interrupciones
+		enable_isr();		// Rehabilitamos interrupciones
+		
 		return; // Salimos de la función
 	}
 	
@@ -101,6 +102,7 @@ void leer_evento()
 	if(indice.aLeer == MAX_EVENTS)
 		indice.aLeer = 0;
 	
+	enable_isr();		// Rehabilitamos interrupciones
 	
 	// Acción dependendiendo del identificador del evento
 	switch (id)
@@ -171,7 +173,7 @@ void leer_evento()
 			break;
 	}
 	
-	enable_isr();
+	
 }
 
 boolean hay_evento()
