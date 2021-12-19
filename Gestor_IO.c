@@ -176,8 +176,7 @@ void latidoLed(void)
 	}
 }
 
-void overflow(void)
+void overflowLed(void)
 {
 	GPIO_escribir(30,1,1);
-	end_execution_error();
 }

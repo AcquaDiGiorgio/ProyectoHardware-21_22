@@ -8,12 +8,18 @@
 #include "uart0.h"
 #include "gestor_output.h"
 
-// Índices del vector de eventos
-static volatile int aLeer = 0;		// Evento que toca procesar
-static volatile int actual = 0;		// Índice al cual se le va a introducir un nuevo evento
-
 void __swi(0xFF) enable_isr (void);
 void __swi(0xFE) disable_isr (void);
+
+void __swi(0xFD) enable_isr_fiq (void);
+void __swi(0xFC) disable_isr_fiq (void);
+
+struct index{
+		int aLeer;			// Evento a ser ejecutado
+		int aEscribir;  // Espacio libre para introducir un evento
+};
+
+static volatile struct index indice;
 
 void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 {
@@ -21,12 +27,10 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 		
 	disable_isr();						// Deshabilitamos interrupciones
 	
-	indiceAux = actual;		// Creamos un índice auxiliar
-	actual++;									// aumentamos el índice
-	if (actual == MAX_EVENTS)	// Si hemos llegado al final de la cola, ponemos el índice al 0
-		actual = 0;
-	
-	enable_isr();							// Rehabilitamos interrupciones
+	indiceAux = indice.aEscribir;				// Creamos un índice auxiliar
+	indice.aEscribir++;									// aumentamos el índice
+	if (indice.aEscribir == MAX_EVENTS)	// Si hemos llegado al final de la cola, ponemos el índice al 0
+		indice.aEscribir = 0;								
 	
 	// Comprobamos que donde queremos introducir el evento, no hay otro esperando a ser leído
 	if(eventList[indiceAux].ready != TRUE)
@@ -37,11 +41,13 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 		eventList[indiceAux].marcaTemporal = clock_gettime(); 
 		eventList[indiceAux].ready = TRUE;
 		
+		enable_isr();											// Rehabilitamos interrupciones
 		return; // Salimos de la función
 	}
 	
 	// Si hay un evento en ese espacio, saltamos un error
-	overflow();
+	overflowLed();
+	end_execution_error();
 }
 
 void tratar_alarma(uint32_t auxData){
@@ -75,18 +81,26 @@ void tratar_alarma(uint32_t auxData){
 
 void leer_evento()
 { 	
+	event_t id;
+	uint32_t auxData;
+	int indiceAux;
+	
+	disable_isr();
+	
 	// Sacamos la información del evento y liberamos su espacio
-	event_t id = eventList[aLeer].id;
-	uint32_t auxData = eventList[aLeer].auxData;
-	eventList[aLeer].ready = FALSE;
+	indiceAux = indice.aLeer;
+	
+	id = eventList[indiceAux].id;
+	auxData = eventList[indiceAux].auxData;
+	eventList[indiceAux].ready = FALSE;
 	
 	// Aumentamos en 1 el índice
-	aLeer++;
+	indice.aLeer++;
 	
 	// Estamos al final de la cola de procesos
-	if(aLeer == MAX_EVENTS){
-		aLeer = FALSE;
-	}
+	if(indice.aLeer == MAX_EVENTS)
+		indice.aLeer = 0;
+	
 	
 	// Acción dependendiendo del identificador del evento
 	switch (id)
@@ -145,22 +159,31 @@ void leer_evento()
 			break;
 
 		case SET_UART_CHR_DISP:
-			pintar_siguiente_caracter();
+			pintar();
 			break;
+		
+		case SET_WATCHDOG:	
+			disable_isr_fiq();
+			WD_feed();
+			enable_isr_fiq();
 		
 		default:
 			break;
-		
 	}
+	
+	enable_isr();
 }
 
 boolean hay_evento()
 {
-	return eventList[aLeer].ready;
+	return eventList[indice.aLeer].ready;
 }
 
 void scheduler()
 {	
+	indice.aLeer = 0;
+	indice.aEscribir = 0;
+	
 	while(1)
 	{
 		if(hay_evento() == TRUE){

@@ -3,6 +3,8 @@
 #include <inttypes.h>
 #include "constantes_comunes.h"
 #include "uart0.h"
+#include "cola.h"
+#include "eventos.h"
 
 #define MAX_COMMAND_SIZE 10
 #define JUGADA_SIZE 4
@@ -97,9 +99,7 @@ void detectar_comando(void)
 
 void reiniciar_partida(void)
 {
-	//char string[] = "RP\n";
-	char_to_uart('G');
-	//string_to_uart(string,3);
+		cola_guardar_eventos(SET_WATCHDOG, NO_AUX_DATA);
 }
 
 void nueva_partida(void)

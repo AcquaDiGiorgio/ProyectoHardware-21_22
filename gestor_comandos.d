@@ -5,3 +5,5 @@
 .\gestor_comandos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\gestor_comandos.o: constantes_comunes.h
 .\gestor_comandos.o: uart0.h
+.\gestor_comandos.o: cola.h
+.\gestor_comandos.o: eventos.h

@@ -23,7 +23,7 @@
 	void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor);
 	
 	// Ha habido overflow en alguna parte del sistema (encer led)
-	void overflow(void);
+	void overflowLed(void);
 	
 	void reiniciarEstadoAnterior(void);
 	void latidoLed(void);

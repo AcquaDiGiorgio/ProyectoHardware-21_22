@@ -45,7 +45,7 @@ void end_execution_error(void)
 {
 	while (1)								// While 1 por si acaso
 	{
-		EXTWAKE = 0; 					// Ni EXTINT0 ni EXTINT1 ni EXTINT2 despertarán al procesador
-		PCON |= 0x02; 				// Se pone al procesador en modo PowerDown
+			EXTWAKE = 0; 					// Ni EXTINT0 ni EXTINT1 ni EXTINT2 despertarán al procesador
+			PCON |= 0x02; 				// Se pone al procesador en modo PowerDown
 	}
 }

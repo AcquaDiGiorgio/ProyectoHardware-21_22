@@ -19,6 +19,7 @@
 		SET_UART_SEND_CHR		= 0x05,		// Evento envía un caracter desde la UART 
 		SET_CHAR 						= 0x06,		// Evento que pide un carácter para el gestor_ouput
 		SET_UART_CHR_DISP 	= 0x07,		// Evento que dice que se puede volver a escribir en la UART
+		SET_WATCHDOG 				= 0x08,
 		
 		// Actuación del evento (Llamado por un evento de tipo SET)
 		EV_GPIO_REF					= 0xA0,		// El evento requiere refrescar las salidas de la IO

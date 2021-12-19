@@ -12,3 +12,4 @@
 .\sudoku_p2.o: gestor_IO.h
 .\sudoku_p2.o: boton.h
 .\sudoku_p2.o: uart0.h
+.\sudoku_p2.o: gestor_output.h
