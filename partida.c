@@ -23,9 +23,9 @@ void preprar_partida(void)
 
 void empezar_partida(void)
 {
-		crear_alarma_unica(0, EV_FIN_PARTIDA, SEGUNDO * 5);
+		crear_alarma_unica(0, EV_FIN_PARTIDA, SEGUNDO * 3);
 		cambiar_estado_partida(jugando);
-		partida_minutos = RTC_leer_segundos();
+		partida_minutos 	= RTC_leer_segundos();
 		partida_segundos 	= RTC_leer_minutos();
 		dibujar();
 }
@@ -35,6 +35,8 @@ void terminar_partida(char *razon, int length)
 		cambiar_estado_partida(final);
 		razon_fin = razon; 
 		razon_len = length;
+		partida_minutos		= RTC_leer_minutos() - partida_minutos;
+		partida_segundos 	= RTC_leer_segundos() - partida_segundos;
 		dibujar();
 }
 

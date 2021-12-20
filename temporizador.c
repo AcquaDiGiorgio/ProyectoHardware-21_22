@@ -13,7 +13,7 @@ static volatile unsigned int timer1_count = 0;
 
 void temporizador_iniciar(void)
 {
-	T1MR0 = 0x77359400 - 0x1;                     // Timer1 interrumpe cada 0,016 us (1 ciclo) * 2.000.000.000 ciclos = 32.000.000 us
+	T1MR0 = 0xD693A400 - 0x1;                     // Timer1 interrumpe cada 4 minutos (36.000.00.000 cuentas)
 	T1MCR = 3;                     								// Timer1 interrumpe y reinicia al llegar a T1MR0
 	T1TCR = 1;                             				// Timer1 Enable
 	
@@ -31,8 +31,8 @@ void temporizador_empezar()
 
 uint64_t temporizador_leer(void)
 {
-	 // Veces interrumpido * maxCount (us) + Count actual (us)
-	 return timer1_count * 32000000 + (T1TC % 63);
+	 // Veces interrumpido * maxCount (ms) + Count actual (ms)
+	 return timer1_count * (0xD693A400 / 1000) + (T1TC / 15000);
 }
 
 uint64_t __SWI_0 (void){

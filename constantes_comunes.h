@@ -54,7 +54,7 @@
 		switch(val)
 		{
 			case 0:			
-				retVal = ' ';
+				retVal = '0';
 				break;
 			
 			case 1:

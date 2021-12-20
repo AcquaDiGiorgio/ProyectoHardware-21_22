@@ -9,6 +9,7 @@
 
 	void init_serial (void); /* Initialize Serial Interface       */
 		
+	void reiniciar_comando(void);
 	void preparar_nuevo_comando(void);
 	void recibir_caracter(int chr);
 	void detectar_comando(void);

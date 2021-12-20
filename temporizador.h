@@ -16,7 +16,7 @@
 	void RTC_init(void);
 	uint8_t RTC_leer_minutos(void);
 	uint8_t RTC_leer_segundos(void);
-		
+	
 	void WD_init(int sec);
 	void WD_feed(void);
 	

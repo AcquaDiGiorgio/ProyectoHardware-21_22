@@ -47,8 +47,8 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 	}
 	
 	// Si hay un evento en ese espacio, saltamos un error
-	overflowLed();
-	end_execution_error();
+	crear_alarma_unica(0,SET_WATCHDOG,20 * SEGUNDO);
+	while(1){}
 }
 
 void tratar_alarma(uint32_t auxData){
@@ -127,7 +127,7 @@ void leer_evento()
 			switch(estado_energia_actual())
 			{
 				case DESPIERTO:
-					escribirValor();
+					detectar_comando();
 					break;
 					
 				case DORMIDO:
@@ -144,7 +144,7 @@ void leer_evento()
 			switch(estado_energia_actual())
 			{
 				case DESPIERTO:
-					eliminarValor();
+					reiniciar_comando();
 					break;
 					
 				case DORMIDO:
@@ -172,7 +172,7 @@ void leer_evento()
 		case SET_WATCHDOG:	
 			disable_isr_fiq();
 			WD_feed();
-			enable_isr_fiq();
+			enable_isr_fiq();							
 			break;
 		
 		case SET_WRITE_COMMAND:
@@ -180,13 +180,16 @@ void leer_evento()
 			columna = (auxData >> 0x8) & 0xFF;
 			fila = (auxData >> 0x10) & 0xFF;
 			introducirValorCelda(fila, columna, valor);
-			candidatos_actualizar();
 			dibujar();
 			break;
 		
 		case SET_RESET_COMMAND:
 			sudokuReiniciar();
 			dibujar();
+			break;
+		
+		case SET_NEW_COMMAND:
+			preprar_partida();
 			break;
 		
 		default:

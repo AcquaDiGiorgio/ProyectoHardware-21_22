@@ -1,6 +1,7 @@
 #include "gestor_output.h"
 #include "sudoku_p2.h"
 #include "cola.h"
+#include "temporizador.h"
 
 #include "uart0.h"
 	
@@ -10,8 +11,10 @@
 #define LEN_CANDIDATOS					13
 #define FILAS_POR_CUADRANTE 		3
 #define LEN_CABECERA_CANDIDATOS 30
-#define LEN_FIN		 							34
+#define LEN_FIN		 							35
 #define LEN_DUR_PARTDIA 				23
+#define LEN_VOLVER_A_JUGAR 			36
+#define LEN_COSTE_ACTUALIZAR		33
 
 #define CUADRICULA_SIZE 				552
 #define LEYENDA_SIZE						64
@@ -27,8 +30,10 @@ static char cabeceraCandidatos[LEN_CABECERA_CANDIDATOS] = {"\n\nF C\tCandidatos\
 static char leyenda[LEYENDA_SIZE] 											= {"\nLEYENDA:\n\tReiniciar la partida: #RST!\n\tIntroducir Jugada #FCVS!"};	
 static char comando[COMANDO_SIZE] 											= {"\nComando: "};
 static char informacion_juego[INFO_SIZE] 								= {"Este juego es el sudoku, tras apretar una tecla, se le mostrará un tablero con\nciertos valores predefinidos y posibles candidatos\n\nPara introducir una jugada, usa el comando #FCVS!\nSiendo F la fila, C la columna, V el valor y S el resto de\nla división de la suma de los 3 anteriores valores entre 8 => (F+C+V)%8\n\nPara reiniciar el tablero usa el comando #RST!\n\nLa partida terminara tras pasar 1 hora o completar el sudoku sin errores\n\nPresione cualquier tecla para continuar\n"};
-static char fin_partida[LEN_FIN] 												= {"La partida ha terminado debido a: "};
+static char fin_partida[LEN_FIN] 												= {"\nLa partida ha terminado debido a: "};
 static char razon_fin[LEN_DUR_PARTDIA] 									= {"\nLa partida ha durado: "};
+static char coste_actualizar[LEN_COSTE_ACTUALIZAR] 			= {"\nCoste de actualizar candidatos: "};
+static char volver_a_jugar[LEN_VOLVER_A_JUGAR]					= {"\nEscriba #NEW! para volver a jugar: "};
 
 static volatile char filas[TOT_FILAS][LEN_FILA];
 static volatile char tableroCompleto[CUADRICULA_SIZE];	//Vector que guarda el tablero completo del sudoku
@@ -36,6 +41,8 @@ static volatile char candidatos[CANDIDATOS_SIZE];
 
 static volatile boolean terminado = FALSE;
 static volatile int index_candidatos = 1;
+
+static volatile uint64_t actualizar_coste = 0;
 
 void __swi(0xFF) enable_isr (void);
 
@@ -46,7 +53,9 @@ void enviar_info(void)
 
 void mostrar_final(uint8_t minutos, uint8_t segundos, char *razon, int len_razon)
 {
-		char tiempo[8];
+		int i;
+		char tiempo[8], actualizar_tiempo[9];
+	
 		tiempo[0] = to_string((minutos>>1) & 0x1);
 		tiempo[1] = to_string(minutos & 0x1);
 		tiempo[2] = 'm';
@@ -56,11 +65,20 @@ void mostrar_final(uint8_t minutos, uint8_t segundos, char *razon, int len_razon
 		tiempo[6] = 's';
 		tiempo[7] = '\n';
 	
+		for (i = 0; i < 7; i++)
+		{
+				actualizar_tiempo[6-i] = to_string(actualizar_coste % (10 * i));
+		}
+		actualizar_tiempo[7] = ' ';
+		actualizar_tiempo[8] = '\n';
+	
 		add_to_buffer(fin_partida, LEN_FIN);
 		add_to_buffer(razon, len_razon);
 		add_to_buffer(razon_fin,LEN_DUR_PARTDIA);
 		add_to_buffer(tiempo, 8);
-		
+		add_to_buffer(coste_actualizar, LEN_COSTE_ACTUALIZAR);
+		add_to_buffer(actualizar_tiempo, 8);
+		add_to_buffer(volver_a_jugar, LEN_VOLVER_A_JUGAR);
 }
 
 void gestor_candidatos(int fila, int columna)
@@ -101,6 +119,12 @@ void inicializar_tablero(void)
 {
 	int fila, valor, j, columna;
 	char chr;
+	uint64_t time;
+	
+	time = clock_gettime();
+	candidatos_actualizar(); 
+	actualizar_coste = actualizar_coste + clock_gettime() - time;
+	temporizador_parar();
 	
 	for (fila = 0; fila < TOT_FILAS; fila++)
 	{
@@ -127,6 +151,12 @@ void inicializar_tablero(void)
 					{				
 							valor = leer_celda(fila,columna);
 							chr = to_string(valor);
+							
+							if (valor == 0)
+							{
+									chr = ' ';
+							}
+						
 							if(es_pista(fila,columna) == FALSE)
 							{
 									gestor_candidatos(fila, columna);

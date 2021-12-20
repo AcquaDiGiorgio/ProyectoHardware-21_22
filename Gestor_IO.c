@@ -18,7 +18,7 @@ void initIO(void)
 	GPIO_iniciar();
 	
 	// Creamos la alarma que refresca la GPIO
-	crear_alarma_periodica(GPIO_REFRESH,EV_GPIO_REF,200);
+	// crear_alarma_periodica(GPIO_REFRESH,EV_GPIO_REF,200);
 	
 	// Marcamos Salidas
 	GPIO_marcar_salida(0,14);
@@ -71,17 +71,14 @@ void refrescarSalidas(void)
 	if (estadoActual != estadoAnterior)
 	{
 		estadoAnterior = estadoActual;
-		crear_alarma_unica(POW_DOWN,EV_POWER,15 * SEGUNDO);
+		// crear_alarma_unica(POW_DOWN,EV_POWER,15 * SEGUNDO);
 	}
 }
 
 void escribirValor(void)
 {
-	uint64_t ini, fin; 					// Variables para el contador de tiempo
 	uint8_t fila,columna,valor; // Variables leidas de la GPIO
 	boolean accesible;
-	
-	ini = clock_gettime(); 	// Inicio cuenta del tiempo de escritura
 	
 	// Leemos la fila, columna y valor de la GPIO
 	fila    = GPIO_leer(16,4)-1;
@@ -109,17 +106,12 @@ void escribirValor(void)
 			crear_alarma_unica(LED_ERROR,EV_LED_ERR,1 * SEGUNDO);
 		}			
 	}
-	
-	fin = clock_gettime() - ini; // fin cuenta del tiempo de escritura
 }
 
 void eliminarValor(void)
 {	
-	uint64_t ini, fin;
 	uint8_t fila,columna,valor;
 	boolean accesible;
-	
-	ini = clock_gettime(); // inicio cuenta del tiempo de eliminación
 	
 	fila    = GPIO_leer(16,4)-1;
 	columna = GPIO_leer(20,4)-1;
@@ -136,8 +128,6 @@ void eliminarValor(void)
 		eliminarValorCelda(fila,columna);
 		candidatos_actualizar();
 	}
-	
-	fin = clock_gettime() - ini; // fin cuenta del tiempo de eliminación
 }
 
 void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
