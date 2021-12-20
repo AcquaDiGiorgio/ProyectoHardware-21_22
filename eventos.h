@@ -20,6 +20,10 @@
 		SET_CHAR 						= 0x06,		// Evento que pide un carácter para el gestor_ouput
 		SET_UART_CHR_DISP 	= 0x07,		// Evento que dice que se puede volver a escribir en la UART
 		SET_WATCHDOG 				= 0x08,
+		SET_WRITE_COMMAND		= 0x09,
+		SET_RESET_COMMAND		= 0x0A,
+		SET_NEW_COMMAND 		= 0x0B,
+		SET_INIT_SUDOKU			= 0x0C,
 		
 		// Actuación del evento (Llamado por un evento de tipo SET)
 		EV_GPIO_REF					= 0xA0,		// El evento requiere refrescar las salidas de la IO

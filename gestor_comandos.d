@@ -7,3 +7,4 @@
 .\gestor_comandos.o: uart0.h
 .\gestor_comandos.o: cola.h
 .\gestor_comandos.o: eventos.h
+.\gestor_comandos.o: gestor_output.h

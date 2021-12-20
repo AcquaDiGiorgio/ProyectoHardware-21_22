@@ -10,7 +10,7 @@
 	void init_serial (void); /* Initialize Serial Interface       */
 		
 	void preparar_nuevo_comando(void);
-	void recibir_caracter(char chr);
+	void recibir_caracter(int chr);
 	void detectar_comando(void);
 	void reiniciar_partida(void);
 	void nueva_partida(void);

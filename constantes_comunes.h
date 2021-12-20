@@ -6,6 +6,8 @@
 	}boolean;
 	
 	#define SEGUNDO 1000		// 1000 ms
+	#define NEW_LINE				0x0A
+	#define TAB							0x09
 	
 	__inline int to_uint(char value)
 	{
@@ -44,6 +46,55 @@
 			default:
 				return -1;
 		}
+	}
+	
+	__inline int to_string(int val)
+	{
+		int retVal = ' ';
+		switch(val)
+		{
+			case 0:			
+				retVal = ' ';
+				break;
+			
+			case 1:
+				retVal = '1';
+				break;
+				
+			case 2:
+				retVal = '2';
+				break;
+				
+			case 3:
+				retVal = '3';
+				break;
+				
+			case 4:
+				retVal = '4';
+				break;
+				
+			case 5:
+				retVal = '5';
+				break;
+				
+			case 6:
+				retVal = '6';
+				break;
+				
+			case 7:
+				retVal = '7';
+				break;
+				
+			case 8:
+				retVal = '8';
+				break;
+				
+			case 9:
+				retVal = '9';
+				break;
+		}
+		
+		return retVal;
 	}
 
 	

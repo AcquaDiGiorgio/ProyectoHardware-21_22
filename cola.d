@@ -12,3 +12,5 @@
 .\cola.o: gestor_comandos.h
 .\cola.o: uart0.h
 .\cola.o: gestor_output.h
+.\cola.o: sudoku_p2.h
+.\cola.o: celda.h

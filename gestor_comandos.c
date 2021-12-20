@@ -5,11 +5,12 @@
 #include "uart0.h"
 #include "cola.h"
 #include "eventos.h"
+#include "gestor_output.h"
 
 #define MAX_COMMAND_SIZE 10
 #define JUGADA_SIZE 4
 
-volatile char comando[MAX_COMMAND_SIZE];
+volatile int comando[MAX_COMMAND_SIZE];
 int posicion_actual = 0;
 
 //
@@ -31,7 +32,7 @@ void reiniciar_comando(void)
 // 
 // Está función debe ser llamada por el scheduler
 //
-void recibir_caracter(char chr)
+void recibir_caracter(int chr)
 {
 	if (chr == '#')																	// Principio de un comando
 	{
@@ -59,73 +60,77 @@ void recibir_caracter(char chr)
 //
 void detectar_comando(void)
 {
-	int int_val, i;
-	int int_command[MAX_COMMAND_SIZE];
-	boolean error = FALSE;
+		int int_val, i;
+		int int_command[MAX_COMMAND_SIZE];
+		boolean error = FALSE;
 
-	if (comando[0] == 'R' && comando[1] == 'S' && comando[2] == 'T') 			// Comando RESET (RST)
-	{
-		reiniciar_partida();
-	}
-	else if (comando[0] == 'N' && comando[1] == 'E' && comando[2] == 'W')	// Comando NEW
-	{
-		nueva_partida();
-	}
-	else																																	// Comando Numérico
-	{		
-		for (i = 1; i < JUGADA_SIZE + 1 && error == FALSE; i++)
+		if (comando[0] == 'R' && comando[1] == 'S' && comando[2] == 'T') 			// Comando RESET (RST)
 		{
-			int_val = to_uint(comando[i]); 	// Cambio el valor char a int
-			if (int_val == -1)							// Si no es un número entero positivo
-			{
-				error = TRUE;
-			}
-			else
-			{	
-				int_command[i] = int_val;
-			}
+				reiniciar_partida();
+				cola_guardar_eventos(SET_UART_CHR_DISP, NO_AUX_DATA);
 		}
+		else if (comando[0] == 'N' && comando[1] == 'E' && comando[2] == 'W')	// Comando NEW
+		{
+				nueva_partida();
+				cola_guardar_eventos(SET_UART_CHR_DISP, NO_AUX_DATA);
+		}
+		else																																	// Comando Numérico
+		{		
+				for (i = 0; i < JUGADA_SIZE && error == FALSE; i++)
+				{
+						int_val = to_uint(comando[i]); 	// Cambio el valor char a int
+						if (int_val == -1)							// Si no es un número entero positivo
+						{
+								error = TRUE;
+						}
+						else
+						{	
+								int_command[i] = int_val;
+						}
+				}
 
-		if (error == FALSE)
-		{
-			introducir_jugada(int_command);
+				if (error == FALSE)
+				{
+						introducir_jugada(int_command);
+						pintar();		
+				}
+				else
+				{
+						lanzar_error(NOT_A_COMMAND);
+				}
 		}
-		else
-		{
-			lanzar_error(NOT_A_COMMAND);
-		}
-	}
 }
 
 void reiniciar_partida(void)
 {
-		cola_guardar_eventos(SET_WATCHDOG, NO_AUX_DATA);
+		
 }
 
 void nueva_partida(void)
 {
-	//char string[] = "NW\n";
-	//string_to_uart(string,3);
+		cola_guardar_eventos(SET_WATCHDOG, NO_AUX_DATA);
 }
 
 void introducir_jugada(int info[])
 {
-	uint8_t fila, columna, valor, checksum, checksum_real;
+		uint8_t fila, columna, valor, checksum, checksum_real;
+		int auxData;
 
-	fila 					= info[0];
-	columna 			= info[1];
-	valor 				= info[2];
-	checksum 			= info[3];
-	checksum_real = (fila + columna + valor) % 8;
+		fila 					= info[0];
+		columna 			= info[1];
+		valor 				= info[2];
+		checksum 			= info[3];
+		checksum_real = (fila + columna + valor) % 8;
 
-	if (checksum == checksum_real)
-	{
-		// Meter el valor
-	}
-	else
-	{
-		lanzar_error(BAD_CHECKSUM);
-	}
+		if (checksum == checksum_real)
+		{
+				auxData = (fila << 0x10) | (columna << 0x08) | valor;
+				cola_guardar_eventos(SET_WRITE_COMMAND, auxData);
+		}
+		else
+		{
+				lanzar_error(BAD_CHECKSUM);
+		}
 }
 
 void lanzar_error(command_err err)

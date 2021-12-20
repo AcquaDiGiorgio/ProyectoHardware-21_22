@@ -8,6 +8,7 @@
 #define BUFF_SIZE 20 
 
 void rsi_uart0(void) __irq;
+boolean escribiendoComnado = FALSE;
 
 /* **************************** */
 /* Initialize Serial Interface  */
@@ -41,21 +42,30 @@ void char_to_uart(int chr)
 /* **************************************************************  */
 void rsi_uart0(void) __irq
 {
-	int interrupt;
+	int interrupt, chr;
 	interrupt = U0IIR >> 0x1;
-	interrupt = interrupt & 0x111;
+	interrupt = interrupt & 0x03;
 	
-	if ( interrupt == 0x02 )								// BRB intrruption
+	if ( interrupt == 0x02 )				// BRB intrruption
 	{
-		if( U0LSR & 0x01 ) 								// U0RBR contains valid data
-		{			
-			char_to_uart(U0RBR);			
-			cola_guardar_eventos(SET_UART_SEND_CHR, U0RBR);
-		}	
+			if( U0LSR & 0x01 ) 								// U0RBR contains valid data
+			{			
+					chr = U0RBR;
+					//escribiendoComnado = TRUE;
+					//char_to_uart(chr);			
+					cola_guardar_eventos(SET_UART_SEND_CHR, chr);
+			}	
 	}
-	else if ( interrupt == 0x01 )						// THRE Interruption
+	else if ( interrupt == 0x01 )	// THRE Interruption
 	{
-		cola_guardar_eventos(SET_UART_CHR_DISP, NO_AUX_DATA);
+			if ( escribiendoComnado == FALSE )
+			{
+					cola_guardar_eventos(SET_UART_CHR_DISP, NO_AUX_DATA);
+			}
+			else
+			{
+					escribiendoComnado = FALSE;
+			}
 	}
 	
 	VICVectAddr = 0;

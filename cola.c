@@ -7,6 +7,7 @@
 #include "gestor_comandos.h"
 #include "uart0.h"
 #include "gestor_output.h"
+#include "sudoku_p2.h"
 
 void __swi(0xFF) enable_isr (void);
 void __swi(0xFE) disable_isr (void);
@@ -84,7 +85,7 @@ void leer_evento()
 { 	
 	event_t id;
 	uint32_t auxData;
-	int indiceAux;
+	int indiceAux, fila, columna, valor;
 	
 	disable_isr();
 	
@@ -168,6 +169,18 @@ void leer_evento()
 			disable_isr_fiq();
 			WD_feed();
 			enable_isr_fiq();
+			break;
+		
+		case SET_WRITE_COMMAND:
+			valor = auxData & 0xFF;
+			columna = (auxData >> 0x8) & 0xFF;
+			fila = (auxData >> 0x10) & 0xFF;
+			introducirValorCelda(fila, columna, valor);
+			break;
+		
+		case SET_INIT_SUDOKU:
+			char_to_uart(NEW_LINE);
+			break;
 		
 		default:
 			break;
