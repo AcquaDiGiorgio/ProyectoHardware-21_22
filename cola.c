@@ -8,6 +8,7 @@
 #include "uart0.h"
 #include "gestor_output.h"
 #include "sudoku_p2.h"
+#include "partida.h"
 
 void __swi(0xFF) enable_isr (void);
 void __swi(0xFE) disable_isr (void);
@@ -74,6 +75,10 @@ void tratar_alarma(uint32_t auxData){
 			latidoLed();
 			break;
 		
+		case EV_FIN_PARTIDA:
+			terminar_partida("Partida ha sido muy larga", 25);
+			break;
+		
 		default:
 			break;
 	}
@@ -82,6 +87,7 @@ void tratar_alarma(uint32_t auxData){
 void leer_evento()
 { 	
 	event_t id;
+	estado_juego_t estado_partida;
 	uint32_t auxData;
 	int indiceAux, fila, columna, valor;
 	
@@ -152,7 +158,15 @@ void leer_evento()
 		
 		// Gestionar entrada de la UART
 		case SET_UART_SEND_CHR:
-			recibir_caracter(auxData);
+			estado_partida = obtener_estado_juego();
+			if(estado_partida == principio)
+			{
+					empezar_partida();
+			}
+			else
+			{
+					recibir_caracter(auxData);
+			}			
 			break;
 		
 		case SET_WATCHDOG:	
@@ -167,12 +181,12 @@ void leer_evento()
 			fila = (auxData >> 0x10) & 0xFF;
 			introducirValorCelda(fila, columna, valor);
 			candidatos_actualizar();
-			inicializar_tablero();
+			dibujar();
 			break;
 		
 		case SET_RESET_COMMAND:
 			sudokuReiniciar();
-			inicializar_tablero();
+			dibujar();
 			break;
 		
 		default:

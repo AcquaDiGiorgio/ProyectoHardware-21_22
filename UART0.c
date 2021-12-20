@@ -59,7 +59,7 @@ void write_buffer(void)
 	}	
 }
 
-void recibir_buffer(char buff[], int size)
+void add_to_buffer(char buff[], int size)
 {
 	int i;
 	for(i = 0; i < size; i++)
@@ -97,7 +97,7 @@ void rsi_uart0(void) __irq
 		if( U0LSR & 0x01 ) 								// U0RBR contains valid data
 		{			
 			chr = U0RBR;
-			recibir_buffer(&chr,1);
+			add_to_buffer(&chr,1);
 			cola_guardar_eventos(SET_UART_SEND_CHR, chr);
 		}	
 	}

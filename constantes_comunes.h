@@ -48,7 +48,7 @@
 		}
 	}
 	
-	__inline int to_string(int val)
+	__inline char to_string(int val)
 	{
 		int retVal = ' ';
 		switch(val)

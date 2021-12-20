@@ -1,2 +1,9 @@
 .\partida.o: partida.c
+.\partida.o: partida.h
 .\partida.o: gestor_output.h
+.\partida.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
+.\partida.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\partida.o: temporizador.h
+.\partida.o: gestor_alarmas.h
+.\partida.o: eventos.h
+.\partida.o: constantes_comunes.h

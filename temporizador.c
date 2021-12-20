@@ -66,7 +66,7 @@ void temporizador_periodo(int periodo)
 //Inicializa el RTC, reseteando la cuenta, ajustando el reloj y activando el enable.
 void RTC_init(void)
 {
-	PREINT	= 0x726; // 60 MHz / x - 1 en Hex
+	PREINT	= 0x726; 															// 60 MHz / x - 1 en Hex
 	PREFRAC = 0x700;
 	CCR 		= 0x01;
 }

@@ -30,7 +30,8 @@
 		EV_POWER						= 0xA1,		// El evento requiere que se entre en modo PowerDown
 		EV_CHECK_PULS				= 0xA2,		// El evento requiere comprobar si elgún botón está pulsado
 		EV_LED_ERR					= 0xA3,		// El evento requiere apagar el led de error de la IO
-		EV_LATIDO						= 0xA4		// El evento requiere cambiar el estado del led de latido de la IO
+		EV_LATIDO						= 0xA4,		// El evento requiere cambiar el estado del led de latido de la IO
+		EV_FIN_PARTIDA			= 0xA5
 		
 	}event_t;
 

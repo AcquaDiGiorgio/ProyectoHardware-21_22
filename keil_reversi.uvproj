@@ -511,6 +511,11 @@
               <FileType>5</FileType>
               <FilePath>.\gestor_output.h</FilePath>
             </File>
+            <File>
+              <FileName>partida.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\partida.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

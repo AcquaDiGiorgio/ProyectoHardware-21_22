@@ -21,26 +21,22 @@ Target DLL:      UL2ARM.DLL V1.74.10.0
 Dialog DLL:      TARMP.DLL V1.53.0.0
  
 <h2>Project:</h2>
-C:\Users\Pc\Desktop\Jorge\Proyectos\ProyectoHardware-21_22\keil_reversi.uvproj
+C:\Users\jorge\Documents\GitHub\ProyectoHardware-21_22\keil_reversi.uvproj
 Project File Date:  12/20/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Simulator'
-compiling gestor_output.c...
-gestor_output.c(44): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
-  		recibir_buffer(informacion_juego, INFO_SIZE);
-gestor_output.c(50): warning:  #1294-D: Old-style function gestor_candidatos
-  void gestor_candidatos(fila, columna)
-gestor_output.c(138): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
-  	recibir_buffer(tableroCompleto, CUADRICULA_SIZE);
-gestor_output.c(141): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
-  	recibir_buffer(candidatos, index_candidatos);
-gestor_output.c: 4 warnings, 0 errors
+compiling partida.c...
+partida.c(59): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+  			mostrar_final(partida_minutos, partida_segundos, razon_fin, razon_len);
+partida.c: 1 warning, 0 errors
+compiling cola.c...
+compiling sudoku_p2.c...
 linking...
-Program Size: Code=8324 RO-data=120 RW-data=748 ZI-data=26548  
-".\keil_reversi.axf" - 0 Error(s), 4 Warning(s).
-Build Time Elapsed:  00:00:02
+Program Size: Code=8844 RO-data=32 RW-data=1088 ZI-data=25768  
+".\keil_reversi.axf" - 0 Error(s), 1 Warning(s).
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

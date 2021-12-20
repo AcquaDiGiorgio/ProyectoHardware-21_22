@@ -10,7 +10,7 @@
 	// Tipo de una alma
 	struct alarma_t{
 		boolean active; 				// Alarma activa o no
-		int elapsedTime; 			 	// Marca cuanto tiempo ha pasado en ms
+		uint32_t elapsedTime; 			 	// Marca cuanto tiempo ha pasado en ms
 		uint32_t auxData; 			// Información auxiliar de la alrma
 	};
 	
