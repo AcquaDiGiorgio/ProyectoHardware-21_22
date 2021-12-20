@@ -10,42 +10,27 @@
 #define FILAS_POR_CUADRANTE 	3
 
 #define CUADRICULA_SIZE 			552
-#define LEYENDA_SIZE					74
+#define LEYENDA_SIZE					64
 #define COMANDO_SIZE 					10
+#define INFO_SIZE							311
+#define CANDIDATOS_SIZE				100
+																																				
+static const char outerRow[LEN_FILA] 	= {"############################\n"};
+static const char midRow[LEN_FILA] 		= {"#--+--+--#--+--+--#--+--+--#\n"};
+static const char hardRow[LEN_FILA] 	= {"###+###+###+###+###+###+####\n"};
 
+static char leyenda[LEYENDA_SIZE] = {"\nLEYENDA:\n\tReiniciar la partida: #RST!\n\tIntroducir Jugada #FCVS!"};	
+static char comando[COMANDO_SIZE] = {"\nComando: "};
 
-static int leyenda[LEYENDA_SIZE] = {NEW_LINE,'L','E','Y','E','N','D','A',':',NEW_LINE,
-																					TAB,'A','c','a','b','a','r',' ','l','a',' ',
-																							'p','a','r','t','i','d','a',':',' ','#','R','S','T','!',NEW_LINE,
-																					TAB,'N','u','e','v','a',' ',
-																							'p','a','r','t','i','d','a',':',' ','#','N','E','W','!',NEW_LINE,
-																					TAB,'J','u','g','a','d','a',':',' ','#','F','C','V','S','!',NEW_LINE};
+static volatile char informacion_juego[INFO_SIZE] = {"Este juego es el sudoku, tras apretar una tecla, se le mostrará un tablero con ciertos valores predefinidos y posibles candidatos\n\nPara introducir una jugada, usa el comando #FCVS!\nSiendo F la fila, C la columna, V el valor y S el resto de la división de la suma de los 3 anteriores valores entre 8 => (F+C+V)%8"};
 
-																			
-static const int topRow[LEN_FILA] = {'#','#','#','#','#','#','#','#','#',
-																		 '#','#','#','#','#','#','#','#','#',
-																		 '#','#','#','#','#','#','#','#','#','#',NEW_LINE};
-
-static const int midRow[LEN_FILA] = {'#','-','-','+','-','-','+','-','-',
-																		 '#','-','-','+','-','-','+','-','-',
-																		 '#','-','-','+','-','-','+','-','-','#',NEW_LINE};
-
-static const int lowRow[LEN_FILA] = {'#','#','#','#','#','#','#','#','#',
-																		 '#','#','#','#','#','#','#','#','#',
-																		 '#','#','#','#','#','#','#','#','#','#',NEW_LINE};
-
-static const int hardRow[LEN_FILA] = {'#','#','#','#','#','#','#','#','#',
-																			'+','#','#','#','#','#','#','#','#',
-																			'+','#','#','#','#','#','#','#','#','#',NEW_LINE};
-
-static int comando[COMANDO_SIZE] = {NEW_LINE,'C','o','m','a','n','d','o',':',' '};
-
-static volatile int sigchar = 0;
 
 static volatile int filas[TOT_FILAS][LEN_FILA];
 
-static volatile int tableroCompleto[CUADRICULA_SIZE];	//Vector que guarda el tablero completo del sudoku
-																			 
+static volatile char tableroCompleto[CUADRICULA_SIZE];	//Vector que guarda el tablero completo del sudoku
+
+static volatile int candidatos[CANDIDATOS_SIZE];
+
 static volatile boolean terminado = FALSE;
 
 void __swi(0xFF) enable_isr (void);
@@ -104,7 +89,7 @@ void inicializar_tablero()
 	
 	concat_tablero();
 	recibir_buffer(tableroCompleto, CUADRICULA_SIZE);
-	recibir_buffer(leyenda, LEYENDA_SIZE);
+	recibir_buffer(leyenda, LEYENDA_SIZE); 
 	recibir_buffer(comando, COMANDO_SIZE);
 }
 
@@ -117,7 +102,7 @@ void concat_tablero()
 	
 		for (i = 0; i < LEN_FILA; i++)										// Guardo la fila de arriba
 		{
-				tableroCompleto[pos] = topRow[i];
+				tableroCompleto[pos] = outerRow[i];
 				pos++;
 		}
 		
@@ -149,7 +134,7 @@ void concat_tablero()
 		
 		for (i = 0; i < LEN_FILA; i++)
 		{
-				tableroCompleto[pos] = lowRow[i];
+				tableroCompleto[pos] = outerRow[i];
 				pos++;
 		}
 }

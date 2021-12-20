@@ -12,6 +12,6 @@
 	void init_serial (void); /* Initialize Serial Interface       */
 	interUart_t detectar_interrupcion(uint8_t IIR);
 	
-	void recibir_buffer(int buff[], int size);
+	void recibir_buffer(char buff[], int size);
 	void write_buffer(void);
 #endif //UART0_H

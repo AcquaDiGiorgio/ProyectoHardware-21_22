@@ -59,7 +59,7 @@ void write_buffer(void)
 	}	
 }
 
-void recibir_buffer(int buff[], int size)
+void recibir_buffer(char buff[], int size)
 {
 	int i;
 	for(i = 0; i < size; i++)
@@ -87,7 +87,8 @@ void recibir_buffer(int buff[], int size)
 /* **************************************************************  */
 void rsi_uart0(void) __irq
 {
-	int interrupt, chr;
+	int interrupt;
+		char chr;
 	interrupt = U0IIR >> 0x1;
 	interrupt = interrupt & 0x03;
 	

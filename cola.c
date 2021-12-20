@@ -167,10 +167,12 @@ void leer_evento()
 			fila = (auxData >> 0x10) & 0xFF;
 			introducirValorCelda(fila, columna, valor);
 			candidatos_actualizar();
+			inicializar_tablero();
 			break;
 		
 		case SET_RESET_COMMAND:
 			sudokuReiniciar();
+			inicializar_tablero();
 			break;
 		
 		default:

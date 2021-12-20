@@ -68,7 +68,6 @@ void detectar_comando(void)
 		if (comando[0] == 'R' && comando[1] == 'S' && comando[2] == 'T') 			// Comando RESET (RST)
 		{
 				reiniciar_partida();
-				inicializar_tablero();
 				enable_isr();
 		}
 		else if (comando[0] == 'N' && comando[1] == 'E' && comando[2] == 'W')	// Comando NEW
@@ -94,8 +93,7 @@ void detectar_comando(void)
 
 				if (error == FALSE)
 				{
-						introducir_jugada(int_command);
-						inicializar_tablero();
+						introducir_jugada(int_command);						
 						enable_isr();
 				}
 				else
