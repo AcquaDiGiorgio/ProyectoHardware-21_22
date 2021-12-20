@@ -12,6 +12,7 @@
 ".\gestor_comandos.o"
 ".\uart0.o"
 ".\gestor_output.o"
+".\partida.o"
 ".\swi.o"
 --strict --scatter ".\keil_reversi.sct"
 --summary_stderr --info summarysizes -o .\keil_reversi.axf

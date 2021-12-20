@@ -576,6 +576,11 @@
               <FileType>1</FileType>
               <FilePath>.\gestor_output.c</FilePath>
             </File>
+            <File>
+              <FileName>partida.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\partida.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

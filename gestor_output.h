@@ -9,5 +9,6 @@
 
 	void pintar(void);
 	int to_string(int val);
+	void enviar_info(void);
 
 #endif //GESTOR_OUTPUT_H
