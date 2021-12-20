@@ -8,18 +8,18 @@
 #define TOT_FILAS 						9
 #define TOT_CUADRANTES  			3
 #define FILAS_POR_CUADRANTE 	3
-#define TOT_CHARS 						551 // 19 * 29
 
-#define LEYENDA_SIZE					0
+#define CUADRICULA_SIZE 			552
+#define LEYENDA_SIZE					74
 #define COMANDO_SIZE 					10
 
 
-//static const int leyenda[LEYENDA_SIZE] = {'L','E','Y','E','N','D','A',':',NEW_LINE,
-//																					TAB,'A','c','a','b','a','r',' ','l','a',' ',
-//																							'p','a','r','t','i','d','a',':',' ','#','R','S','T','!',NEW_LINE,
-//																					TAB,'N','u','e','v','a',' ',
-//																							'p','a','r','t','i','d','a',':',' ','#','N','E','W','!',NEW_LINE,
-//																					TAB,'J','u','g','a','d','a',':',' ','#','F','C','V','S','!',NEW_LINE};
+static int leyenda[LEYENDA_SIZE] = {NEW_LINE,'L','E','Y','E','N','D','A',':',NEW_LINE,
+																					TAB,'A','c','a','b','a','r',' ','l','a',' ',
+																							'p','a','r','t','i','d','a',':',' ','#','R','S','T','!',NEW_LINE,
+																					TAB,'N','u','e','v','a',' ',
+																							'p','a','r','t','i','d','a',':',' ','#','N','E','W','!',NEW_LINE,
+																					TAB,'J','u','g','a','d','a',':',' ','#','F','C','V','S','!',NEW_LINE};
 
 																			
 static const int topRow[LEN_FILA] = {'#','#','#','#','#','#','#','#','#',
@@ -38,15 +38,17 @@ static const int hardRow[LEN_FILA] = {'#','#','#','#','#','#','#','#','#',
 																			'+','#','#','#','#','#','#','#','#',
 																			'+','#','#','#','#','#','#','#','#','#',NEW_LINE};
 
-static const int comando[COMANDO_SIZE] = {NEW_LINE,'C','o','m','a','n','d','o',':',' '};
+static int comando[COMANDO_SIZE] = {NEW_LINE,'C','o','m','a','n','d','o',':',' '};
 
 static volatile int sigchar = 0;
 
 static volatile int filas[TOT_FILAS][LEN_FILA];
 
-static volatile int tableroCompleto[1000];	//Vector que guarda el tablero completo del sudoku
+static volatile int tableroCompleto[CUADRICULA_SIZE];	//Vector que guarda el tablero completo del sudoku
 																			 
 static volatile boolean terminado = FALSE;
+
+void __swi(0xFF) enable_isr (void);
 
 //													
 //Inicializa el tablero para presentarlo por pantalla
@@ -100,17 +102,19 @@ void inicializar_tablero()
 		filas[fila][LEN_FILA-1] = NEW_LINE;
 	}
 	
-	concat_tablero();	
-	cola_guardar_eventos(SET_INIT_SUDOKU, NO_AUX_DATA);
+	concat_tablero();
+	recibir_buffer(tableroCompleto, CUADRICULA_SIZE);
+	recibir_buffer(leyenda, LEYENDA_SIZE);
+	recibir_buffer(comando, COMANDO_SIZE);
 }
-
-
 
 void concat_tablero()
 {
 		int i, j, cuadrante, fila, filaReal, pos;
-		pos = 0;
+		pos = 1;
 		
+		tableroCompleto[0] = NEW_LINE;
+	
 		for (i = 0; i < LEN_FILA; i++)										// Guardo la fila de arriba
 		{
 				tableroCompleto[pos] = topRow[i];
@@ -148,32 +152,4 @@ void concat_tablero()
 				tableroCompleto[pos] = lowRow[i];
 				pos++;
 		}
-		
-		for (i = 0; i < COMANDO_SIZE; i++)
-		{
-			tableroCompleto[pos] = comando[i];
-			pos++;
-		}
-}
-
-void pintar(void){
-	int chr;
-	if (terminado == FALSE)
-	{
-			chr = tableroCompleto[sigchar];
-			sigchar++;
-			
-			if (sigchar == TOT_CHARS+COMANDO_SIZE) // sigchar == TOT_CHARS
-			{
-				terminado = TRUE;
-				sigchar = 0;
-			}
-			
-			cola_guardar_eventos(SET_CHAR, chr);
-			// char_to_uart(chr);
-	}
-	else
-	{
-			terminado = FALSE;
-	}
 }

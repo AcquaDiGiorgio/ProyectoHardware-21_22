@@ -220,12 +220,13 @@ boolean celda_correcta(uint8_t fila, uint8_t columna)
 
 void introducirValorCelda(uint8_t fila, uint8_t columna, int valor)
 {
-		cuadricula[fila][columna] = valor;
+	cuadricula[fila][columna] = valor;
+	celda_correcta(fila,columna);
 }
 	
 void eliminarValorCelda(uint8_t fila, uint8_t columna)
 {
-		cuadricula[fila][columna] = 0;
+	cuadricula[fila][columna] = 0;
 }	
 uint8_t leer_celda(uint8_t fila, uint8_t columna)
 {
@@ -259,7 +260,7 @@ void sudokuReiniciar(void)
 			// Si no es pista
 			if(es_pista(i, j) == FALSE)
 			{				
-				celda_poner_valor(&cuadricula[i][j],0); // Le quitamos el valor
+				celda_vaciar(&cuadricula[i][j]); // Le quitamos el valor
 			}
 		}
 	}
@@ -286,6 +287,5 @@ int main (void) {
 	//inicializarAlarmasDefault();
 	candidatos_actualizar();
 	inicializar_tablero();
-	
 	scheduler();
 }

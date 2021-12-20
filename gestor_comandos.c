@@ -12,6 +12,7 @@
 
 volatile int comando[MAX_COMMAND_SIZE];
 int posicion_actual = 0;
+void __swi(0xFF) enable_isr (void);
 
 //
 //El vector de caracteres lo vacia
@@ -67,12 +68,14 @@ void detectar_comando(void)
 		if (comando[0] == 'R' && comando[1] == 'S' && comando[2] == 'T') 			// Comando RESET (RST)
 		{
 				reiniciar_partida();
-				cola_guardar_eventos(SET_UART_CHR_DISP, NO_AUX_DATA);
+				inicializar_tablero();
+				enable_isr();
 		}
 		else if (comando[0] == 'N' && comando[1] == 'E' && comando[2] == 'W')	// Comando NEW
 		{
 				nueva_partida();
-				cola_guardar_eventos(SET_UART_CHR_DISP, NO_AUX_DATA);
+				inicializar_tablero();
+				enable_isr();
 		}
 		else																																	// Comando Numérico
 		{		
@@ -92,7 +95,8 @@ void detectar_comando(void)
 				if (error == FALSE)
 				{
 						introducir_jugada(int_command);
-						pintar();		
+						inicializar_tablero();
+						enable_isr();
 				}
 				else
 				{
@@ -103,12 +107,12 @@ void detectar_comando(void)
 
 void reiniciar_partida(void)
 {
-		
+	cola_guardar_eventos(SET_RESET_COMMAND, NO_AUX_DATA);
 }
 
 void nueva_partida(void)
 {
-		cola_guardar_eventos(SET_WATCHDOG, NO_AUX_DATA);
+	cola_guardar_eventos(SET_WATCHDOG, NO_AUX_DATA);
 }
 
 void introducir_jugada(int info[])
@@ -120,16 +124,27 @@ void introducir_jugada(int info[])
 		columna 			= info[1];
 		valor 				= info[2];
 		checksum 			= info[3];
-		checksum_real = (fila + columna + valor) % 8;
-
-		if (checksum == checksum_real)
-		{
-				auxData = (fila << 0x10) | (columna << 0x08) | valor;
-				cola_guardar_eventos(SET_WRITE_COMMAND, auxData);
+	
+		if ( fila > 0 && columna > 0)
+		{	
+				checksum_real = (fila + columna + valor) % 8;
+	
+				if (checksum == checksum_real)
+				{
+						fila--;
+						columna--;
+						auxData = (fila << 0x10) | (columna << 0x08) | valor;
+						cola_guardar_eventos(SET_WRITE_COMMAND, auxData);
+						enable_isr();
+				}
+				else
+				{
+						lanzar_error(BAD_CHECKSUM);
+				}
 		}
 		else
 		{
-				lanzar_error(BAD_CHECKSUM);
+				lanzar_error(NOT_A_COMMAND);
 		}
 }
 

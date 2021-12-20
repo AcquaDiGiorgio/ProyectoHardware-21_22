@@ -6,6 +6,8 @@
 #define ALRM_PERIODICA 1	// Alarma que se debe reiniciar tras su ejecución
 #define DYNAMIC_ID 5			// Mínimo índice de una alarma no predifinida por el sistema
 
+void __swi(0xFF) enable_isr (void);
+
 void crear_alarma_unica(int id, event_t evento, int retardo)
 {
 	if (id == 0)
@@ -108,11 +110,12 @@ void gestionar_alarmas()
 // POST: gestiona el evento anclado a la alrma ejecutada y si es periódica
 // 			 la reinicia
 void gestionar_alarma(int idAlarma)
-{
+{	
 	// Guardamos el evento que se tiene que gestionar
 	uint32_t auxData = alarmas[idAlarma].auxData;
 	
 	cola_guardar_eventos(SET_ALARMA, getEvento(auxData));
+	enable_isr();
 	
 	// Si la alarma es periódica, reiniciamos su tiempo
 	if (esPeriodica(auxData) == 1)

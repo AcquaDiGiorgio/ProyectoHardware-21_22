@@ -26,7 +26,7 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 {
 	int indiceAux;
 		
-	disable_isr();						// Deshabilitamos interrupciones
+	disable_isr();											// Deshabilitamos interrupciones
 	
 	indiceAux = indice.aEscribir;				// Creamos un índice auxiliar
 	indice.aEscribir++;									// aumentamos el índice
@@ -41,8 +41,6 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 		eventList[indiceAux].auxData = auxData;
 		eventList[indiceAux].marcaTemporal = clock_gettime(); 
 		eventList[indiceAux].ready = TRUE;
-		
-		enable_isr();		// Rehabilitamos interrupciones
 		
 		return; // Salimos de la función
 	}
@@ -87,7 +85,7 @@ void leer_evento()
 	uint32_t auxData;
 	int indiceAux, fila, columna, valor;
 	
-	disable_isr();
+	//disable_isr();
 	
 	// Sacamos la información del evento y liberamos su espacio
 	indiceAux = indice.aLeer;
@@ -103,7 +101,7 @@ void leer_evento()
 	if(indice.aLeer == MAX_EVENTS)
 		indice.aLeer = 0;
 	
-	enable_isr();		// Rehabilitamos interrupciones
+	// enable_isr();		// Rehabilitamos interrupciones
 	
 	// Acción dependendiendo del identificador del evento
 	switch (id)
@@ -157,14 +155,6 @@ void leer_evento()
 			recibir_caracter(auxData);
 			break;
 		
-		case SET_CHAR:
-			char_to_uart(auxData);
-			break;
-
-		case SET_UART_CHR_DISP:
-			pintar();
-			break;
-		
 		case SET_WATCHDOG:	
 			disable_isr_fiq();
 			WD_feed();
@@ -176,10 +166,11 @@ void leer_evento()
 			columna = (auxData >> 0x8) & 0xFF;
 			fila = (auxData >> 0x10) & 0xFF;
 			introducirValorCelda(fila, columna, valor);
+			candidatos_actualizar();
 			break;
 		
-		case SET_INIT_SUDOKU:
-			char_to_uart(NEW_LINE);
+		case SET_RESET_COMMAND:
+			sudokuReiniciar();
 			break;
 		
 		default:

@@ -64,4 +64,9 @@ __inline static uint8_t celda_hay_error(CELDA celda)
 		return (celda & 0x0020) >> 5;
 }	
 
+__inline static void celda_vaciar(CELDA *celda_ptr)
+{
+		*celda_ptr = 0x0;
+}
+
 #endif // CELDA_H

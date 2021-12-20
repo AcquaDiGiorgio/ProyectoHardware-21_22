@@ -7,9 +7,6 @@
 void timer0_ISR(void) __irq;
 void timer1_ISR(void) __irq;
 
-void __swi(0xFF) enable_isr (void);
-void __swi(0xFE) disable_isr (void);
-
 //uint64_t __swi(0x00) clock_gettime (void);
 
 static volatile unsigned int timer1_count = 0;
@@ -93,10 +90,8 @@ uint8_t RTC_leer_segundos(void)
 // Alimenta al watchdog timer
 void WD_feed(void)
 {
-	disable_isr(); // Desactivar interrupciones
 	WDFEED = 0xAA;						   
 	WDFEED = 0x55;
-	enable_isr(); //Activar interrupciones
 }
 
 // Inicializa el watchdog timer para que resetee el procesador
