@@ -8,4 +8,4 @@
 .\gestor_output.o: cola.h
 .\gestor_output.o: eventos.h
 .\gestor_output.o: temporizador.h
-.\gestor_output.o: uart0.h
+.\gestor_output.o: pantalla.h

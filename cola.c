@@ -47,19 +47,19 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 	}
 	
 	// Si hay un evento en ese espacio, saltamos un error
-	crear_alarma_unica(0,SET_WATCHDOG,20 * SEGUNDO);
+	alarma_crear_alarma_unica(0,SET_WATCHDOG,20 * SEGUNDO);
 	while(1){}
 }
 
 void tratar_alarma(uint32_t auxData){
 	switch(auxData){ 				// La acción a realizar depende de sus datos auxiliares
 		case EV_GPIO_REF:			// Refrescar las salidas de la GPIO
-			refrescarSalidas();
+			IO_refrescarSalidas();
 			break;
 		
 		case EV_POWER:				// Poner el procesador en modo Power Down
 			PM_power_down();
-			reiniciarEstadoAnterior();
+			IO_reiniciarEstadoAnterior();
 			break;
 		
 		case EV_CHECK_PULS:		// Comprobar la pulsación de los botones
@@ -68,15 +68,15 @@ void tratar_alarma(uint32_t auxData){
 			break;
 		
 		case EV_LED_ERR:			// Apagar el led de error de la GPIO
-			quitarLedErr();
+			IO_quitarLedErr();
 			break;
 		
 		case EV_LATIDO:				// Apagar el led del latido de la GPIO
-			latidoLed();
+			IO_latidoLed();
 			break;
 		
 		case EV_FIN_PARTIDA:
-			terminar_partida("Partida ha sido muy larga", 25);
+			partida_terminar("Partida ha sido muy larga", 25);
 			break;
 		
 		default:
@@ -119,19 +119,19 @@ void cola_leer_evento()
 		
 		// Gestionar el evento de timer0
 		case SET_TIMER_0:
-			gestionar_alarmas();
+			alarma_gestionar_alarmas();
 		  break;
 		
 		// Gestionar interrupción externa 1
 		case SET_EXT_INT_1:
-			switch(estado_energia_actual())
+			switch(energia_estado_actual())
 			{
 				case DESPIERTO:
-					detectar_comando();
+					comando_detectar();
 					break;
 					
 				case DORMIDO:
-					actualizar_estado_energia(NULL_EVENT);
+					energia_actualizar_estado(NULL_EVENT);
 					break;
 				
 				default:
@@ -141,14 +141,14 @@ void cola_leer_evento()
 	
 		// Gestionar interrupción externa 2
 		case SET_EXT_INT_2:
-			switch(estado_energia_actual())
+			switch(energia_estado_actual())
 			{
 				case DESPIERTO:
-					reiniciar_comando();
+					comando_reiniciar();
 					break;
 					
 				case DORMIDO:
-					actualizar_estado_energia(NULL_EVENT);
+					energia_actualizar_estado(NULL_EVENT);
 					break;
 				
 				default:
@@ -158,14 +158,14 @@ void cola_leer_evento()
 		
 		// Gestionar entrada de la UART
 		case SET_UART_SEND_CHR:
-			estado_partida = obtener_estado_juego();
+			estado_partida = partida_obtener_estado();
 			if(estado_partida == principio)
 			{
-					empezar_partida();
+					partida_empezar();
 			}
 			else
 			{
-					recibir_caracter(auxData);
+					comando_recibir_caracter(auxData);
 			}			
 			break;
 		
@@ -180,16 +180,16 @@ void cola_leer_evento()
 			columna = (auxData >> 0x8) & 0xFF;
 			fila = (auxData >> 0x10) & 0xFF;
 			introducirValorCelda(fila, columna, valor);
-			dibujar();
+			partida_mostrar();
 			break;
 		
 		case SET_RESET_COMMAND:
 			sudokuReiniciar();
-			dibujar();
+			partida_mostrar();
 			break;
 		
 		case SET_NEW_COMMAND:
-			preprar_partida();
+			partida_preprar();
 			break;
 		
 		default:

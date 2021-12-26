@@ -31,7 +31,7 @@ void pantalla_write_buffer(void)
 		}	
 }
 
-void uart_add_to_buffer(char buff[], int size)
+void pantalla_add_to_buffer(char buff[], int size)
 {
 		int i;
 		for(i = 0; i < size; i++)

@@ -429,32 +429,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Header</GroupName>
+          <GroupName>scheduler</GroupName>
           <Files>
-            <File>
-              <FileName>celda.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\celda.h</FilePath>
-            </File>
             <File>
               <FileName>cola.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\cola.h</FilePath>
             </File>
             <File>
-              <FileName>eventos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\eventos.h</FilePath>
+              <FileName>cola.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\cola.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>system_calls</GroupName>
+          <Files>
             <File>
-              <FileName>gestor_alarmas.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\gestor_alarmas.h</FilePath>
+              <FileName>SWI.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\SWI.s</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>gpio</GroupName>
+          <Files>
             <File>
-              <FileName>gestor_energia.h</FileName>
+              <FileName>Gestor_IO.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\gestor_energia.h</FilePath>
+              <FilePath>.\Gestor_IO.h</FilePath>
             </File>
             <File>
               <FileName>gpio_control.h</FileName>
@@ -462,15 +467,20 @@
               <FilePath>.\gpio_control.h</FilePath>
             </File>
             <File>
-              <FileName>tableros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\tableros.h</FilePath>
+              <FileName>gpio_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gpio_control.c</FilePath>
             </File>
             <File>
-              <FileName>temporizador.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\temporizador.h</FilePath>
+              <FileName>Gestor_IO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Gestor_IO.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ext_int</GroupName>
+          <Files>
             <File>
               <FileName>boton.h</FileName>
               <FileType>5</FileType>
@@ -482,25 +492,20 @@
               <FilePath>.\gestor_pulsacion.h</FilePath>
             </File>
             <File>
-              <FileName>Gestor_IO.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Gestor_IO.h</FilePath>
+              <FileName>gestor_pulsacion.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor_pulsacion.c</FilePath>
             </File>
             <File>
-              <FileName>sudoku_p2.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\sudoku_p2.h</FilePath>
+              <FileName>boton.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\boton.c</FilePath>
             </File>
-            <File>
-              <FileName>constantes_comunes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\constantes_comunes.h</FilePath>
-            </File>
-            <File>
-              <FileName>gestor_comandos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\gestor_comandos.h</FilePath>
-            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>uart</GroupName>
+          <Files>
             <File>
               <FileName>UART0.h</FileName>
               <FileType>5</FileType>
@@ -510,66 +515,6 @@
               <FileName>gestor_output.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\gestor_output.h</FilePath>
-            </File>
-            <File>
-              <FileName>partida.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\partida.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>C</GroupName>
-          <Files>
-            <File>
-              <FileName>cola.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\cola.c</FilePath>
-            </File>
-            <File>
-              <FileName>gestor_alarmas.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\gestor_alarmas.c</FilePath>
-            </File>
-            <File>
-              <FileName>gestor_energia.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\gestor_energia.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_control.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\gpio_control.c</FilePath>
-            </File>
-            <File>
-              <FileName>temporizador.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\temporizador.c</FilePath>
-            </File>
-            <File>
-              <FileName>boton.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\boton.c</FilePath>
-            </File>
-            <File>
-              <FileName>gestor_pulsacion.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\gestor_pulsacion.c</FilePath>
-            </File>
-            <File>
-              <FileName>Gestor_IO.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Gestor_IO.c</FilePath>
-            </File>
-            <File>
-              <FileName>sudoku_p2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sudoku_p2.c</FilePath>
-            </File>
-            <File>
-              <FileName>gestor_comandos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\gestor_comandos.c</FilePath>
             </File>
             <File>
               <FileName>UART0.c</FileName>
@@ -582,6 +527,101 @@
               <FilePath>.\gestor_output.c</FilePath>
             </File>
             <File>
+              <FileName>pantalla.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pantalla.c</FilePath>
+            </File>
+            <File>
+              <FileName>pantalla.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\pantalla.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>timers</GroupName>
+          <Files>
+            <File>
+              <FileName>gestor_alarmas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gestor_alarmas.h</FilePath>
+            </File>
+            <File>
+              <FileName>temporizador.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\temporizador.h</FilePath>
+            </File>
+            <File>
+              <FileName>gestor_alarmas.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor_alarmas.c</FilePath>
+            </File>
+            <File>
+              <FileName>temporizador.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\temporizador.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>energia</GroupName>
+          <Files>
+            <File>
+              <FileName>gestor_energia.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gestor_energia.h</FilePath>
+            </File>
+            <File>
+              <FileName>gestor_energia.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor_energia.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>comandos</GroupName>
+          <Files>
+            <File>
+              <FileName>gestor_comandos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gestor_comandos.h</FilePath>
+            </File>
+            <File>
+              <FileName>gestor_comandos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor_comandos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sudoku</GroupName>
+          <Files>
+            <File>
+              <FileName>partida.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\partida.h</FilePath>
+            </File>
+            <File>
+              <FileName>sudoku_p2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\sudoku_p2.h</FilePath>
+            </File>
+            <File>
+              <FileName>tableros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\tableros.h</FilePath>
+            </File>
+            <File>
+              <FileName>celda.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\celda.h</FilePath>
+            </File>
+            <File>
+              <FileName>sudoku_p2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sudoku_p2.c</FilePath>
+            </File>
+            <File>
               <FileName>partida.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\partida.c</FilePath>
@@ -589,12 +629,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>System Calls</GroupName>
+          <GroupName>commons</GroupName>
           <Files>
             <File>
-              <FileName>SWI.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\SWI.s</FilePath>
+              <FileName>constantes_comunes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\constantes_comunes.h</FilePath>
+            </File>
+            <File>
+              <FileName>eventos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\eventos.h</FilePath>
             </File>
           </Files>
         </Group>

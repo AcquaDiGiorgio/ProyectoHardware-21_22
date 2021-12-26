@@ -8,6 +8,7 @@
 #include "uart0.h"
 #include "gestor_output.h"
 #include "partida.h"
+#include "pantalla.h"
 
 // Cuadrícula a utilizar
 // Para cambiarla, modificar cuadricula_C_C por el tablero deseado
@@ -289,12 +290,12 @@ boolean celdaAccesible(uint8_t fila, uint8_t columna)
 int main (void) {
 		temporizador_iniciar();		
 		temporizador_periodo(1);	// Timer0
-		initIO();
-		init_serial();
+		IO_init();
+		uart_init(pantalla_add_to_buffer, pantalla_write_buffer);
 		RTC_init();
 		eint_init();
-		inicializarAlarmasDefault();
+		alarma_inicializarAlarmasDefault();
 		candidatos_actualizar();
-		preprar_partida();
+		partida_preprar();
 		scheduler();
 }

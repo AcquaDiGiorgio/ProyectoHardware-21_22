@@ -103,7 +103,7 @@ void IO_escribirValor(void)
 			cambiandoLed = TRUE;
 			GPIO_escribir(13,1,1);
 			// Creamos una alarma que apague el led
-			crear_alarma_unica(LED_ERROR,EV_LED_ERR,1 * SEGUNDO);
+			alarma_crear_alarma_unica(LED_ERROR,EV_LED_ERR,1 * SEGUNDO);
 		}			
 	}
 }

@@ -14,3 +14,4 @@
 .\sudoku_p2.o: uart0.h
 .\sudoku_p2.o: gestor_output.h
 .\sudoku_p2.o: partida.h
+.\sudoku_p2.o: pantalla.h

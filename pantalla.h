@@ -5,4 +5,3 @@
 	void pantalla_write_buffer(void);
 	
 #endif //PANTALLA_H
-	

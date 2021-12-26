@@ -34,12 +34,12 @@ void eint_init (void)
 }
 
 //Devuelve el valor de la variable para detectar una nueva pulsacion
-int button_nueva_pulsacion_1()
+int boton1_nueva_pulsacion()
 {
 	return nueva_pulsacion_eint1;
 }
 
-int button_nueva_pulsacion_2()
+int boton2_nueva_pulsacion()
 {
 	return nueva_pulsacion_eint2;
 }

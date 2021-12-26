@@ -9,7 +9,7 @@
 
 
 		void partida_cambiar_estado(estado_juego_t estado);
-		estado_juego_t partida_obtener_estado_juego(void);
+		estado_juego_t partida_obtener_estado(void);
 		
 		void partida_preprar(void);
 		void partida_empezar(void);

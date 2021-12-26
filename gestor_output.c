@@ -3,7 +3,7 @@
 #include "cola.h"
 #include "temporizador.h"
 
-#include "uart0.h"
+#include "pantalla.h"
 	
 #define LEN_FILA 								29
 #define TOT_FILAS 							9
@@ -48,7 +48,7 @@ void __swi(0xFF) enable_isr (void);
 
 void enviar_info(void)
 {
-		add_to_buffer(informacion_juego, INFO_SIZE);
+		pantalla_add_to_buffer(informacion_juego, INFO_SIZE);
 }
 
 void mostrar_final(uint8_t minutos, uint8_t segundos, char *razon, int len_razon)
@@ -72,13 +72,13 @@ void mostrar_final(uint8_t minutos, uint8_t segundos, char *razon, int len_razon
 		actualizar_tiempo[7] = ' ';
 		actualizar_tiempo[8] = '\n';
 	
-		add_to_buffer(fin_partida, LEN_FIN);
-		add_to_buffer(razon, len_razon);
-		add_to_buffer(razon_fin,LEN_DUR_PARTDIA);
-		add_to_buffer(tiempo, 8);
-		add_to_buffer(coste_actualizar, LEN_COSTE_ACTUALIZAR);
-		add_to_buffer(actualizar_tiempo, 8);
-		add_to_buffer(volver_a_jugar, LEN_VOLVER_A_JUGAR);
+		pantalla_add_to_buffer(fin_partida, LEN_FIN);
+		pantalla_add_to_buffer(razon, len_razon);
+		pantalla_add_to_buffer(razon_fin,LEN_DUR_PARTDIA);
+		pantalla_add_to_buffer(tiempo, 8);
+		pantalla_add_to_buffer(coste_actualizar, LEN_COSTE_ACTUALIZAR);
+		pantalla_add_to_buffer(actualizar_tiempo, 8);
+		pantalla_add_to_buffer(volver_a_jugar, LEN_VOLVER_A_JUGAR);
 }
 
 void gestor_candidatos(int fila, int columna)
@@ -184,12 +184,12 @@ void inicializar_tablero(void)
 	
 	concat_tablero();
 	
-	add_to_buffer(tableroCompleto, CUADRICULA_SIZE);
-	add_to_buffer(leyenda, LEYENDA_SIZE); 
-	add_to_buffer(cabeceraCandidatos,LEN_CABECERA_CANDIDATOS);
-	add_to_buffer(candidatos, index_candidatos);
+	pantalla_add_to_buffer(tableroCompleto, CUADRICULA_SIZE);
+	pantalla_add_to_buffer(leyenda, LEYENDA_SIZE); 
+	pantalla_add_to_buffer(cabeceraCandidatos,LEN_CABECERA_CANDIDATOS);
+	pantalla_add_to_buffer(candidatos, index_candidatos);
 	index_candidatos = 1;
-	add_to_buffer(comando, COMANDO_SIZE);
+	pantalla_add_to_buffer(comando, COMANDO_SIZE);
 }
 
 void concat_tablero()
