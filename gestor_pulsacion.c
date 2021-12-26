@@ -21,7 +21,7 @@ void gestion_eint1(event_t evento)
 	}
 	else // Le llama la alarma
 	{
-		if( boton1_pulsado() == FALSE && button_nueva_pulsacion_1() == TRUE ) // Botón bajado
+		if( boton1_pulsado() == FALSE && boton1_nueva_pulsacion() == TRUE ) // Botón bajado
 		{	
 			button_clear_nueva_pulsacion_1(); 													// Indicamos que no hay pulsacion
 			boton1_reactivate();																				// Reactivamos las interrupciones
@@ -43,7 +43,7 @@ void gestion_eint2(event_t evento)
 	}
 	else // Le llama la alarma
 	{	
-		if( boton2_pulsado() == FALSE && button_nueva_pulsacion_2() == TRUE ) // Botón bajado
+		if( boton2_pulsado() == FALSE && boton2_nueva_pulsacion() == TRUE ) // Botón bajado
 		{	
 				button_clear_nueva_pulsacion_2(); 													//Indicamos que no hay pulsacion
 				boton2_reactivate();																				// Reactivamos las interrupciones

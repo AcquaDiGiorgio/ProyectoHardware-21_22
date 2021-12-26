@@ -7,8 +7,8 @@
 	void eint_init (void);
 
 	//Devuelve el valor de la variable para detectar una nueva pulsacion
-	int button_nueva_pulsacion_1(void);
-	int button_nueva_pulsacion_2(void);
+	int boton1_nueva_pulsacion(void);
+	int boton2_nueva_pulsacion(void);
 
 	//Resetea la variable correspondiente a 0
 	void button_clear_nueva_pulsacion_1(void);

@@ -9,9 +9,7 @@
 		INTER_UNKNOWN
 	}interUart_t;
 
-	void init_serial (void); /* Initialize Serial Interface       */
-	interUart_t detectar_interrupcion(uint8_t IIR);
+	void uart_init(void (*f)(char*,int), void (*writeStr)());
+	void uart_print_chr(char chr);
 	
-	void add_to_buffer(char buff[], int size);
-	void write_buffer(void);
 #endif //UART0_H

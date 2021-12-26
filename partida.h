@@ -8,14 +8,13 @@
 		}estado_juego_t;
 
 
-		void cambiar_estado_partida(estado_juego_t estado);
+		void partida_cambiar_estado(estado_juego_t estado);
+		estado_juego_t partida_obtener_estado_juego(void);
 		
-		void preprar_partida(void);
-		void empezar_partida(void);
-		void terminar_partida(char *razon, int length);
+		void partida_preprar(void);
+		void partida_empezar(void);
+		void partida_terminar(char *razon, int length);
 		
-		estado_juego_t obtener_estado_juego(void);
-		
-		void dibujar(void);
+		void partida_mostrar(void);
 		
 #endif // PARTIDA_H

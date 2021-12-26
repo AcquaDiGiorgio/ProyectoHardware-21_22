@@ -20,8 +20,8 @@
 	
 	// Guardado, lectura y compración de existencia de eventos de la cola
 	void cola_guardar_eventos(event_t idEvento, uint32_t auxData);
-	void leer_evento(void);
-	boolean hay_evento(void);
+	void cola_leer_evento(void);
+	boolean cola_hay_evento(void);
 	
 	// Scheduler del sistema de eventos
 	void scheduler(void);

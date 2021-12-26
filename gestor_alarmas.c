@@ -8,7 +8,7 @@
 
 void __swi(0xFF) enable_isr (void);
 
-void crear_alarma_unica(int id, event_t evento, int retardo)
+void alarma_crear_alarma_unica(int id, event_t evento, int retardo)
 {
 	if (id == 0)
 	{
@@ -17,7 +17,7 @@ void crear_alarma_unica(int id, event_t evento, int retardo)
 		{
 			if(alarmas[i].active == FALSE)
 			{
-				uint32_t auxData = returnAuxData(evento,ALRM_UNICA,retardo);
+				uint32_t auxData = alarma_returnAuxData(evento,ALRM_UNICA,retardo);
 				alarmas[i].elapsedTime = 0;
 				alarmas[i].auxData = auxData;
 				alarmas[i].active = TRUE;
@@ -27,7 +27,7 @@ void crear_alarma_unica(int id, event_t evento, int retardo)
 	}
 	else
 	{
-		uint32_t auxData = returnAuxData(evento,ALRM_UNICA,retardo);
+		uint32_t auxData = alarma_returnAuxData(evento,ALRM_UNICA,retardo);
 		alarmas[id-1].auxData = auxData;
 		alarmas[id-1].elapsedTime = 0;
 		alarmas[id-1].active = TRUE;
@@ -36,101 +36,100 @@ void crear_alarma_unica(int id, event_t evento, int retardo)
 	// Todas las alarmas ocupadas
 }
 
-void crear_alarma_periodica(int id, event_t evento, int retardo)
+void alarma_crear_alarma_periodica(int id, event_t evento, int retardo)
 {
-	if (id == 0)
-	{
-		int i;
-		for (i = DYNAMIC_ID; i < TOT_ALARMAS; i++)
+		if (id == 0)
 		{
-			if(alarmas[i].active == FALSE)
-			{
-				uint32_t auxData = returnAuxData(evento,ALRM_PERIODICA,retardo);
-				alarmas[i].auxData = auxData;
-				alarmas[i].active = TRUE;
-				return;
-			}
+				int i;
+				for (i = DYNAMIC_ID; i < TOT_ALARMAS; i++)
+				{
+						if(alarmas[i].active == FALSE)
+						{
+								uint32_t auxData = alarma_returnAuxData(evento,ALRM_PERIODICA,retardo);
+								alarmas[i].auxData = auxData;
+								alarmas[i].active = TRUE;
+								return;
+						}
+				}
 		}
-	}
-	else
-	{
-		uint32_t auxData = returnAuxData(evento,ALRM_PERIODICA,retardo);
-		alarmas[id-1].auxData = auxData;
-		alarmas[id-1].active = TRUE;
-		return;
-	}
-	// Todas las alarmas ocupadas
+		else
+		{
+				uint32_t auxData = alarma_returnAuxData(evento,ALRM_PERIODICA,retardo);
+				alarmas[id-1].auxData = auxData;
+				alarmas[id-1].active = TRUE;
+				return;
+		}
+		// Todas las alarmas ocupadas
 }
 
 // PRE:  id del evento a gestionar, la periodicidad de la alama y su retardo
 // POST: Crea los Datos auxilires de una alama
-uint32_t returnAuxData(event_t evento, int perioica, int retardo)
+uint32_t alarma_returnAuxData(event_t evento, int perioica, int retardo)
 {
-	uint32_t retVal = evento;
-	retVal = ( retVal << 1 ) | perioica;
-	retVal = ( retVal << 23 ) | retardo;
-	return retVal;
+		uint32_t retVal = evento;
+		retVal = ( retVal << 1 ) | perioica;
+		retVal = ( retVal << 23 ) | retardo;
+		return retVal;
 }
 
-int getRetardo(uint32_t auxData)
+int alarma_getRetardo(uint32_t auxData)
 {
-	return auxData & 0x7FFFFF;
+		return auxData & 0x7FFFFF;
 }
 
-uint8_t getEvento(uint32_t auxData)
+uint8_t alarma_getEvento(uint32_t auxData)
 {
-	return (auxData >> 24) & 0xFF;
+		return (auxData >> 24) & 0xFF;
 }
 
-int esPeriodica(uint32_t auxData)
+int alarma_esPeriodica(uint32_t auxData)
 {
-	return (auxData >> 23) & 0x1;
+		return (auxData >> 23) & 0x1;
 }
 
 // PRE:  True
 // POST: suma 1 en el contador de la alarmas activas y las gestiona si es
 // 			 necesario
-void gestionar_alarmas()
+void alarma_gestionar_alarmas()
 {
-	int i;
-	for(i = 0; i < TOT_ALARMAS; i++)
-	{
-		if(alarmas[i].active == TRUE)
+		int i;
+		for(i = 0; i < TOT_ALARMAS; i++)
 		{
-			alarmas[i].elapsedTime++;
-			if(alarmas[i].elapsedTime >= getRetardo(alarmas[i].auxData))
-			{
-				gestionar_alarma(i);
-			}
+				if(alarmas[i].active == TRUE)
+				{
+						alarmas[i].elapsedTime++;
+						if(alarmas[i].elapsedTime >= alarma_getRetardo(alarmas[i].auxData))
+						{
+								alarma_gestionar_alarma(i);
+						}
+				}
 		}
-	}
 }
 
 // PRE: id de un Evento a gestionar y los datos de la alarma ejecutada
 // POST: gestiona el evento anclado a la alrma ejecutada y si es periódica
 // 			 la reinicia
-void gestionar_alarma(int idAlarma)
+void alarma_gestionar_alarma(int idAlarma)
 {	
 	// Guardamos el evento que se tiene que gestionar
-	uint32_t auxData = alarmas[idAlarma].auxData;
-	
-	cola_guardar_eventos(SET_ALARMA, getEvento(auxData));
-	enable_isr();
-	
-	// Si la alarma es periódica, reiniciamos su tiempo
-	if (esPeriodica(auxData) == 1)
-	{
-		alarmas[idAlarma].elapsedTime = 0;
-	// Sino, la desactivamos
-	}
-	else
-	{
-		alarmas[idAlarma].active = FALSE;
-	}
+		uint32_t auxData = alarmas[idAlarma].auxData;
+		
+		cola_guardar_eventos(SET_ALARMA, alarma_getEvento(auxData));
+		enable_isr();
+		
+		// Si la alarma es periódica, reiniciamos su tiempo
+		if (alarma_esPeriodica(auxData) == 1)
+		{
+			alarmas[idAlarma].elapsedTime = 0;
+		}		
+		else	// Sino, la desactivamos
+		{
+			alarmas[idAlarma].active = FALSE;
+		}
 }
 
-void inicializarAlarmasDefault(void)
+void alarma_inicializarAlarmasDefault(void)
 {
-	crear_alarma_periodica(PULSACION,EV_CHECK_PULS,100);
-	crear_alarma_periodica(LATIDO,EV_LATIDO,200);
+	alarma_crear_alarma_periodica(PULSACION,EV_CHECK_PULS,100);
+	alarma_crear_alarma_periodica(LATIDO,EV_LATIDO,200);
 }

@@ -17,7 +17,7 @@ void __swi(0xFF) enable_isr (void);
 //
 //El vector de caracteres lo vacia
 //
-void reiniciar_comando(void)
+void comando_reiniciar(void)
 {
 	int i;
 	
@@ -33,15 +33,15 @@ void reiniciar_comando(void)
 // 
 // Está función debe ser llamada por el scheduler
 //
-void recibir_caracter(int chr)
+void comando_recibir_caracter(int chr)
 {
 	if (chr == '#')																	// Principio de un comando
 	{
-		reiniciar_comando();
+		comando_reiniciar();
 	}
 	else if (posicion_actual >= MAX_COMMAND_SIZE)		// Comando muy grande
 	{
-		reiniciar_comando();
+		comando_reiniciar();
 		lanzar_error(OVERSIZED_COMMAND);
 	}
 	else
@@ -54,7 +54,7 @@ void recibir_caracter(int chr)
 //
 //Detecta si los caracteres en el vector representan a un comando valido
 //
-void detectar_comando(void)
+void comando_detectar(void)
 {
 		int int_val, i;
 		int int_command[MAX_COMMAND_SIZE];
@@ -95,7 +95,7 @@ void detectar_comando(void)
 						lanzar_error(NOT_A_COMMAND);
 				}
 		}
-		reiniciar_comando();
+		comando_reiniciar();
 }
 
 void reiniciar_partida(void)

@@ -12,7 +12,7 @@ volatile boolean cambiandoLed = FALSE;
 volatile boolean latido_on = FALSE;
 
 //Inicializa el gestor IO
-void initIO(void)
+void IO_init(void)
 {
 	// Iniciamos la GPIO
 	GPIO_iniciar();
@@ -25,7 +25,7 @@ void initIO(void)
 	GPIO_marcar_salida(30,2);
 }
 
-void refrescarSalidas(void)
+void IO_refrescarSalidas(void)
 {
 	uint32_t estadoActual;
 	uint32_t candidatos;
@@ -75,7 +75,7 @@ void refrescarSalidas(void)
 	}
 }
 
-void escribirValor(void)
+void IO_escribirValor(void)
 {
 	uint8_t fila,columna,valor; // Variables leidas de la GPIO
 	boolean accesible;
@@ -86,7 +86,7 @@ void escribirValor(void)
 	valor   = GPIO_leer(24,4);
 	
 	// Miramos si ha pedido terminar
-	checkFinPartida(fila+1,columna+1,valor);
+	IO_checkFinPartida(fila+1,columna+1,valor);
 	
 	accesible = celdaAccesible(fila, columna);
 	
@@ -108,7 +108,7 @@ void escribirValor(void)
 	}
 }
 
-void eliminarValor(void)
+void IO_eliminarValor(void)
 {	
 	uint8_t fila,columna,valor;
 	boolean accesible;
@@ -118,7 +118,7 @@ void eliminarValor(void)
 	valor   = GPIO_leer(24,4);
 	
 	// Miramos si ha pedido terminar
-	checkFinPartida(fila+1,columna+1,valor);
+	IO_checkFinPartida(fila+1,columna+1,valor);
 	
 	accesible = celdaAccesible(fila, columna);
 	
@@ -130,7 +130,7 @@ void eliminarValor(void)
 	}
 }
 
-void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
+void IO_checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
 {
 	if(fila == 0 && columna == 0 && valor == 0)
 	{
@@ -139,18 +139,18 @@ void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
 	}
 }
 
-void quitarLedErr(void)
+void IO_quitarLedErr(void)
 {
 	GPIO_clear_salida(13,1);
 	cambiandoLed = FALSE;
 }
 
-void reiniciarEstadoAnterior(void)
+void IO_reiniciarEstadoAnterior(void)
 {
 	estadoAnterior = 0;
 }
 
-void latidoLed(void)
+void IO_latidoLed(void)
 {
 	switch(latido_on)	
 	{
@@ -166,7 +166,7 @@ void latidoLed(void)
 	}
 }
 
-void overflowLed(void)
+void IO_overflowLed(void)
 {
 	GPIO_escribir(30,1,1);
 }

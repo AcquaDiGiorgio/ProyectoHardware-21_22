@@ -8,11 +8,12 @@
 		DESPIERTO = 1
 	};
 
-	int estado_energia_actual(void);								// Devuelve el valor da la máquina de estados
-	void actualizar_estado_energia(event_t evento);	// Maquina de estados
+	int energia_estado_actual(void);								// Devuelve el valor da la máquina de estados
+	void energia_actualizar_energia(event_t evento);	// Maquina de estados
 	void PM_power_down (void);											// Pone al reloj en modo power down
 	void PM_idle (void);														// Pone al reloj en modo idle
 	void PM_wakeup (void);													// Despierta al procesador de PowerDown
+	
 	extern void Switch_to_PLL(void); 								// Función dentro de Startup.s
 	void end_execution_error(void);
 	

@@ -9,7 +9,6 @@
 	
 	// Iniciación, lectura y parada del timer1
 	void temporizador_empezar(void);
-	uint64_t __swi(0x00) clock_gettime (void);
 	void temporizador_parar(void);
 
 	//RTC y Watchdog
@@ -19,5 +18,7 @@
 	
 	void WD_init(int sec);
 	void WD_feed(void);
+	
+	uint64_t __swi(0x00) clock_gettime (void);
 	
 #endif //TEMPORIZADOR_H

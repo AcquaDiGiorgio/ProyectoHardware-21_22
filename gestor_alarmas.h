@@ -28,19 +28,19 @@
 		alarmas[TOT_ALARMAS] = {{FALSE,0,0},{FALSE,0,0},{FALSE,0,0},{FALSE,0,0},{FALSE,0,0},{FALSE,0,0},{FALSE,0,0}};
 
 	// Creación de Alarmas
-	void crear_alarma_unica(int id, event_t evento, int retardo);
-	void crear_alarma_periodica(int id, event_t evento, int retardo);
+	void alarma_crear_alarma_unica(int id, event_t evento, int retardo);
+	void alarma_crear_alarma_periodica(int id, event_t evento, int retardo);
 
 	// Getters información de una alarma
-	uint32_t returnAuxData(event_t evento, int perioica, int retardo);
-	int getRetardo(uint32_t auxData);
-	uint8_t getEvento(uint32_t auxData);
-	int esPeriodica(uint32_t auxData);
+	uint32_t alarma_returnAuxData(event_t evento, int perioica, int retardo);
+	int alarma_getRetardo(uint32_t auxData);
+	uint8_t alarma_getEvento(uint32_t auxData);
+	int alarma_esPeriodica(uint32_t auxData);
 
 	// Gestión de alarmas y sus eventos
-	void gestionar_alarmas(void); 				// Esta función será llamada por el scheduler
-	void gestionar_alarma(int idAlarma);	// Esta función se llamará cuando se haya llegado al tiempo límite
+	void alarma_gestionar_alarmas(void); 				// Esta función será llamada por el scheduler
+	void alarma_gestionar_alarma(int idAlarma);	// Esta función se llamará cuando se haya llegado al tiempo límite
 
 	// Inicialización de ciertas alarmas predefinidas por el sistema
-	void inicializarAlarmasDefault(void);
+	void alarma_inicializarAlarmasDefault(void);
 #endif

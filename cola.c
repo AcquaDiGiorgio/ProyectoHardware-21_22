@@ -84,7 +84,7 @@ void tratar_alarma(uint32_t auxData){
 	}
 }
 
-void leer_evento()
+void cola_leer_evento()
 { 	
 	event_t id;
 	estado_juego_t estado_partida;
@@ -199,7 +199,7 @@ void leer_evento()
 	
 }
 
-boolean hay_evento()
+boolean cola_hay_evento()
 {
 	return eventList[indice.aLeer].ready;
 }
@@ -211,8 +211,8 @@ void scheduler()
 	
 	while(1)
 	{
-		if(hay_evento() == TRUE){
-			leer_evento();
+		if(cola_hay_evento() == TRUE){
+			cola_leer_evento();
 		}else{
 			PM_idle();
 		}		

@@ -4,28 +4,28 @@
 	#include <inttypes.h>
 
 	// Inicia la IO de la GPIO
-	void initIO(void);
+	void IO_init(void);
 
 	// Refresca las salidas del sistema
-	void refrescarSalidas(void);
+	void IO_refrescarSalidas(void);
 	
 	// Escribe/Borra un valor de la celda leída de la GPIO
-	void escribirValor(void);
-	void eliminarValor(void);
+	void IO_escribirValor(void);
+	void IO_eliminarValor(void);
 	
 	// Encer led de error
-	void ponerLedErr(void);
+	void IO_ponerLedErr(void);
 	
 	// Quita el led de error
-	void quitarLedErr(void);
+	void IO_quitarLedErr(void);
 	
 	// Comprueba que se quiere finalizar la partida
-	void checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor);
+	void IO_checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor);
 	
 	// Ha habido overflow en alguna parte del sistema (encer led)
-	void overflowLed(void);
+	void IO_overflowLed(void);
 	
-	void reiniciarEstadoAnterior(void);
-	void latidoLed(void);
+	void IO_reiniciarEstadoAnterior(void);
+	void IO_latidoLed(void);
 
 #endif //GESTOR_IO_H

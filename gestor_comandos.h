@@ -9,10 +9,12 @@
 
 	void init_serial (void); /* Initialize Serial Interface       */
 		
-	void reiniciar_comando(void);
-	void preparar_nuevo_comando(void);
-	void recibir_caracter(int chr);
-	void detectar_comando(void);
+	// Funciones accesibles por el resto
+	void comando_reiniciar(void);
+	void comando_preparar_nuevo(void);
+	void comando_recibir_caracter(int chr);
+	void comando_detectar(void);
+	
 	void reiniciar_partida(void);
 	void nueva_partida(void);
 	void introducir_jugada(int[]);

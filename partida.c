@@ -18,34 +18,34 @@ void cambiar_estado_partida(estado_juego_t estado)
 void preprar_partida(void)
 {
 		cambiar_estado_partida(principio);
-		dibujar();
+		partida_mostrar();
 }
 
-void empezar_partida(void)
+void partida_empezar(void)
 {
-		crear_alarma_unica(0, EV_FIN_PARTIDA, SEGUNDO * 3);
+		alarma_crear_alarma_unica(0, EV_FIN_PARTIDA, SEGUNDO * 3);
 		cambiar_estado_partida(jugando);
 		partida_minutos 	= RTC_leer_segundos();
 		partida_segundos 	= RTC_leer_minutos();
-		dibujar();
+		partida_mostrar();
 }
 
-void terminar_partida(char *razon, int length)
+void partida_terminar(char *razon, int length)
 {
 		cambiar_estado_partida(final);
 		razon_fin = razon; 
 		razon_len = length;
 		partida_minutos		= RTC_leer_minutos() - partida_minutos;
 		partida_segundos 	= RTC_leer_segundos() - partida_segundos;
-		dibujar();
+		partida_mostrar();
 }
 
-estado_juego_t obtener_estado_juego(void)
+estado_juego_t partida_obtener_estado(void)
 {
 		return estadoActual;
 }
 
-void dibujar(void)
+void partida_mostrar(void)
 {
 	switch(estadoActual)
 	{
