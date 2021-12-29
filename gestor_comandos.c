@@ -100,12 +100,12 @@ void comando_detectar(void)
 
 void reiniciar_partida(void)
 {
-	cola_guardar_eventos(SET_RESET_COMMAND, NO_AUX_DATA);
+	cola_guardar_eventos(SET_RESET_COMMAND, NO_AUX_DATA, USER);
 }
 
 void nueva_partida(void)
 {
-	cola_guardar_eventos(SET_NEW_COMMAND, NO_AUX_DATA);
+	cola_guardar_eventos(SET_NEW_COMMAND, NO_AUX_DATA, USER);
 }
 
 void introducir_jugada(int info[])
@@ -127,8 +127,7 @@ void introducir_jugada(int info[])
 						fila--;
 						columna--;
 						auxData = (fila << 0x10) | (columna << 0x08) | valor;
-						cola_guardar_eventos(SET_WRITE_COMMAND, auxData);
-						enable_isr();
+						cola_guardar_eventos(SET_WRITE_COMMAND, auxData, USER);
 				}
 				else
 				{

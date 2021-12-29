@@ -16,6 +16,9 @@ void __swi(0xFE) disable_isr (void);
 void __swi(0xFD) enable_isr_fiq (void);
 void __swi(0xFC) disable_isr_fiq (void);
 
+void __swi(0xFB) enable_fiq (void);
+void __swi(0xFA) disable_fiq (void);
+
 struct index{
 		int aLeer;			// Evento a ser ejecutado
 		int aEscribir;  // Espacio libre para introducir un evento
@@ -23,16 +26,54 @@ struct index{
 
 static volatile struct index indice;
 
-void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
+void lock(acceso_t acceso)
+{
+		switch(acceso)
+		{
+			case USER:
+				disable_isr_fiq();
+				break;
+				
+			case IRQ:
+				disable_fiq();
+				break;
+				
+			case FIQ:
+				disable_isr();
+				break;
+		}
+}
+
+void unlock(acceso_t acceso)
+{
+		switch(acceso)
+		{
+			case USER:
+				enable_isr_fiq();
+				break;
+				
+			case IRQ:
+				enable_fiq();
+				break;
+				
+			case FIQ:
+				enable_isr();
+				break;
+		}
+}
+
+void cola_guardar_eventos(event_t idEvento, uint32_t auxData, acceso_t acceso)
 {
 	int indiceAux;
-		
-	disable_isr();											// Deshabilitamos interrupciones
+	
+	lock(acceso);
 	
 	indiceAux = indice.aEscribir;				// Creamos un índice auxiliar
 	indice.aEscribir++;									// aumentamos el índice
 	if (indice.aEscribir == MAX_EVENTS)	// Si hemos llegado al final de la cola, ponemos el índice al 0
 		indice.aEscribir = 0;								
+	
+	unlock(acceso);
 	
 	// Comprobamos que donde queremos introducir el evento, no hay otro esperando a ser leído
 	if(eventList[indiceAux].ready != TRUE)
@@ -41,13 +82,10 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 		eventList[indiceAux].id = idEvento;
 		eventList[indiceAux].auxData = auxData;
 		eventList[indiceAux].marcaTemporal = clock_gettime(); 
-		eventList[indiceAux].ready = TRUE;
-		
+		eventList[indiceAux].ready = TRUE;		
 		return; // Salimos de la función
 	}
 	
-	// Si hay un evento en ese espacio, saltamos un error
-	alarma_crear_alarma_unica(0,SET_WATCHDOG,20 * SEGUNDO);
 	while(1){}
 }
 
@@ -90,8 +128,6 @@ void cola_leer_evento()
 	estado_juego_t estado_partida;
 	uint32_t auxData;
 	int indiceAux, fila, columna, valor;
-	
-	//disable_isr();
 	
 	// Sacamos la información del evento y liberamos su espacio
 	indiceAux = indice.aLeer;
@@ -169,10 +205,8 @@ void cola_leer_evento()
 			}			
 			break;
 		
-		case SET_WATCHDOG:	
-			disable_isr_fiq();
-			WD_feed();
-			enable_isr_fiq();							
+		case EV_EXE_WATCHDOG:	
+			WD_feed();							
 			break;
 		
 		case SET_WRITE_COMMAND:

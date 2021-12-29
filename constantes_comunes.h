@@ -5,6 +5,10 @@
 		FALSE = 0, TRUE = 1
 	}boolean;
 	
+	typedef enum {
+		ENABLE = 1, DISABLE = 0
+	}state;
+	
 	#define SEGUNDO 1000		// 1000 ms
 	#define NEW_LINE				0x0A
 	#define TAB							0x09
@@ -97,5 +101,11 @@
 			return retVal;
 	}
 
-#endif // CONSTANTES_COMUNES_H
 
+	typedef enum {
+			IRQ = 0,
+			USER = 1,
+			FIQ = 2
+	}acceso_t;
+	
+#endif // CONSTANTES_COMUNES_H

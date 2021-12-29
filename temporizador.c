@@ -7,6 +7,9 @@
 void timer0_ISR(void) __irq;
 void timer1_ISR(void) __irq;
 
+void __swi(0xFD) enable_isr_fiq (void);
+void __swi(0xFC) disable_isr_fiq (void);
+
 //uint64_t __swi(0x00) clock_gettime (void);
 
 static volatile unsigned int timer1_count = 0;
@@ -90,8 +93,10 @@ uint8_t RTC_leer_segundos(void)
 // Alimenta al watchdog timer
 void WD_feed(void)
 {
+	disable_isr_fiq();
 	WDFEED = 0xAA;						   
 	WDFEED = 0x55;
+	enable_isr_fiq();
 }
 
 // Inicializa el watchdog timer para que resetee el procesador
@@ -103,12 +108,11 @@ void WD_init(int sec)
 	WDMOD = 0x3;
 	// Se debe alimentar una primera vez para ponerlo en marcha
 	WD_feed();
-
 }
 
 void timer0_ISR(void) __irq
 {
-	cola_guardar_eventos(SET_TIMER_0, NO_AUX_DATA);	// Metemos en la cola el evento sin AuxData
+	cola_guardar_eventos(SET_TIMER_0, NO_AUX_DATA, IRQ);	// Metemos en la cola el evento sin AuxData
 	T0IR = 1;                              					// Clear interrupt flag
 	VICVectAddr = 0;                       					// Acknowledge Interrupt
 }

@@ -20,7 +20,8 @@
 		POW_DOWN 			= 2,			// Alarma que pondrá el sistema a modo Power Down
 		PULSACION 		= 3,			// Alarma que comprobará si ha habido una nueva pulsación
 		LED_ERROR			= 4,			// Alarma que bajará el led de error
-		LATIDO				= 5
+		LATIDO				= 5,
+		WATCHDOG			= 6
 	};
 
 	// Vector de alarmas
@@ -42,5 +43,5 @@
 	void alarma_gestionar_alarma(int idAlarma);	// Esta función se llamará cuando se haya llegado al tiempo límite
 
 	// Inicialización de ciertas alarmas predefinidas por el sistema
-	void alarma_inicializarAlarmasDefault(void);
+	void alarma_inicializarAlarmasDefault(int wd_sec);
 #endif

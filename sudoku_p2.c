@@ -294,7 +294,8 @@ int main (void) {
 		uart_init(pantalla_add_to_buffer, pantalla_write_buffer);
 		RTC_init();
 		eint_init();
-		alarma_inicializarAlarmasDefault();
+		WD_init(5);
+		alarma_inicializarAlarmasDefault(5);
 		candidatos_actualizar();
 		partida_preprar();
 		scheduler();

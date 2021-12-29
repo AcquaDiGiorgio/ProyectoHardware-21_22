@@ -41,6 +41,12 @@ SWI_Handler
 				CMP		R12,#0xFC
 				BEQ		__disable_isr_fiq
 				
+				CMP		R12,#0xFB
+				BEQ		__enable_fiq
+
+				CMP		R12,#0xFA
+				BEQ		__disable_fiq				
+				
                 LDR     R8, SWI_Count
                 CMP     R12, R8
                 BHS     SWI_Dead                ; Overflow
@@ -86,7 +92,7 @@ __disable_isr
 				
                 LDMFD   SP!, {R8, R12}        	; Load R8, SPSR
                 LDMFD   SP!, {R12, PC}^         ; Restore R12 and Return
-				
+					
 __enable_isr_fiq
 				MRS		R0, SPSR
 				MOV		R1, #0xFFFFFFFF
@@ -104,7 +110,25 @@ __disable_isr_fiq
 				MSR 	SPSR_c, R0
 				
                 LDMFD   SP!, {R8, R12}          ; Load R8, SPSR
+                LDMFD   SP!, {R12, PC}^         ; Restore R12 and Return	
+
+__enable_fiq
+				MRS		R0, SPSR
+				MOV		R1, #0xFFFFFFFF
+				EOR		R2, R1, #F_Bit			; Máscara Negada
+				
+				AND 	R0, R0, R2 				; Enable FIQ interrupts
+				MSR 	SPSR_c, R0
+				
+                LDMFD   SP!, {R8, R12}          ; Load R8, SPSR
+                LDMFD   SP!, {R12, PC}^         ; Restore R12 and Return
+				
+__disable_fiq
+				MRS		R0, SPSR
+				ORR 	R0, R0, #F_Bit 			; Disable FIQ interrupts
+				MSR 	SPSR_c, R0
+				
+                LDMFD   SP!, {R8, R12}          ; Load R8, SPSR
                 LDMFD   SP!, {R12, PC}^         ; Restore R12 and Return
 				
                 END
-

@@ -19,7 +19,7 @@
 	static struct event_info eventList[MAX_EVENTS];
 	
 	// Guardado, lectura y compración de existencia de eventos de la cola
-	void cola_guardar_eventos(event_t idEvento, uint32_t auxData);
+	void cola_guardar_eventos(event_t idEvento, uint32_t auxData, acceso_t tipoAcceso);
 	void cola_leer_evento(void);
 	boolean cola_hay_evento(void);
 	
