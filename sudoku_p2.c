@@ -69,7 +69,8 @@ int candidatos_actualizar(void)
 	
 	for (i = 0; i < 9; ++i){
 			for (j = 0; j < 9; ++j){
-					eliminar_candidatos(&cuadricula[i][j]);	
+					eliminar_candidatos(&cuadricula[i][j]);				
+					celda_correcta(i,j);
 			}
 	}
 	
@@ -170,23 +171,30 @@ boolean todas_las_celdas_correctas()
 boolean celda_correcta(uint8_t fila, uint8_t columna)
 {
 		uint8_t j, i, valor, init_i, init_j, end_i, end_j;
-    const uint8_t init_region[NUM_FILAS] = {0, 0, 0, 3, 3, 3, 6, 6, 6};
-		
+		const uint8_t init_region[NUM_FILAS] = {0, 0, 0, 3, 3, 3, 6, 6, 6};
+
 		valor = celda_leer_valor(cuadricula[fila][columna]);
 		
-    /* recorrer fila descartando valor de listas candidatos */
-    for(i=0;i<NUM_FILAS;i++)
+		if (valor == 0)
+		{
+				celda_quitar_error(&cuadricula[fila][columna]);
+				return TRUE;
+		}
+		
+		/* recorrer fila descartando valor de listas candidatos */
+		for(i=0;i<NUM_FILAS;i++)
 		{
 				if(i!=fila)
 				{
 						if(valor == celda_leer_valor(cuadricula[i][columna]))
 						{
 								celda_marcar_error(&cuadricula[fila][columna]);
+								celda_marcar_error(&cuadricula[i][columna]);
 								return FALSE;
 						} 
 				}				
 		}
-		
+
 		for(j=0;j<NUM_COLUMNAS;j++)
 		{
 				if(j!=columna)
@@ -194,16 +202,17 @@ boolean celda_correcta(uint8_t fila, uint8_t columna)
 						if(valor == celda_leer_valor(cuadricula[fila][j]))
 						{
 								celda_marcar_error(&cuadricula[fila][columna]);
+								celda_marcar_error(&cuadricula[fila][j]);
 								return FALSE;
 						} 
 				}	
 		}
-		
+
 		init_i = init_region[fila];
 		init_j = init_region[columna];
 		end_i = init_i + 3;
 		end_j = init_j + 3;
-		
+
 		 /* recorrer region descartando valor de listas candidatos */
 		for (i=init_i; i<end_i; i++) {
 				for(j=init_j; j<end_j; j++) {
@@ -212,13 +221,15 @@ boolean celda_correcta(uint8_t fila, uint8_t columna)
 								if(valor == celda_leer_valor(cuadricula[i][j]))
 								{
 										celda_marcar_error(&cuadricula[fila][columna]);
+										celda_marcar_error(&cuadricula[i][j]);
 										return FALSE;
 								} 
 						}	
 				}
 		}
 
-   return TRUE;
+		celda_quitar_error(&cuadricula[i][j]);
+		return TRUE;
 }
 
 void introducirValorCelda(uint8_t fila, uint8_t columna, int valor)
@@ -226,7 +237,6 @@ void introducirValorCelda(uint8_t fila, uint8_t columna, int valor)
 		if( es_pista(fila,columna) == FALSE )
 		{
 				cuadricula[fila][columna] = valor;
-				celda_correcta(fila,columna);
 		}	
 }
 	
@@ -294,8 +304,8 @@ int main (void) {
 		uart_init(pantalla_add_to_buffer, pantalla_write_buffer);
 		RTC_init();
 		eint_init();
-		WD_init(5);
-		alarma_inicializarAlarmasDefault(5);
+		WD_init(20);
+		alarma_inicializarAlarmasDefault(10);
 		candidatos_actualizar();
 		partida_preprar();
 		scheduler();

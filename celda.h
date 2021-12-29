@@ -59,6 +59,11 @@ __inline static void celda_marcar_error(CELDA *celda_ptr)
 		*celda_ptr = *celda_ptr	| 0x20;
 }
 
+__inline static void celda_quitar_error(CELDA *celda_ptr)
+{
+		*celda_ptr = *celda_ptr	& 0xFFFFFFDF;
+}
+
 __inline static uint8_t celda_hay_error(CELDA celda)
 {
 		return (celda & 0x0020) >> 5;

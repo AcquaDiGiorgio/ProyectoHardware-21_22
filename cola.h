@@ -16,7 +16,7 @@
 	};
 
 	// Vector de interrupciones
-	static struct event_info eventList[MAX_EVENTS];
+	static volatile struct event_info eventList[MAX_EVENTS];
 	
 	// Guardado, lectura y compración de existencia de eventos de la cola
 	void cola_guardar_eventos(event_t idEvento, uint32_t auxData, acceso_t tipoAcceso);

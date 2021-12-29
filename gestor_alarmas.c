@@ -114,7 +114,7 @@ void alarma_gestionar_alarma(int idAlarma)
 	// Guardamos el evento que se tiene que gestionar
 		uint32_t auxData = alarmas[idAlarma].auxData;
 		
-		cola_guardar_eventos(SET_ALARMA, alarma_getEvento(auxData), IRQ);
+		cola_guardar_eventos(SET_ALARMA, alarma_getEvento(auxData), USER);
 		
 		// Si la alarma es periódica, reiniciamos su tiempo
 		if (alarma_esPeriodica(auxData) == 1)
@@ -131,5 +131,5 @@ void alarma_inicializarAlarmasDefault(int wd_sec)
 {
 	alarma_crear_alarma_periodica(PULSACION,EV_CHECK_PULS,100);
 	alarma_crear_alarma_periodica(LATIDO,EV_LATIDO,200);
-	//alarma_crear_alarma_periodica(WATCHDOG,EV_EXE_WATCHDOG,wd_sec);
+	alarma_crear_alarma_periodica(WATCHDOG,EV_EXE_WATCHDOG,wd_sec);
 }

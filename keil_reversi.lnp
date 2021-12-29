@@ -15,5 +15,6 @@
 ".\gestor_comandos.o"
 ".\sudoku_p2.o"
 ".\partida.o"
+".\access.o"
 --strict --scatter ".\keil_reversi.sct"
 --summary_stderr --info summarysizes -o .\keil_reversi.axf

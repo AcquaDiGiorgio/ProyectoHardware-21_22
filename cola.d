@@ -15,3 +15,4 @@
 .\cola.o: sudoku_p2.h
 .\cola.o: celda.h
 .\cola.o: partida.h
+.\cola.o: access.h

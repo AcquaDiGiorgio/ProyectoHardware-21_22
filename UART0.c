@@ -61,7 +61,7 @@ void rsi_uart0(void) __irq
 		{			
 			chr = U0RBR;
 			add_to_buffer(&chr, 1);
-			cola_guardar_eventos(SET_UART_SEND_CHR, chr, IRQ);
+			cola_guardar_eventos(SET_UART_SEND_CHR, chr, ISR);
 		}	
 	}
 	else if ( interrupt == 0x01 )	// THRE Interruption

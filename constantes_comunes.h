@@ -9,9 +9,10 @@
 		ENABLE = 1, DISABLE = 0
 	}state;
 	
-	#define SEGUNDO 1000		// 1000 ms
-	#define NEW_LINE				0x0A
-	#define TAB							0x09
+	#define CICLOS_POR_SEGUNDO 	1000
+	#define SEGUNDO 						1000		// 1000 ms
+	#define NEW_LINE						0x0A
+	#define TAB									0x09
 	
 	__inline int to_uint(char value)
 	{
@@ -103,9 +104,9 @@
 
 
 	typedef enum {
-			IRQ = 0,
-			USER = 1,
-			FIQ = 2
+			ISR 	= 0,
+			USER 	= 1,
+			FIQ		= 2
 	}acceso_t;
 	
 #endif // CONSTANTES_COMUNES_H

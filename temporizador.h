@@ -10,6 +10,7 @@
 	// Iniciación, lectura y parada del timer1
 	void temporizador_empezar(void);
 	void temporizador_parar(void);
+	uint64_t temporizador_leer(void);
 
 	//RTC y Watchdog
 	void RTC_init(void);

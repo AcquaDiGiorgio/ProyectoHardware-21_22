@@ -351,8 +351,8 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>0</Optim>
-            <oTime>0</oTime>
+            <Optim>4</Optim>
+            <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>0</OneElfS>
             <Strict>0</Strict>
@@ -640,6 +640,21 @@
               <FileName>eventos.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\eventos.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>access</GroupName>
+          <Files>
+            <File>
+              <FileName>access.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\access.h</FilePath>
+            </File>
+            <File>
+              <FileName>access.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\access.c</FilePath>
             </File>
           </Files>
         </Group>
