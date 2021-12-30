@@ -8,13 +8,13 @@
 #define BUFF_SIZE 5000
 
 void rsi_uart0(void) __irq;
-void (*add_to_buffer)(char*, int);
+void (*add_to_buffer)(volatile char*, int);
 void (*write_buffer)();
 
 /* **************************** */
 /* Initialize Serial Interface  */
 /* **************************** */
-void uart_init (void (*saveStr)(char*,int), void (*writeStr)()) /* Initialize Serial Interface       */
+void uart_init (void (*saveStr)(volatile char*,int), void (*writeStr)()) /* Initialize Serial Interface       */
 {               
   PINSEL0 |= 0x5;                  			 /* Enable RxD0 and TxD0              */
   U0LCR = 0x83;                          /* 8 bits, no Parity, 1 Stop bit     */

@@ -11,6 +11,8 @@
 #include "partida.h"
 #include "access.h"
 
+#include "pantalla.h"
+
 struct index{
 		int aLeer;			// Evento a ser ejecutado
 		int aEscribir;  // Espacio libre para introducir un evento
@@ -20,15 +22,11 @@ static volatile struct index indice;
 
 void cola_guardar_eventos(event_t idEvento, uint32_t auxData, acceso_t acceso)
 {
-		int indiceAux, test2;
-		boolean test, test3;
+		int indiceAux;
 		
 		lock(acceso);
 		
 		indiceAux = indice.aEscribir;				// Creamos un índice auxiliar	
-		test2 = indice.aLeer;
-		test = eventList[indice.aLeer].ready;
-		test3 = eventList[indice.aEscribir].ready;
 		indice.aEscribir++;									// aumentamos el índice
 		
 		if (indice.aEscribir == MAX_EVENTS)

@@ -507,14 +507,14 @@
           <GroupName>uart</GroupName>
           <Files>
             <File>
+              <FileName>pantalla.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\pantalla.h</FilePath>
+            </File>
+            <File>
               <FileName>UART0.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\UART0.h</FilePath>
-            </File>
-            <File>
-              <FileName>gestor_output.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\gestor_output.h</FilePath>
             </File>
             <File>
               <FileName>UART0.c</FileName>
@@ -522,19 +522,9 @@
               <FilePath>.\UART0.c</FilePath>
             </File>
             <File>
-              <FileName>gestor_output.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\gestor_output.c</FilePath>
-            </File>
-            <File>
               <FileName>pantalla.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\pantalla.c</FilePath>
-            </File>
-            <File>
-              <FileName>pantalla.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\pantalla.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -597,14 +587,9 @@
           <GroupName>sudoku</GroupName>
           <Files>
             <File>
-              <FileName>partida.h</FileName>
+              <FileName>celda.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\partida.h</FilePath>
-            </File>
-            <File>
-              <FileName>sudoku_p2.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\sudoku_p2.h</FilePath>
+              <FilePath>.\celda.h</FilePath>
             </File>
             <File>
               <FileName>tableros.h</FileName>
@@ -612,9 +597,24 @@
               <FilePath>.\tableros.h</FilePath>
             </File>
             <File>
-              <FileName>celda.h</FileName>
+              <FileName>sudoku_p2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\celda.h</FilePath>
+              <FilePath>.\sudoku_p2.h</FilePath>
+            </File>
+            <File>
+              <FileName>partida.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\partida.h</FilePath>
+            </File>
+            <File>
+              <FileName>gestor_output.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gestor_output.h</FilePath>
+            </File>
+            <File>
+              <FileName>gestor_output.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gestor_output.c</FilePath>
             </File>
             <File>
               <FileName>sudoku_p2.c</FileName>

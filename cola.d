@@ -16,3 +16,4 @@
 .\cola.o: celda.h
 .\cola.o: partida.h
 .\cola.o: access.h
+.\cola.o: pantalla.h

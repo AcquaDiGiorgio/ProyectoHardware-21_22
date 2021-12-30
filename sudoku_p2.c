@@ -306,7 +306,6 @@ int main (void) {
 		eint_init();
 		WD_init(20);
 		alarma_inicializarAlarmasDefault(10);
-		candidatos_actualizar();
 		partida_preprar();
 		scheduler();
 }

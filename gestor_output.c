@@ -51,17 +51,17 @@ void enviar_info(void)
 		pantalla_add_to_buffer(informacion_juego, INFO_SIZE);
 }
 
-void mostrar_final(uint8_t minutos, uint8_t segundos, char *razon, int len_razon)
+void mostrar_final(uint8_t minutos, uint8_t segundos, volatile char *razon, int len_razon)
 {
 		int i;
 		char tiempo[8], actualizar_tiempo[9];
 	
-		tiempo[0] = to_string((minutos>>1) & 0x1);
-		tiempo[1] = to_string(minutos & 0x1);
+		tiempo[0] = to_string(minutos / 10);
+		tiempo[1] = to_string(minutos % 10);
 		tiempo[2] = 'm';
 		tiempo[3] = ' ';
-		tiempo[4] = to_string((segundos>>1) & 0x1);
-		tiempo[5] = to_string(segundos & 0x1);
+		tiempo[4] = to_string(segundos / 10);
+		tiempo[5] = to_string(segundos % 10);
 		tiempo[6] = 's';
 		tiempo[7] = '\n';
 	

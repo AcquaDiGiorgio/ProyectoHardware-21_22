@@ -11,6 +11,6 @@
 
 	void pintar(void);
 	void enviar_info(void);
-	void mostrar_final(uint8_t minutos, uint8_t segundos, char *razon, int len_razon);
+	void mostrar_final(uint8_t minutos, uint8_t segundos, volatile char *razon, int len_razon);
 
 #endif //GESTOR_OUTPUT_H

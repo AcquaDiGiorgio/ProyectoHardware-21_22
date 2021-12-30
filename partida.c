@@ -23,14 +23,14 @@ void partida_preprar(void)
 
 void partida_empezar(void)
 {
-		alarma_crear_alarma_unica(0, EV_FIN_PARTIDA, SEGUNDO * 3);
+		alarma_crear_alarma_unica(0, EV_FIN_PARTIDA, SEGUNDO * 5);
 		partida_cambiar_estado(jugando);
-		partida_minutos 	= RTC_leer_segundos();
-		partida_segundos 	= RTC_leer_minutos();
+		partida_minutos 	= RTC_leer_minutos();
+		partida_segundos 	= RTC_leer_segundos();
 		partida_mostrar();
 }
 
-void partida_terminar(char *razon, int length)
+void partida_terminar(volatile char *razon, int length)
 {
 		partida_cambiar_estado(final);
 		razon_fin = razon; 

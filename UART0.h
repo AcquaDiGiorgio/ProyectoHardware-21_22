@@ -9,7 +9,7 @@
 		INTER_UNKNOWN
 	}interUart_t;
 
-	void uart_init(void (*f)(char*,int), void (*writeStr)());
+	void uart_init(void (*f)(volatile char*,int), void (*writeStr)());
 	void uart_print_chr(char chr);
 	
 #endif //UART0_H

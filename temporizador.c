@@ -35,7 +35,7 @@ void temporizador_empezar()
 uint64_t temporizador_leer(void)
 {
 	 // Veces interrumpido * maxCount (ms) + Count actual (ms)
-	 return timer1_count * (0xD693A400 / 1000) + (T1TC / 15000);
+	 return timer1_count * (0xD693A400 / 0x3E8) + (T1TC / 0x3A98);
 }
 
 uint64_t __SWI_0 (void){
@@ -69,8 +69,8 @@ void temporizador_periodo(int periodo)
 //Inicializa el RTC, reseteando la cuenta, ajustando el reloj y activando el enable.
 void RTC_init(void)
 {
-	PREINT	= 0x726; 															// 60 MHz / x - 1 en Hex
-	PREFRAC = 0x700;
+	PREINT	= 456; 															// (15.000.000 / 32768) - 1
+	PREFRAC = 25024;														//  15.000.000 - ((456+1)*32768)
 	CCR 		= 0x01;
 }
 
@@ -113,8 +113,8 @@ void WD_init(int sec)
 void timer0_ISR(void) __irq
 {
 	cola_guardar_eventos(SET_TIMER_0, NO_AUX_DATA, FIQ);	// Metemos en la cola el evento sin AuxData
-	T0IR = 1;                              					// Clear interrupt flag
-	VICVectAddr = 0;                       					// Acknowledge Interrupt
+	T0IR = 1;                              								// Clear interrupt flag
+	VICVectAddr = 0;                       								// Acknowledge Interrupt
 }
 
 void timer1_ISR(void) __irq

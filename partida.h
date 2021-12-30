@@ -13,7 +13,7 @@
 		
 		void partida_preprar(void);
 		void partida_empezar(void);
-		void partida_terminar(char *razon, int length);
+		void partida_terminar(volatile char *razon, int length);
 		
 		void partida_mostrar(void);
 		
