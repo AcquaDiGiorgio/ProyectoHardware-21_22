@@ -57,16 +57,16 @@ void rsi_uart0(void) __irq
 	
 	if ( interrupt == 0x02 )				// BRB intrruption
 	{
-		if( U0LSR & 0x01 ) 						// U0RBR contains valid data
-		{			
-			chr = U0RBR;
-			add_to_buffer(&chr, 1);
-			cola_guardar_eventos(SET_UART_SEND_CHR, chr, ISR);
-		}	
+			if( U0LSR & 0x01 ) 						// U0RBR contains valid data
+			{			
+					chr = U0RBR;
+					add_to_buffer(&chr, 1);
+					cola_guardar_eventos(SET_UART_SEND_CHR, chr, ISR);
+			}	
 	}
 	else if ( interrupt == 0x01 )	// THRE Interruption
 	{	
-		write_buffer();
+			write_buffer();
 	}
 	
 	VICVectAddr = 0;

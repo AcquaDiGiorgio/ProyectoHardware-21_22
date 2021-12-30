@@ -2,7 +2,6 @@
 #include "sudoku_p2.h"
 #include "cola.h"
 #include "temporizador.h"
-
 #include "pantalla.h"
 	
 #define LEN_FILA 								29
@@ -65,11 +64,13 @@ void mostrar_final(uint8_t minutos, uint8_t segundos, volatile char *razon, int 
 		tiempo[6] = 's';
 		tiempo[7] = '\n';
 	
-		for (i = 0; i < 7; i++)
+		for (i = 0; i < 6; i++)
 		{
-				actualizar_tiempo[6-i] = to_string(actualizar_coste % (10 * i));
+				actualizar_tiempo[i] = to_string(actualizar_coste % (potencia(10, 6-i)) / (potencia(10, 5-i)) );
 		}
-		actualizar_tiempo[7] = ' ';
+		
+		actualizar_tiempo[6] = 'm';
+		actualizar_tiempo[7] = 's';
 		actualizar_tiempo[8] = '\n';
 	
 		pantalla_add_to_buffer(fin_partida, LEN_FIN);
@@ -77,7 +78,7 @@ void mostrar_final(uint8_t minutos, uint8_t segundos, volatile char *razon, int 
 		pantalla_add_to_buffer(razon_fin,LEN_DUR_PARTDIA);
 		pantalla_add_to_buffer(tiempo, 8);
 		pantalla_add_to_buffer(coste_actualizar, LEN_COSTE_ACTUALIZAR);
-		pantalla_add_to_buffer(actualizar_tiempo, 8);
+		pantalla_add_to_buffer(actualizar_tiempo, 9);
 		pantalla_add_to_buffer(volver_a_jugar, LEN_VOLVER_A_JUGAR);
 }
 
@@ -94,7 +95,7 @@ void gestor_candidatos(int fila, int columna)
 		candidatos[index_candidatos] = '\t';
 		index_candidatos++;	
 	
-		candidatos_celda = leer_candidatos(fila,columna);
+		candidatos_celda = sudoku_leer_candidatos(fila,columna);
 	
 		for (i = 0; i < 9; i++)
 		{
@@ -124,7 +125,6 @@ void inicializar_tablero(void)
 	time = clock_gettime();
 	candidatos_actualizar(); 
 	actualizar_coste = actualizar_coste + clock_gettime() - time;
-	temporizador_parar();
 	
 	for (fila = 0; fila < TOT_FILAS; fila++)
 	{
@@ -149,7 +149,7 @@ void inicializar_tablero(void)
 					}
 					else if ((j - 1) % 3 == 0)		// Estamos en un espacio vacío
 					{				
-							valor = leer_celda(fila,columna);
+							valor = sudoku_leer_valor(fila,columna);
 							chr = to_string(valor);
 							
 							if (valor == 0)
@@ -157,7 +157,7 @@ void inicializar_tablero(void)
 									chr = ' ';
 							}
 						
-							if(es_pista(fila,columna) == FALSE)
+							if(sudoku_es_pista(fila,columna) == FALSE)
 							{
 									gestor_candidatos(fila, columna);
 							}
@@ -165,11 +165,11 @@ void inicializar_tablero(void)
 					else									
 					{
 							chr = ' ';	
-							if(es_pista(fila,columna) == TRUE)
+							if(sudoku_es_pista(fila,columna) == TRUE)
 							{
 									chr = 'P';
 							}
-							else if (hay_error(fila,columna) == TRUE)
+							else if (sudoku_hay_error(fila,columna) == TRUE)
 							{	
 									chr = 'E';
 							}

@@ -18,7 +18,7 @@ void IO_init(void)
 	GPIO_iniciar();
 	
 	// Creamos la alarma que refresca la GPIO
-	// crear_alarma_periodica(GPIO_REFRESH,EV_GPIO_REF,200);
+	alarma_crear_alarma_periodica(GPIO_REFRESH,EV_GPIO_REF,200);
 	
 	// Marcamos Salidas
 	GPIO_marcar_salida(0,14);
@@ -27,52 +27,52 @@ void IO_init(void)
 
 void IO_refrescarSalidas(void)
 {
-	uint32_t estadoActual;
-	uint32_t candidatos;
-	uint8_t fila, columna, valor, pista;
-	
-	switch(cambiandoLed)
-	{
-		case TRUE:
-			GPIO_clear_salida(0, 13);
-			break;
+		uint32_t estadoActual;
+		uint32_t candidatos;
+		uint8_t fila, columna, valor, pista;
 		
-		case FALSE:
-			GPIO_clear_salida(0, 14);
-			break;
-	}
-	
-	// Obtenemos la fila y columna pedida
-	fila = GPIO_leer(16,4)-1;
-	columna = GPIO_leer(20,4)-1;
-	
-	// Obtenemos del sudoku el valor de esa celda
-	if(fila < 8 && columna < 8)
-	{
-		valor = leer_celda(fila, columna);
-		// Obtenemos los candidatos
-		candidatos = leer_candidatos(fila, columna);
+		switch(cambiandoLed)
+		{
+			case TRUE:
+				GPIO_clear_salida(0, 13);
+				break;
+			
+			case FALSE:
+				GPIO_clear_salida(0, 14);
+				break;
+		}
 		
-		// Marcamos el valor de la celda en la salida
-		GPIO_escribir(0,3,valor);
+		// Obtenemos la fila y columna pedida
+		fila = GPIO_leer(16,4)-1;
+		columna = GPIO_leer(20,4)-1;
 		
-		// Marcamos los candidatos de la celda en la salida
-		GPIO_escribir(4,9,candidatos);
+		// Obtenemos del sudoku el valor de esa celda
+		if(fila < 8 && columna < 8)
+		{
+				valor = sudoku_leer_valor(fila, columna);
+				// Obtenemos los candidatos
+				candidatos = sudoku_leer_candidatos(fila, columna);
+				
+				// Marcamos el valor de la celda en la salida
+				GPIO_escribir(0,3,valor);
+				
+				// Marcamos los candidatos de la celda en la salida
+				GPIO_escribir(4,9,candidatos);
+				
+				// Escribimos el valor de la pista de esta celda en error
+				GPIO_escribir(13,1,pista);
+				
+				if (sudoku_es_pista(fila,columna))
+						GPIO_escribir(13,1,1);
+		}
 		
-		// Escribimos el valor de la pista de esta celda en error
-		GPIO_escribir(13,1,pista);
-		
-		if (es_pista(fila,columna))
-			GPIO_escribir(13,1,1);
-	}
-	
-	// Comprobamos el estado anterior de toda la GPIO
-	estadoActual = GPIO_leer(0,31);
-	if (estadoActual != estadoAnterior)
-	{
-		estadoAnterior = estadoActual;
-		// crear_alarma_unica(POW_DOWN,EV_POWER,15 * SEGUNDO);
-	}
+		// Comprobamos el estado anterior de toda la GPIO
+		estadoActual = GPIO_leer(0,31);
+		if (estadoActual != estadoAnterior)
+		{
+				estadoAnterior = estadoActual;
+				alarma_add_alarma_PD();
+		}
 }
 
 void IO_escribirValor(void)
@@ -88,17 +88,17 @@ void IO_escribirValor(void)
 	// Miramos si ha pedido terminar
 	IO_checkFinPartida(fila+1,columna+1,valor);
 	
-	accesible = celdaAccesible(fila, columna);
+	accesible = sudoku_celdaAccesible(fila, columna);
 	
 	// Si es pista no hacemos nada
-	if (accesible == TRUE && es_pista(fila,columna) == FALSE)
+	if (accesible == TRUE && sudoku_es_pista(fila,columna) == FALSE)
 	{
 		// Si no es pista lo introducimos
-		introducirValorCelda(fila,columna,valor);
+		sudoku_introducir_valor(fila,columna,valor);
 		candidatos_actualizar();
 		
 		// Si la jugada es errónea, encendemos el led
-		if(celda_correcta(fila,columna) == FALSE)
+		if(sudoku_celda_correcta(fila,columna) == FALSE)
 		{
 			cambiandoLed = TRUE;
 			GPIO_escribir(13,1,1);
@@ -120,12 +120,12 @@ void IO_eliminarValor(void)
 	// Miramos si ha pedido terminar
 	IO_checkFinPartida(fila+1,columna+1,valor);
 	
-	accesible = celdaAccesible(fila, columna);
+	accesible = sudoku_celdaAccesible(fila, columna);
 	
 	// Si no es una pista y además el procesador viene de un estado despierto
-	if (accesible == TRUE && es_pista(fila,columna) == FALSE)
+	if (accesible == TRUE && sudoku_es_pista(fila,columna) == FALSE)
 	{
-		eliminarValorCelda(fila,columna);
+		sudoku_eliminar_valor(fila,columna);
 		candidatos_actualizar();
 	}
 }
@@ -134,7 +134,7 @@ void IO_checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
 {
 	if(fila == 0 && columna == 0 && valor == 0)
 	{
-		sudokuReiniciar();
+		sudoku_reiniciar();
 		PM_power_down();
 	}
 }

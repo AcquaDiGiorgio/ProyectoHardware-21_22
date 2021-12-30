@@ -16,7 +16,8 @@ static volatile unsigned int timer1_count = 0;
 
 void temporizador_iniciar(void)
 {
-	T1MR0 = 0xD693A400 - 0x1;                     // Timer1 interrumpe cada 4 minutos (36.000.00.000 cuentas)
+
+	T1MR0 = 0xD68FFA80 - 0x1;                     // Timer1 interrumpe cada 4 minutos (3.599.760.000 cuentas)
 	T1MCR = 3;                     								// Timer1 interrumpe y reinicia al llegar a T1MR0
 	T1TCR = 1;                             				// Timer1 Enable
 	
@@ -31,11 +32,11 @@ void temporizador_empezar()
 	VICIntEnable = VICIntEnable | 0x00000020;			// Encendemos timer1
 }
 
-
+// Devuelve ms
 uint64_t temporizador_leer(void)
 {
-	 // Veces interrumpido * maxCount (ms) + Count actual (ms)
-	 return timer1_count * (0xD693A400 / 0x3E8) + (T1TC / 0x3A98);
+	 // Veces interrumpido * Tiempo por interrupcción (ms) + Ciclos actuales / ciclos por ms  con  reloj de 60 MHz
+	 return timer1_count * 240000 + T1TC / 14999;
 }
 
 uint64_t __SWI_0 (void){
@@ -51,7 +52,7 @@ void temporizador_parar()
 void temporizador_periodo(int periodo)
 {
 	int cuentas;
-	cuentas = periodo * 15000;
+	cuentas = periodo * 15000;										
 	T0MR0 = cuentas - 1;													// Timer0 interrumpe cada 'periodo' ms = 'cuentas' - 1 counts
 	T0MCR = 3;																		// Timer0 interrumpe y reinicia al llegar a T0MR0
 	T0TCR = 1;																		// Timer0 Enable
@@ -119,7 +120,7 @@ void timer0_ISR(void) __irq
 
 void timer1_ISR(void) __irq
 {
-	timer1_count++;																	// Sumamos 1 en el número de cuentas
-	T1IR = 1;                              					// Clear interrupt flag
-	VICVectAddr = 0;                       					// Acknowledge Interrupt
+	timer1_count++;																				// Sumamos 1 en el número de cuentas
+	T1IR = 1;                              								// Clear interrupt flag
+	VICVectAddr = 0;                       								// Acknowledge Interrupt
 }

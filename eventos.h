@@ -31,7 +31,8 @@
 		EV_LED_ERR					= 0xA3,		// El evento requiere apagar el led de error de la IO
 		EV_LATIDO						= 0xA4,		// El evento requiere cambiar el estado del led de latido de la IO
 		EV_FIN_PARTIDA			= 0xA5,
-		EV_EXE_WATCHDOG			= 0xA6
+		EV_FEED_WATCHDOG		= 0xA6,
+		EV_COMMAND_CONFIRM	= 0xA7
 		
 	}event_t;
 

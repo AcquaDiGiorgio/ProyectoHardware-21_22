@@ -127,9 +127,14 @@ void alarma_gestionar_alarma(int idAlarma)
 		}
 }
 
+void alarma_add_alarma_PD(void)
+{
+		alarma_crear_alarma_unica(POW_DOWN,EV_POWER,15 * SEGUNDO);
+}
+
 void alarma_inicializarAlarmasDefault(int wd_sec)
 {
 	alarma_crear_alarma_periodica(PULSACION,EV_CHECK_PULS,100);
 	alarma_crear_alarma_periodica(LATIDO,EV_LATIDO,200);
-	alarma_crear_alarma_periodica(WATCHDOG,EV_EXE_WATCHDOG,wd_sec);
+	alarma_crear_alarma_periodica(WATCHDOG,EV_FEED_WATCHDOG,wd_sec);
 }

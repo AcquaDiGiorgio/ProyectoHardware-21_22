@@ -44,4 +44,5 @@
 
 	// Inicialización de ciertas alarmas predefinidas por el sistema
 	void alarma_inicializarAlarmasDefault(int wd_sec);
+	void alarma_add_alarma_PD(void);
 #endif

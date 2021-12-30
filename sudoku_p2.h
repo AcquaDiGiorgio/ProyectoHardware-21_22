@@ -29,22 +29,22 @@
 	int candidatos_actualizar(void);
 	
 	// Introducción y eliminación del valor de una celda
-	void introducirValorCelda(uint8_t fila, uint8_t columna, int valor);
-	void eliminarValorCelda(uint8_t fila, uint8_t columna);
+	void sudoku_introducir_valor(uint8_t fila, uint8_t columna, int valor);
+	void sudoku_eliminar_valor(uint8_t fila, uint8_t columna);
 	
 	// Lectura del valor y los candidatos de una celda
-	uint8_t leer_celda(uint8_t fila, uint8_t columna);
-	uint16_t leer_candidatos(uint8_t fila, uint8_t columna);
+	uint8_t sudoku_leer_valor(uint8_t fila, uint8_t columna);
+	uint16_t sudoku_leer_candidatos(uint8_t fila, uint8_t columna);
 	
 	// Obtención de información de una celda
-	uint8_t es_pista(uint8_t fila, uint8_t columna);
-	boolean celda_correcta(uint8_t fila, uint8_t columna);
+	uint8_t sudoku_es_pista(uint8_t fila, uint8_t columna);
+	boolean sudoku_celda_correcta(uint8_t fila, uint8_t columna);
 	
 	// Reinicio del sudoku
-	void sudokuReiniciar(void);
+	void sudoku_reiniciar(void);
 	
 	// Check de si la celda a acceder está en el rango de celdas
-	boolean celdaAccesible(uint8_t fila, uint8_t columna);
-	uint8_t hay_error(uint8_t fila, uint8_t columna);
+	boolean sudoku_celdaAccesible(uint8_t fila, uint8_t columna);
+	uint8_t sudoku_hay_error(uint8_t fila, uint8_t columna);
 
 #endif /* SUDOKU_P2_H */

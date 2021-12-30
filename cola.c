@@ -88,11 +88,16 @@ void tratar_alarma(uint32_t auxData){
 						partida_terminar("Partida ha sido muy larga", 25);
 						break;
 				
-				case EV_EXE_WATCHDOG:
+				case EV_FEED_WATCHDOG:
 						WD_feed();
+						break;
+				
+				case EV_COMMAND_CONFIRM:
+						comando_comprobar();
+						break;
 				
 				default:
-					break;
+						break;
 		}
 }
 
@@ -137,7 +142,8 @@ void cola_leer_evento()
 						switch(energia_estado_actual())
 						{
 							case DESPIERTO:
-									comando_detectar();
+									alarma_add_alarma_PD();
+									//comando_detectar();
 									break;
 								
 							case DORMIDO:
@@ -154,7 +160,8 @@ void cola_leer_evento()
 						switch(energia_estado_actual())
 						{
 							case DESPIERTO:
-									comando_reiniciar();
+									alarma_add_alarma_PD();
+									comando_cancelar();
 									break;
 								
 							case DORMIDO:
@@ -168,6 +175,7 @@ void cola_leer_evento()
 				
 				// Gestionar entrada de la UART
 				case SET_UART_SEND_CHR:
+						alarma_add_alarma_PD();
 						estado_partida = partida_obtener_estado();
 						if(estado_partida == principio)
 						{
@@ -183,18 +191,19 @@ void cola_leer_evento()
 						valor = auxData & 0xFF;
 						columna = (auxData >> 0x8) & 0xFF;
 						fila = (auxData >> 0x10) & 0xFF;
-						introducirValorCelda(fila, columna, valor);
+						sudoku_introducir_valor(fila, columna, valor);
 						partida_mostrar();
 						break;
 				
 				case SET_RESET_COMMAND:
-						sudokuReiniciar();
-						partida_mostrar();
+						alarma_add_alarma_PD();
+						partida_terminar("Usuario a escrito #RST!",23);
 						break;
 				
 				case SET_NEW_COMMAND:
+						alarma_crear_alarma_unica(POW_DOWN,EV_POWER,15 * SEGUNDO);
 						partida_preprar();
-						break;
+						break;				
 				
 				default:
 						break;

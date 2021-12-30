@@ -70,7 +70,7 @@ int candidatos_actualizar(void)
 	for (i = 0; i < 9; ++i){
 			for (j = 0; j < 9; ++j){
 					eliminar_candidatos(&cuadricula[i][j]);				
-					celda_correcta(i,j);
+					sudoku_celda_correcta(i,j);
 			}
 	}
 	
@@ -86,98 +86,52 @@ int candidatos_actualizar(void)
 	return celdas_vacias;
 }
 
-/* Función que comprueba que todos los valores de todas las celdas
- * no están ya puestos en esa fila, columna o cuadrado
- *
- * Esta función tiene un elvado coste en cálculo y no se ha usado
- * en esta versión (Práctica 2). O(n*T(Filas)-1*T(Columnas)-1*T(Cuadrado)-1)
- * en el caso peor, siendo n el número de celdas y T(x) el número de
- * celdas que contiene cada x [Filas|Colunmnas|Cuadrados]. En este tipo de
- * sudoku se puede simplificar el coste a O(n*(9^3-3)) = O(726n). 
- */
-boolean todas_las_celdas_correctas()
+void comprobar_errores(uint8_t fila, uint8_t columna)
 {
-    
-		uint8_t j, i, k, init_i, init_j, end_i, end_j;
-		uint8_t indice, cuadrado_filas, cuadrado_columnas;
-		// Metodología parecida a la propagación de candidatos
-		const uint8_t init_region[] = {0, 3, 6};
+    uint8_t i, j, init_i, init_j, end_i, end_j;
+	
+    /* puede ayudar esta "look up table" a mejorar el rendimiento */
+    const uint8_t init_region[NUM_FILAS] = {0, 0, 0, 3, 3, 3, 6, 6, 6};
 
-		// Guardamos las ocurrencias de cada numero (índice) en un vector
-		// Si hay más de 1 se devuelve False
-		uint8_t ocurrencias[NUM_FILAS] = {0,0,0,0,0,0,0,0,0};
-		
-		// Recorrer fila descartando valor de listas candidatos 
-		for(i=0;i<NUM_FILAS;i++)
-		{
-				for (j=0;j<NUM_COLUMNAS;j++)
-				{
-						indice = celda_leer_valor(cuadricula[i][j])-1;
-						ocurrencias[indice]++;
-						if (ocurrencias[indice] > 1) return FALSE;	
+    /* recorrer fila descartando valor de listas candidatos */
+    for (j=0;j<NUM_FILAS;j++)
+				sudoku_celda_correcta(fila, j);
+
+    /* recorrer columna descartando valor de listas candidatos */
+    for (i=0;i<NUM_FILAS;i++)
+				sudoku_celda_correcta(i, columna);
+
+    /* determinar fronteras región */
+    init_i = init_region[fila];
+    init_j = init_region[columna];
+    end_i = init_i + 3;
+    end_j = init_j + 3;
+
+    /* recorrer region descartando valor de listas candidatos */
+    for (i=init_i; i<end_i; i++) {
+				for(j=init_j; j<end_j; j++) {
+						sudoku_celda_correcta(i, j);
 				}
-				
-				// Limpiamos el vector
-				for(k=0; k<NUM_FILAS; k++) ocurrencias[k] = 0;
-		}
-		
-		// Recorrer columnas descartando valor de listas candidatos 
-		for(j=0;j<NUM_COLUMNAS;j++)
-		{
-				for (i=0;i<NUM_FILAS;i++)
-				{
-						indice = celda_leer_valor(cuadricula[i][j])-1;
-						ocurrencias[indice]++;
-						if (ocurrencias[indice] > 1) return FALSE;
-				}
-				
-				// Limpiamos el vector
-				for(k=0; k<NUM_FILAS; k++) ocurrencias[k] = 0;
-		}
-		
-		// Recorrer cuadrados descartando valor de listas candidatos 
-		for(cuadrado_filas=0;cuadrado_filas<3;cuadrado_filas++)
-		{
-				for(cuadrado_columnas=0;cuadrado_columnas<3;cuadrado_columnas++)
-				{
-						init_i = init_region[cuadrado_filas];
-						init_j = init_region[cuadrado_columnas];
-						end_i = init_i + 3;
-						end_j = init_j + 3;
-						
-						// En cada cuadrado miramos todos las celdas
-						for (i=init_i; i<end_i; i++) {
-								for(j=init_j; j<end_j; j++) {
-										indice = celda_leer_valor(cuadricula[i][j])-1;
-										ocurrencias[indice]++;
-										if (ocurrencias[indice] > 1) return FALSE;
-								}
-						}
-						
-						// Limpiamos el vector
-						for(k=0; k<NUM_FILAS; k++) ocurrencias[k] = 0;
-				}
-		}
-		
-	 return TRUE;
+    }
 }
 
-/* Hace lo mismo que la función comprobar_todas_las_celdas pero
- * para solo 1 celda.
+/* Comprueba que una celda tiene el mismo valor que una con una en la
+ * misma fila, columna o cuadrante
  *
  * Función con poco coste computacional (constante) y usada en esta
  * práctica 2
  */
-boolean celda_correcta(uint8_t fila, uint8_t columna)
+boolean sudoku_celda_correcta(uint8_t fila, uint8_t columna)
 {
 		uint8_t j, i, valor, init_i, init_j, end_i, end_j;
 		const uint8_t init_region[NUM_FILAS] = {0, 0, 0, 3, 3, 3, 6, 6, 6};
+		boolean correcto = TRUE;
 
 		valor = celda_leer_valor(cuadricula[fila][columna]);
+		celda_quitar_error(&cuadricula[fila][columna]);
 		
 		if (valor == 0)
 		{
-				celda_quitar_error(&cuadricula[fila][columna]);
 				return TRUE;
 		}
 		
@@ -190,7 +144,7 @@ boolean celda_correcta(uint8_t fila, uint8_t columna)
 						{
 								celda_marcar_error(&cuadricula[fila][columna]);
 								celda_marcar_error(&cuadricula[i][columna]);
-								return FALSE;
+								correcto = FALSE;
 						} 
 				}				
 		}
@@ -203,7 +157,7 @@ boolean celda_correcta(uint8_t fila, uint8_t columna)
 						{
 								celda_marcar_error(&cuadricula[fila][columna]);
 								celda_marcar_error(&cuadricula[fila][j]);
-								return FALSE;
+								correcto = FALSE;
 						} 
 				}	
 		}
@@ -222,52 +176,52 @@ boolean celda_correcta(uint8_t fila, uint8_t columna)
 								{
 										celda_marcar_error(&cuadricula[fila][columna]);
 										celda_marcar_error(&cuadricula[i][j]);
-										return FALSE;
+										correcto = FALSE;
 								} 
 						}	
 				}
 		}
-
-		celda_quitar_error(&cuadricula[i][j]);
-		return TRUE;
+		
+		return correcto;
 }
 
-void introducirValorCelda(uint8_t fila, uint8_t columna, int valor)
+void sudoku_introducir_valor(uint8_t fila, uint8_t columna, int valor)
 {
-		if( es_pista(fila,columna) == FALSE )
+		if( sudoku_es_pista(fila,columna) == FALSE )
 		{
 				cuadricula[fila][columna] = valor;
+				comprobar_errores(fila, columna);
 		}	
 }
 	
-void eliminarValorCelda(uint8_t fila, uint8_t columna)
+void sudoku_eliminar_valor(uint8_t fila, uint8_t columna)
 {
-		if( es_pista(fila,columna) == FALSE )
+		if( sudoku_es_pista(fila,columna) == FALSE )
 		{
 				cuadricula[fila][columna] = 0;
 		}
 }	
-uint8_t leer_celda(uint8_t fila, uint8_t columna)
+uint8_t sudoku_leer_valor(uint8_t fila, uint8_t columna)
 {
 		return celda_leer_valor(cuadricula[fila][columna]);
 }
 
-uint16_t leer_candidatos(uint8_t fila, uint8_t columna)
+uint16_t sudoku_leer_candidatos(uint8_t fila, uint8_t columna)
 {
 		return celda_leer_candidatos(cuadricula[fila][columna]);
 }
 
-uint8_t es_pista(uint8_t fila, uint8_t columna)
+uint8_t sudoku_es_pista(uint8_t fila, uint8_t columna)
 {
 		return celda_es_pista(cuadricula[fila][columna]);
 }
 
-uint8_t hay_error(uint8_t fila, uint8_t columna)
+uint8_t sudoku_hay_error(uint8_t fila, uint8_t columna)
 {
 		return celda_hay_error(cuadricula[fila][columna]);
 }
 	
-void sudokuReiniciar(void)
+void sudoku_reiniciar(void)
 {
 		// Variables de iteración
 		uint8_t i;
@@ -277,7 +231,7 @@ void sudokuReiniciar(void)
 		for (i = 0; i < 9; ++i){
 				for (j = 0; j < 9; ++j){
 						// Si no es pista
-						if(es_pista(i, j) == FALSE)
+						if(sudoku_es_pista(i, j) == FALSE)
 						{				
 								celda_vaciar(&cuadricula[i][j]); // Le quitamos el valor
 						}
@@ -287,7 +241,7 @@ void sudokuReiniciar(void)
 		candidatos_actualizar();
 }
 
-boolean celdaAccesible(uint8_t fila, uint8_t columna)
+boolean sudoku_celdaAccesible(uint8_t fila, uint8_t columna)
 {
 		boolean retVal = FALSE;
 		

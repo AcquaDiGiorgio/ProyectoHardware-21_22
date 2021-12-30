@@ -102,6 +102,15 @@
 			return retVal;
 	}
 
+	__inline int potencia(int a, int b)
+	{
+			int i, retval = 1;
+			for (i = 0; i < b; i++)
+			{
+					retval = retval * a;
+			}
+			return retval;
+	}
 
 	typedef enum {
 			ISR 	= 0,
