@@ -93,7 +93,13 @@ void tratar_alarma(uint32_t auxData){
 						break;
 				
 				case EV_COMMAND_CONFIRM:
+						alarma_parar(LED_CANCELAR-1);
+						IO_apagar_led_cancelar();
 						comando_comprobar();
+						break;
+				
+				case EV_LED_CANCELAR:
+						IO_cancelarLed();
 						break;
 				
 				default:
@@ -107,8 +113,6 @@ void cola_leer_evento()
 		estado_juego_t estado_partida;
 		uint32_t auxData;
 		int fila, columna, valor;
-		
-		//lock(USER);	
 	
 		// Sacamos la información del evento y liberamos su espacio
 		id = eventList[indice.aLeer].id;
@@ -121,8 +125,6 @@ void cola_leer_evento()
 		// Estamos al final de la cola de procesos
 		if(indice.aLeer == MAX_EVENTS)
 			indice.aLeer = 0;	
-	
-		//unlock(USER);		
 		
 		// Acción dependendiendo del identificador del evento
 		switch (id)
@@ -202,6 +204,7 @@ void cola_leer_evento()
 				
 				case SET_NEW_COMMAND:
 						alarma_crear_alarma_unica(POW_DOWN,EV_POWER,15 * SEGUNDO);
+						sudoku_reiniciar();
 						partida_preprar();
 						break;				
 				

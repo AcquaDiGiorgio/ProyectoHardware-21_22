@@ -18,7 +18,7 @@
 #define CUADRICULA_SIZE 				552
 #define LEYENDA_SIZE						64
 #define COMANDO_SIZE 						10
-#define INFO_SIZE								475
+#define INFO_SIZE								476
 #define CANDIDATOS_SIZE					1134 // 13 * 9 * 9
 																																				
 static char outerRow[LEN_FILA] 	= {"############################\n"};
@@ -28,7 +28,7 @@ static char hardRow[LEN_FILA] 	= {"#########+########+#########\n"};
 static char cabeceraCandidatos[LEN_CABECERA_CANDIDATOS] = {"\n\nF C\tCandidatos\n- -\t---------"};
 static char leyenda[LEYENDA_SIZE] 											= {"\nLEYENDA:\n\tReiniciar la partida: #RST!\n\tIntroducir Jugada #FCVS!"};	
 static char comando[COMANDO_SIZE] 											= {"\nComando: "};
-static char informacion_juego[INFO_SIZE] 								= {"Este juego es el sudoku, tras apretar una tecla, se le mostrará un tablero con\nciertos valores predefinidos y posibles candidatos\n\nPara introducir una jugada, usa el comando #FCVS!\nSiendo F la fila, C la columna, V el valor y S el resto de\nla división de la suma de los 3 anteriores valores entre 8 => (F+C+V)%8\n\nPara reiniciar el tablero usa el comando #RST!\n\nLa partida terminara tras pasar 1 hora o completar el sudoku sin errores\n\nPresione cualquier tecla para continuar\n"};
+static char informacion_juego[INFO_SIZE] 								= {"\nEste juego es el sudoku, tras apretar una tecla, se le mostrará un tablero con\nciertos valores predefinidos y posibles candidatos\n\nPara introducir una jugada, usa el comando #FCVS!\nSiendo F la fila, C la columna, V el valor y S el resto de\nla división de la suma de los 3 anteriores valores entre 8 => (F+C+V)%8\n\nPara reiniciar el tablero usa el comando #RST!\n\nLa partida terminara tras pasar 1 hora o completar el sudoku sin errores\n\nPresione cualquier tecla para continuar\n"};
 static char fin_partida[LEN_FIN] 												= {"\nLa partida ha terminado debido a: "};
 static char razon_fin[LEN_DUR_PARTDIA] 									= {"\nLa partida ha durado: "};
 static char coste_actualizar[LEN_COSTE_ACTUALIZAR] 			= {"\nCoste de actualizar candidatos: "};

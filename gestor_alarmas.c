@@ -4,7 +4,7 @@
 
 #define ALRM_UNICA 0			// Alarma que solo se debe ejcutar 1 vez
 #define ALRM_PERIODICA 1	// Alarma que se debe reiniciar tras su ejecución
-#define DYNAMIC_ID 5			// Mínimo índice de una alarma no predifinida por el sistema
+
 
 void __swi(0xFF) enable_isr (void);
 
@@ -60,6 +60,11 @@ void alarma_crear_alarma_periodica(int id, event_t evento, int retardo)
 				return;
 		}
 		// Todas las alarmas ocupadas
+}
+
+void alarma_parar(int id)
+{
+		alarmas[id].active = FALSE;
 }
 
 // PRE:  id del evento a gestionar, la periodicidad de la alama y su retardo
@@ -119,11 +124,11 @@ void alarma_gestionar_alarma(int idAlarma)
 		// Si la alarma es periódica, reiniciamos su tiempo
 		if (alarma_esPeriodica(auxData) == 1)
 		{
-			alarmas[idAlarma].elapsedTime = 0;
+				alarmas[idAlarma].elapsedTime = 0;
 		}		
 		else	// Sino, la desactivamos
 		{
-			alarmas[idAlarma].active = FALSE;
+				alarma_parar(idAlarma);
 		}
 }
 
@@ -134,7 +139,7 @@ void alarma_add_alarma_PD(void)
 
 void alarma_inicializarAlarmasDefault(int wd_sec)
 {
-	alarma_crear_alarma_periodica(PULSACION,EV_CHECK_PULS,100);
-	alarma_crear_alarma_periodica(LATIDO,EV_LATIDO,200);
-	alarma_crear_alarma_periodica(WATCHDOG,EV_FEED_WATCHDOG,wd_sec);
+	alarma_crear_alarma_periodica(0,EV_CHECK_PULS,100);
+	alarma_crear_alarma_periodica(0,EV_LATIDO,200);
+	alarma_crear_alarma_periodica(0,EV_FEED_WATCHDOG,wd_sec);
 }

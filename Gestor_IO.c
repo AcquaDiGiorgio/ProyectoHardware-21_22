@@ -10,19 +10,30 @@
 volatile uint32_t estadoAnterior = 0x0;
 volatile boolean cambiandoLed = FALSE;
 volatile boolean latido_on = FALSE;
+volatile boolean cancelado_on = FALSE;
+
+const boolean modo_p2 = FALSE;
 
 //Inicializa el gestor IO
 void IO_init(void)
 {
-	// Iniciamos la GPIO
-	GPIO_iniciar();
-	
-	// Creamos la alarma que refresca la GPIO
-	alarma_crear_alarma_periodica(GPIO_REFRESH,EV_GPIO_REF,200);
-	
-	// Marcamos Salidas
-	GPIO_marcar_salida(0,14);
-	GPIO_marcar_salida(30,2);
+		// Iniciamos la GPIO
+		GPIO_iniciar();
+		
+		// Creamos la alarma que refresca la GPIO
+		alarma_crear_alarma_periodica(0,EV_GPIO_REF,200);
+		
+		// Marcamos Salidas
+		if (modo_p2 == TRUE)
+		{
+			GPIO_marcar_salida(0,14);
+			GPIO_marcar_salida(30,2);
+		}
+		else
+		{
+			GPIO_marcar_salida(0,14);
+			GPIO_marcar_salida(16,16);
+		}
 }
 
 void IO_refrescarSalidas(void)
@@ -77,35 +88,35 @@ void IO_refrescarSalidas(void)
 
 void IO_escribirValor(void)
 {
-	uint8_t fila,columna,valor; // Variables leidas de la GPIO
-	boolean accesible;
-	
-	// Leemos la fila, columna y valor de la GPIO
-	fila    = GPIO_leer(16,4)-1;
-	columna = GPIO_leer(20,4)-1;
-	valor   = GPIO_leer(24,4);
-	
-	// Miramos si ha pedido terminar
-	IO_checkFinPartida(fila+1,columna+1,valor);
-	
-	accesible = sudoku_celdaAccesible(fila, columna);
-	
-	// Si es pista no hacemos nada
-	if (accesible == TRUE && sudoku_es_pista(fila,columna) == FALSE)
-	{
-		// Si no es pista lo introducimos
-		sudoku_introducir_valor(fila,columna,valor);
-		candidatos_actualizar();
+		uint8_t fila,columna,valor; // Variables leidas de la GPIO
+		boolean accesible;
 		
-		// Si la jugada es errónea, encendemos el led
-		if(sudoku_celda_correcta(fila,columna) == FALSE)
+		// Leemos la fila, columna y valor de la GPIO
+		fila    = GPIO_leer(16,4)-1;
+		columna = GPIO_leer(20,4)-1;
+		valor   = GPIO_leer(24,4);
+		
+		// Miramos si ha pedido terminar
+		IO_checkFinPartida(fila+1,columna+1,valor);
+		
+		accesible = sudoku_celdaAccesible(fila, columna);
+		
+		// Si es pista no hacemos nada
+		if (accesible == TRUE && sudoku_es_pista(fila,columna) == FALSE)
 		{
-			cambiandoLed = TRUE;
-			GPIO_escribir(13,1,1);
-			// Creamos una alarma que apague el led
-			alarma_crear_alarma_unica(LED_ERROR,EV_LED_ERR,1 * SEGUNDO);
-		}			
-	}
+				// Si no es pista lo introducimos
+				sudoku_introducir_valor(fila,columna,valor);
+				candidatos_actualizar();
+				
+				// Si la jugada es errónea, encendemos el led
+				if(sudoku_celda_correcta(fila,columna) == FALSE)
+				{
+						cambiandoLed = TRUE;
+						GPIO_escribir(13,1,1);
+						// Creamos una alarma que apague el led
+						alarma_crear_alarma_unica(0,EV_LED_ERR,1 * SEGUNDO);
+				}			
+		}
 }
 
 void IO_eliminarValor(void)
@@ -152,18 +163,39 @@ void IO_reiniciarEstadoAnterior(void)
 
 void IO_latidoLed(void)
 {
-	switch(latido_on)	
-	{
-		case TRUE:
-			GPIO_clear_salida(31,1);
-			latido_on = FALSE;
-			break;
-		
-		case FALSE:
-			GPIO_escribir(31,1,1);
-			latido_on = TRUE;
-			break;
-	}
+		switch(latido_on)	
+		{
+			case TRUE:
+				GPIO_clear_salida(31,1);
+				latido_on = FALSE;
+				break;
+			
+			case FALSE:
+				GPIO_escribir(31,1,1);
+				latido_on = TRUE;
+				break;
+		}
+}
+
+void IO_cancelarLed(void)
+{
+		switch(cancelado_on)	
+		{
+			case TRUE:
+				IO_apagar_led_cancelar();
+				break;
+			
+			case FALSE:
+				GPIO_escribir(28,1,1);
+				cancelado_on = TRUE;
+				break;
+		}
+}
+
+void IO_apagar_led_cancelar(void)
+{
+		GPIO_clear_salida(28,1);
+		cancelado_on = FALSE;
 }
 
 void IO_overflowLed(void)

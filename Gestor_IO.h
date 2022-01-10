@@ -27,5 +27,7 @@
 	
 	void IO_reiniciarEstadoAnterior(void);
 	void IO_latidoLed(void);
+	void IO_cancelarLed(void);
+	void IO_apagar_led_cancelar(void);
 
 #endif //GESTOR_IO_H

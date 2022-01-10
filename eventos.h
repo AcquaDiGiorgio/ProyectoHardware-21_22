@@ -25,14 +25,16 @@
 		SET_INIT_SUDOKU 		= 0x0B,
 		
 		// Actuación del evento (Llamado por un evento de tipo SET)
-		EV_GPIO_REF					= 0xA0,		// El evento requiere refrescar las salidas de la IO
-		EV_POWER						= 0xA1,		// El evento requiere que se entre en modo PowerDown
-		EV_CHECK_PULS				= 0xA2,		// El evento requiere comprobar si elgún botón está pulsado
-		EV_LED_ERR					= 0xA3,		// El evento requiere apagar el led de error de la IO
-		EV_LATIDO						= 0xA4,		// El evento requiere cambiar el estado del led de latido de la IO
-		EV_FIN_PARTIDA			= 0xA5,
-		EV_FEED_WATCHDOG		= 0xA6,
-		EV_COMMAND_CONFIRM	= 0xA7
+		EV_GPIO_REF						= 0xA0,		// El evento requiere refrescar las salidas de la IO
+		EV_POWER							= 0xA1,		// El evento requiere que se entre en modo PowerDown
+		EV_CHECK_PULS					= 0xA2,		// El evento requiere comprobar si elgún botón está pulsado
+		EV_LED_ERR						= 0xA3,		// El evento requiere apagar el led de error de la IO
+		EV_LATIDO							= 0xA4,		// El evento requiere cambiar el estado del led de latido de la IO
+		EV_FIN_PARTIDA				= 0xA5,
+		EV_FEED_WATCHDOG			= 0xA6,
+		EV_COMMAND_CONFIRM		= 0xA7,
+		EV_LED_CANCELAR		  	= 0xA8,
+		EV_PARAR_LED_CANCELAR = 0xA9
 		
 	}event_t;
 

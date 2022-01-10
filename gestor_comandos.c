@@ -144,6 +144,7 @@ void introducir_jugada(int info[])
 						}	
 								
 						cola_guardar_eventos(SET_WRITE_COMMAND, auxData, USER);
+						alarma_crear_alarma_periodica(LED_CANCELAR,EV_LED_CANCELAR,100);
 						alarma_crear_alarma_unica(0,EV_COMMAND_CONFIRM, 3 * SEGUNDO);
 				}
 				else
@@ -165,18 +166,14 @@ void comando_cancelar(void)
 void comando_comprobar(void)
 {
 		uint8_t fila, columna;
-		int auxData, info[MAX_COMMAND_SIZE], i;
-	
-		for (i = 0; i < JUGADA_SIZE; i++)
-		{
-				info[i] = to_uint(comandoAnterior[i]); 	// Cambio el valor char a int
-		}
+		int auxData;
 	
 		if (comando_cancelado == TRUE)
 		{
-				fila 					= info[0];
-				columna 			= info[1];
-				auxData = (fila << 0x10) | (columna << 0x08) | oldValue;
+				fila 			= to_uint(comandoAnterior[0]) - 1; 
+				columna 	= to_uint(comandoAnterior[1]) - 1;
+				auxData 	= (fila << 0x10) | (columna << 0x08) | oldValue;
+			
 				pantalla_add_to_buffer("\n\nComando cancelado\n", 20);
 				cola_guardar_eventos(SET_WRITE_COMMAND, auxData, USER);
 		}
