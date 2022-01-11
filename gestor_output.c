@@ -69,7 +69,7 @@ void mostrar_final(uint8_t minutos, uint8_t segundos, volatile char *razon, int 
 				actualizar_tiempo[i] = to_string(actualizar_coste % (potencia(10, 6-i)) / (potencia(10, 5-i)) );
 		}
 		
-		actualizar_tiempo[6] = 'm';
+		actualizar_tiempo[6] = 'u';
 		actualizar_tiempo[7] = 's';
 		actualizar_tiempo[8] = '\n';
 	

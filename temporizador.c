@@ -17,7 +17,7 @@ static volatile unsigned int timer1_count = 0;
 void temporizador_iniciar(void)
 {
 
-	T1MR0 = 0xD68FFA80 - 0x1;                     // Timer1 interrumpe cada 4 minutos (3.599.760.000 cuentas)
+	T1MR0 = 0xD693A400 - 0x1;                     // Timer1 interrumpe cada 4 minutos (3.600.000.000 cuentas)
 	T1MCR = 3;                     								// Timer1 interrumpe y reinicia al llegar a T1MR0
 	T1TCR = 1;                             				// Timer1 Enable
 	
@@ -36,7 +36,7 @@ void temporizador_empezar()
 uint64_t temporizador_leer(void)
 {
 	 // Veces interrumpido * Tiempo por interrupcción (ms) + Ciclos actuales / ciclos por ms  con  reloj de 60 MHz
-	 return timer1_count * 240000 + T1TC / 14999;
+	 return timer1_count * 240000000 + T1TC / 15;
 }
 
 uint64_t __SWI_0 (void){

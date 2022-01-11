@@ -39,7 +39,7 @@ __inline static uint8_t celda_leer_valor(CELDA celda)
     return (celda & 0x000F);
 }
 
-__inline static void eliminar_candidatos(CELDA *celda)
+__inline static void celda_eliminar_candidatos(CELDA *celda)
 {
     *celda = *celda & 0x007F;
 }
