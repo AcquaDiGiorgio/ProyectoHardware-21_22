@@ -5,7 +5,6 @@
 #include "gestor_IO.h"
 #include "gestor_energia.h"
 #include "gestor_comandos.h"
-#include "uart0.h"
 #include "gestor_output.h"
 #include "sudoku_p2.h"
 #include "partida.h"
