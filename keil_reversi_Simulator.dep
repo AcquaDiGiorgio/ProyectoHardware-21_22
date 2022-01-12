@@ -1,7 +1,7 @@
 Dependencies for Project 'keil_reversi', Target 'Simulator': (DO NOT MODIFY !)
 F (.\Startup.s)(0x61BF9A61)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"-o .\startup.o --depend .\startup.d)
 F (.\cola.h)(0x61CCB23C)()
-F (.\cola.c)(0x61DD61DC)(-c --cpu ARM7TDMI -D__EVAL -g -O3 -Otime-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\cola.o --omf_browse .\cola.crf --depend .\cola.d)
+F (.\cola.c)(0x61DF5F37)(-c --cpu ARM7TDMI -D__EVAL -g -O3 -Otime-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\cola.o --omf_browse .\cola.crf --depend .\cola.d)
 I (cola.h)(0x61CCB23C)
 I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
@@ -16,7 +16,7 @@ I (gestor_comandos.h)(0x61CDFF36)
 I (gestor_output.h)(0x61CD9EE6)
 I (sudoku_p2.h)(0x61CE050D)
 I (celda.h)(0x61DD53D8)
-I (partida.h)(0x61CD9EBB)
+I (partida.h)(0x61DF5EEE)
 I (access.h)(0x61CCB5AA)
 I (pantalla.h)(0x61CD9E7D)
 F (.\SWI.s)(0x61CCA267)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips--pd "__UVISION_VERSION SETA 526"-o .\swi.o --depend .\swi.d)
@@ -111,7 +111,7 @@ I (gestor_alarmas.h)(0x61DD4ACF)
 F (.\celda.h)(0x61DD53D8)()
 F (.\tableros.h)(0x6168806F)()
 F (.\sudoku_p2.h)(0x61CE050D)()
-F (.\partida.h)(0x61CD9EBB)()
+F (.\partida.h)(0x61DF5EEE)()
 F (.\gestor_output.h)(0x61CD9EE6)()
 F (.\gestor_output.c)(0x61DD5469)(-c --cpu ARM7TDMI -D__EVAL -g -O3 -Otime-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\gestor_output.o --omf_browse .\gestor_output.crf --depend .\gestor_output.d)
 I (gestor_output.h)(0x61CD9EE6)
@@ -139,10 +139,10 @@ I (gestor_IO.h)(0x61DD4ACF)
 I (boton.h)(0x61C8C46A)
 I (uart0.h)(0x61CD9EA7)
 I (gestor_output.h)(0x61CD9EE6)
-I (partida.h)(0x61CD9EBB)
+I (partida.h)(0x61DF5EEE)
 I (pantalla.h)(0x61CD9E7D)
-F (.\partida.c)(0x61CDF294)(-c --cpu ARM7TDMI -D__EVAL -g -O3 -Otime-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\partida.o --omf_browse .\partida.crf --depend .\partida.d)
-I (partida.h)(0x61CD9EBB)
+F (.\partida.c)(0x61DF5F0F)(-c --cpu ARM7TDMI -D__EVAL -g -O3 -Otime-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\Philips-D__UVISION_VERSION="526"-o .\partida.o --omf_browse .\partida.crf --depend .\partida.d)
+I (partida.h)(0x61DF5EEE)
 I (gestor_output.h)(0x61CD9EE6)
 I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x599F2F9E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)

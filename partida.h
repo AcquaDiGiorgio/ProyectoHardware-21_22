@@ -2,9 +2,9 @@
 #define PARTIDA_H
 
 		typedef enum{
-				principio 	= 0,
-				jugando 		= 1,
-				final 			= 2
+				MODO_PRINCIPIO 		= 0,
+				MODO_JUGANDO 			= 1,
+				MODO_TERMINANDO 	= 2
 		}estado_juego_t;
 
 

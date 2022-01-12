@@ -178,7 +178,7 @@ void cola_leer_evento()
 				case SET_UART_SEND_CHR:
 						alarma_add_alarma_PD();
 						estado_partida = partida_obtener_estado();
-						if(estado_partida == principio)
+						if(estado_partida == MODO_PRINCIPIO)
 						{
 								partida_empezar();
 						}
@@ -189,22 +189,33 @@ void cola_leer_evento()
 						break;
 				
 				case SET_WRITE_COMMAND:
-						valor = auxData & 0xFF;
-						columna = (auxData >> 0x8) & 0xFF;
-						fila = (auxData >> 0x10) & 0xFF;
-						sudoku_introducir_valor(fila, columna, valor);
-						partida_mostrar();
+						if (estado_partida == MODO_JUGANDO)
+						{
+								valor = auxData & 0xFF;
+								columna = (auxData >> 0x8) & 0xFF;
+								fila = (auxData >> 0x10) & 0xFF;
+								sudoku_introducir_valor(fila, columna, valor);
+								partida_mostrar();
+						}						
 						break;
 				
 				case SET_RESET_COMMAND:
 						alarma_add_alarma_PD();
-						partida_terminar("Usuario a escrito #RST!",23);
+						estado_partida = partida_obtener_estado();
+						if (estado_partida == MODO_JUGANDO)
+						{
+								partida_terminar("Usuario a escrito #RST!",23);
+						}						
 						break;
 				
 				case SET_NEW_COMMAND:
-						alarma_crear_alarma_unica(POW_DOWN,EV_POWER,15 * SEGUNDO);
-						sudoku_reiniciar();
-						partida_preprar();
+						alarma_add_alarma_PD();					
+						estado_partida = partida_obtener_estado();
+						if (estado_partida == MODO_TERMINANDO)
+						{
+								sudoku_reiniciar();
+								partida_preprar();
+						}							
 						break;				
 				
 				default:
