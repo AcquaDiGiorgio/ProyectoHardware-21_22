@@ -20,7 +20,7 @@ void temporizador_iniciar(void)
 	T1MR0 = 0xD693A400 - 0x1;                     // Timer1 interrumpe cada 4 minutos (3.600.000.000 cuentas)
 	T1MCR = 3;                     								// Timer1 interrumpe y reinicia al llegar a T1MR0
 	T1TCR = 1;                             				// Timer1 Enable
-	
+	VICIntSelect = 0x10;
 	
 	VICVectAddr1 = (unsigned long)timer1_ISR;			// Función que se llamará cuando llegue la interrupción timer0
 	VICVectCntl1 = DEFAULT | 5;
@@ -113,7 +113,7 @@ void WD_init(int sec)
 
 void timer0_ISR(void) __irq
 {
-	cola_guardar_eventos(SET_TIMER_0, NO_AUX_DATA, FIQ);	// Metemos en la cola el evento sin AuxData
+	cola_guardar_eventos(SET_TIMER_0, NO_AUX_DATA);				// Metemos en la cola el evento sin AuxData
 	T0IR = 1;                              								// Clear interrupt flag
 	VICVectAddr = 0;                       								// Acknowledge Interrupt
 }

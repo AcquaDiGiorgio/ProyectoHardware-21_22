@@ -3,7 +3,7 @@
 
 		#include "constantes_comunes.h"
 
-		void lock(acceso_t acceso);
-		void unlock(acceso_t acceso);
+		void lock(void);
+		void unlock(void);
 
 #endif //ACCESS_H

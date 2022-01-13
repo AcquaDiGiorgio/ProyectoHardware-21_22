@@ -111,11 +111,11 @@
 			}
 			return retval;
 	}
-
+	
 	typedef enum {
-			ISR 	= 0,
-			USER 	= 1,
-			FIQ		= 2
+			ISR 	= 0x12,
+			USER 	= 0x10,
+			FIQ		= 0x11
 	}acceso_t;
 	
 #endif // CONSTANTES_COMUNES_H

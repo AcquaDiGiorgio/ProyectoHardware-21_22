@@ -12,79 +12,27 @@ void __swi(0xFA) disable_fiq (void);
 static volatile state isr_state = ENABLE;
 static volatile state fiq_state = ENABLE;
 
-void lock(acceso_t acceso)
+void lock(void)
 {
-		switch(acceso)
-		{
-			case USER:			
-				if(isr_state == ENABLE && fiq_state == ENABLE)
-				{
-						isr_state = DISABLE;
-						fiq_state = DISABLE;
-						disable_isr_fiq();
-				}
-				else if(fiq_state == ENABLE)
-				{
-						fiq_state = DISABLE;
-						disable_fiq();
-				}
-				else if(isr_state == ENABLE)
-				{
-						isr_state = DISABLE;
-						disable_isr();
-				}
-				break;
-				
-			case ISR:					
-				if(fiq_state == ENABLE)
-				{
-						fiq_state = DISABLE;
-						disable_fiq();
-				}
-				break;
-				
-			case FIQ:
-				if(isr_state == ENABLE)
-				{
-						isr_state = DISABLE;
-						disable_isr();
-				}
-				break;
-		}
+		disable_isr_fiq();
 }
 
-void unlock(acceso_t acceso)
+extern int status_mode(void);
+
+void unlock()
 {
+		int acceso;
+		acceso = status_mode();
+		
 		switch(acceso)
 		{
 			case USER:			
-				if(isr_state == DISABLE && fiq_state == DISABLE)
-				{
-						isr_state = ENABLE;
-						fiq_state = ENABLE;
-						enable_isr_fiq();
-				}
-				else if(fiq_state == DISABLE)
-				{
-						fiq_state = ENABLE;
-						enable_fiq();
-				}
-				else if(isr_state == DISABLE)
-				{
-						isr_state = ENABLE;
-						enable_isr();
-				}
-				
+				enable_isr_fiq();
 				break;
 				
 			case ISR:
-				if(fiq_state == DISABLE)
-				{
-						fiq_state = ENABLE;
-						enable_fiq();
-				}
-				break;
-				
+					enable_fiq();
+			
 			case FIQ:
 				break;
 		}

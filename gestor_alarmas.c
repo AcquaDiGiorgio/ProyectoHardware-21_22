@@ -119,7 +119,7 @@ void alarma_gestionar_alarma(int idAlarma)
 	// Guardamos el evento que se tiene que gestionar
 		uint32_t auxData = alarmas[idAlarma].auxData;
 		
-		cola_guardar_eventos(SET_ALARMA, alarma_getEvento(auxData), USER);
+		cola_guardar_eventos(SET_ALARMA, alarma_getEvento(auxData));
 		
 		// Si la alarma es periódica, reiniciamos su tiempo
 		if (alarma_esPeriodica(auxData) == 1)

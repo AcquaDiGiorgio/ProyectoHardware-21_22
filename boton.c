@@ -63,7 +63,7 @@ void eint1_ISR (void) __irq
 	EXTINT = EXTINT | 2;
 	VICVectAddr = 0;
 	gestion_eint1(SET_EXT_INT_1);
-	cola_guardar_eventos(SET_EXT_INT_1, NO_AUX_DATA, ISR);
+	cola_guardar_eventos(SET_EXT_INT_1, NO_AUX_DATA);
 }
 
 void eint2_ISR (void) __irq
@@ -73,7 +73,7 @@ void eint2_ISR (void) __irq
 	EXTINT = EXTINT | 4;
 	VICVectAddr = 0;
 	gestion_eint2(SET_EXT_INT_2);
-	cola_guardar_eventos(SET_EXT_INT_2, NO_AUX_DATA, ISR);
+	cola_guardar_eventos(SET_EXT_INT_2, NO_AUX_DATA);
 }
 
 boolean boton1_pulsado()

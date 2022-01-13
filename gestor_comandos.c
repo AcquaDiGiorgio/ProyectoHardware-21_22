@@ -109,12 +109,12 @@ void comando_detectar(void)
 
 void reiniciar_partida(void)
 {
-		cola_guardar_eventos(SET_RESET_COMMAND, NO_AUX_DATA, USER);
+		cola_guardar_eventos(SET_RESET_COMMAND, NO_AUX_DATA);
 }
 
 void nueva_partida(void)
 {
-		cola_guardar_eventos(SET_NEW_COMMAND, NO_AUX_DATA, USER);
+		cola_guardar_eventos(SET_NEW_COMMAND, NO_AUX_DATA);
 }
 
 void introducir_jugada(int info[])
@@ -143,7 +143,7 @@ void introducir_jugada(int info[])
 								comandoAnterior[i] = comando[i];
 						}	
 								
-						cola_guardar_eventos(SET_WRITE_COMMAND, auxData, USER);
+						cola_guardar_eventos(SET_WRITE_COMMAND, auxData);
 						alarma_crear_alarma_periodica(LED_CANCELAR,EV_LED_CANCELAR,100);
 						alarma_crear_alarma_unica(0,EV_COMMAND_CONFIRM, 3 * SEGUNDO);
 				}
@@ -175,7 +175,7 @@ void comando_comprobar(void)
 				auxData 	= (fila << 0x10) | (columna << 0x08) | oldValue;
 			
 				pantalla_add_to_buffer("\n\nComando cancelado\n", 20);
-				cola_guardar_eventos(SET_WRITE_COMMAND, auxData, USER);
+				cola_guardar_eventos(SET_WRITE_COMMAND, auxData);
 		}
 		
 		comando_reiniciar();

@@ -18,12 +18,13 @@ struct index{
 };
 
 static volatile struct index indice;
+extern int status_mode(void);
 
-void cola_guardar_eventos(event_t idEvento, uint32_t auxData, acceso_t acceso)
+void cola_guardar_eventos(event_t idEvento, uint32_t auxData)
 {
 		int indiceAux;
 		
-		lock(acceso);
+		lock();
 		
 		indiceAux = indice.aEscribir;				// Creamos un índice auxiliar	
 		indice.aEscribir++;									// aumentamos el índice
@@ -34,7 +35,7 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData, acceso_t acceso)
 				indice.aEscribir = 0;	
 		}
 
-		unlock(acceso);
+		unlock();
 		
 		// Comprobamos que donde queremos introducir el evento, no hay otro esperando a ser leído
  		if(eventList[indiceAux].ready == FALSE)
@@ -43,7 +44,7 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData, acceso_t acceso)
 				eventList[indiceAux].id = idEvento;
 				eventList[indiceAux].auxData = auxData;
 					
-				if (acceso == USER)
+				if (status_mode() == USER)
 				{
 						eventList[indiceAux].marcaTemporal = clock_gettime(); 
 				}
@@ -55,7 +56,7 @@ void cola_guardar_eventos(event_t idEvento, uint32_t auxData, acceso_t acceso)
 				eventList[indiceAux].ready = TRUE;		
 				return; // Salimos de la función
 		}
-		
+		WD_feed();
 		while(1){}
 }
 
@@ -189,6 +190,8 @@ void cola_leer_evento()
 						break;
 				
 				case SET_WRITE_COMMAND:
+						alarma_add_alarma_PD();
+						estado_partida = partida_obtener_estado();
 						if (estado_partida == MODO_JUGANDO)
 						{
 								valor = auxData & 0xFF;

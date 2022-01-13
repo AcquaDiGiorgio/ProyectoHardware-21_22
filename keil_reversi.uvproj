@@ -656,6 +656,11 @@
               <FileType>1</FileType>
               <FilePath>.\access.c</FilePath>
             </File>
+            <File>
+              <FileName>status_mode.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\status_mode.s</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
