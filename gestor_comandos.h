@@ -18,8 +18,8 @@
 	void introducir_jugada(int[]);
 	void lanzar_error(command_err err);
 	
+	void comando_permitir_cancelacion(void);
 	void comando_cancelar(void);
-	
-	void comando_comprobar(void);
+	void comando_aceptar(void);
 
 #endif //GESTOR_COMANDOS_H

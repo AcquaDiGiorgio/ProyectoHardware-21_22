@@ -95,7 +95,7 @@ void tratar_alarma(uint32_t auxData){
 				case EV_COMMAND_CONFIRM:
 						alarma_parar(LED_CANCELAR-1);
 						IO_apagar_led_cancelar();
-						comando_comprobar();
+						comando_aceptar();
 						break;
 				
 				case EV_LED_CANCELAR:
@@ -144,8 +144,11 @@ void cola_leer_evento()
 						switch(energia_estado_actual())
 						{
 							case DESPIERTO:
+									alarma_parar(LED_CANCELAR-1);
+									IO_apagar_led_cancelar();
 									alarma_add_alarma_PD();
-									//comando_detectar();
+									
+									comando_aceptar();
 									break;
 								
 							case DORMIDO:
@@ -162,7 +165,10 @@ void cola_leer_evento()
 						switch(energia_estado_actual())
 						{
 							case DESPIERTO:
+									alarma_parar(LED_CANCELAR-1);
+									IO_apagar_led_cancelar();
 									alarma_add_alarma_PD();
+									
 									comando_cancelar();
 									break;
 								
@@ -198,6 +204,7 @@ void cola_leer_evento()
 								columna = (auxData >> 0x8) & 0xFF;
 								fila = (auxData >> 0x10) & 0xFF;
 								sudoku_introducir_valor(fila, columna, valor);
+								comando_permitir_cancelacion();
 								partida_mostrar();
 						}						
 						break;

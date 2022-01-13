@@ -7,3 +7,10 @@
 .\partida.o: gestor_alarmas.h
 .\partida.o: eventos.h
 .\partida.o: constantes_comunes.h
+.\partida.o: sudoku_p2.h
+.\partida.o: celda.h
+.\partida.o: gestor_io.h
+.\partida.o: cola.h
+.\partida.o: uart0.h
+.\partida.o: pantalla.h
+.\partida.o: boton.h

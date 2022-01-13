@@ -1,7 +1,6 @@
 #include "gestor_output.h"
 #include "sudoku_p2.h"
 #include "cola.h"
-#include "temporizador.h"
 #include "pantalla.h"
 	
 #define LEN_FILA 								29
@@ -41,8 +40,6 @@ static volatile char candidatos[CANDIDATOS_SIZE];
 static volatile boolean terminado = FALSE;
 static volatile int index_candidatos = 1;
 
-static volatile uint64_t actualizar_coste = 0;
-
 void __swi(0xFF) enable_isr (void);
 
 void enviar_info(void)
@@ -50,7 +47,7 @@ void enviar_info(void)
 		pantalla_add_to_buffer(informacion_juego, INFO_SIZE);
 }
 
-void mostrar_final(uint8_t minutos, uint8_t segundos, volatile char *razon, int len_razon)
+void mostrar_final(uint8_t minutos, uint8_t segundos, uint32_t actualizar_coste, volatile char *razon, int len_razon)
 {
 		int i;
 		char tiempo[8], actualizar_tiempo[9];
@@ -120,11 +117,6 @@ void inicializar_tablero(void)
 {
 	int fila, valor, j, columna;
 	char chr;
-	uint64_t time;
-	
-	time = clock_gettime();
-	candidatos_actualizar(); 
-	actualizar_coste = actualizar_coste + clock_gettime() - time;
 	
 	for (fila = 0; fila < TOT_FILAS; fila++)
 	{

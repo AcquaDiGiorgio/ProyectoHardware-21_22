@@ -1,14 +1,5 @@
 #include "sudoku_p2.h"
 #include "tableros.h"
-#include "cola.h"
-#include "temporizador.h"
-#include "gestor_alarmas.h"
-#include "gestor_IO.h"
-#include "boton.h"
-#include "uart0.h"
-#include "gestor_output.h"
-#include "partida.h"
-#include "pantalla.h"
 
 // Cuadrícula a utilizar
 // Para cambiarla, modificar cuadricula_C_C por el tablero deseado
@@ -249,17 +240,4 @@ boolean sudoku_celdaAccesible(uint8_t fila, uint8_t columna)
 				retVal = TRUE;
 		
 		return retVal;
-}
-
-int main (void) {
-		temporizador_iniciar();		
-		temporizador_periodo(1);	// Timer0
-		IO_init();
-		uart_init(pantalla_add_to_buffer, pantalla_write_buffer);
-		RTC_init();
-		eint_init();
-		WD_init(20);
-		alarma_inicializarAlarmasDefault(10);
-		partida_preprar();
-		scheduler();
 }

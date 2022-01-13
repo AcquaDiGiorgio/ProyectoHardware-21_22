@@ -16,7 +16,7 @@ static volatile char comandoAnterior[MAX_COMMAND_SIZE];
 static volatile int posicion_actual;
 
 static volatile int oldValue = 0;
-static volatile boolean comando_cancelado = FALSE;
+static volatile boolean cancelable = FALSE;
 
 
 void __swi(0xFF) enable_isr (void);
@@ -71,7 +71,7 @@ void comando_detectar(void)
 		int int_command[MAX_COMMAND_SIZE];
 		boolean error = FALSE;
 
-		comando_cancelado = FALSE;
+		cancelable = FALSE;
 	
 		if (comando[0] == 'R' && comando[1] == 'S' && comando[2] == 'T') 			// Comando RESET (RST)
 		{
@@ -144,6 +144,7 @@ void introducir_jugada(int info[])
 						}	
 								
 						cola_guardar_eventos(SET_WRITE_COMMAND, auxData);
+						comando_permitir_cancelacion();
 						alarma_crear_alarma_periodica(LED_CANCELAR,EV_LED_CANCELAR,100);
 						alarma_crear_alarma_unica(0,EV_COMMAND_CONFIRM, 3 * SEGUNDO);
 				}
@@ -158,17 +159,22 @@ void introducir_jugada(int info[])
 		}
 }
 
-void comando_cancelar(void)
+void comando_permitir_cancelacion(void)
 {
-		comando_cancelado = TRUE;
+		cancelable = TRUE;
 }
 
-void comando_comprobar(void)
+void comando_aceptar(void)
+{
+		cancelable = FALSE;
+}
+
+void comando_cancelar(void)
 {
 		uint8_t fila, columna;
 		int auxData;
 	
-		if (comando_cancelado == TRUE)
+		if (cancelable == TRUE)
 		{
 				fila 			= to_uint(comandoAnterior[0]) - 1; 
 				columna 	= to_uint(comandoAnterior[1]) - 1;
