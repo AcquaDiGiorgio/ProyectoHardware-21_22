@@ -11,6 +11,7 @@
 ".\gestor_alarmas.o"
 ".\temporizador.o"
 ".\gestor_energia.o"
+".\idle_powerdown.o"
 ".\gestor_comandos.o"
 ".\gestor_output.o"
 ".\sudoku_p2.o"

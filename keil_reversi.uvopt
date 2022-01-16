@@ -142,7 +142,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDARM</Key>
-          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=975,67,1306,395,0)(108=885,175,1042,295,0)(106=994,204,1214,508,0)(105=1073,456,1263,700,0)(80=19,225,530,635,0)(104=53,65,369,484,0)(100=757,183,1340,365,1)(113=220,244,605,685,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=218,233,735,620,0)(116=790,303,1076,593,0)</Name>
+          <Name>(134=-1,-1,-1,-1,0)(135=-1,-1,-1,-1,0)(107=-596,-9,-265,319,0)(108=-245,130,-88,250,1)(106=994,204,1214,508,0)(105=1073,456,1263,700,0)(80=19,225,530,635,0)(104=53,65,369,484,0)(100=757,183,1340,365,1)(113=220,244,605,685,0)(112=220,58,718,768,0)(136=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(110=840,313,1366,768,0)(111=840,188,1366,643,0)(114=277,320,963,768,0)(115=218,233,735,620,0)(116=790,303,1076,593,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -150,120 +150,7 @@
           <Name>(107=-1,-1,-1,-1,0)(108=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(105=-1,-1,-1,-1,0)(80=-1,-1,-1,-1,0)(104=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(101=-1,-1,-1,-1,0)(102=-1,-1,-1,-1,0)(103=-1,-1,-1,-1,0)(113=-1,-1,-1,-1,0)(112=-1,-1,-1,-1,0)(117=-1,-1,-1,-1,0)(118=-1,-1,-1,-1,0)(110=-1,-1,-1,-1,0)(111=-1,-1,-1,-1,0)(114=-1,-1,-1,-1,0)(115=-1,-1,-1,-1,0)(116=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>27</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>11708</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\access.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\access.c\27</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>27</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>668</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\cola.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\keil_reversi\cola.c\27</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>25</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>11704</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\access.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>8</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>13020</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\status_mode.s</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>12</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>13032</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\status_mode.s</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>5</Number>
-          <Type>0</Type>
-          <LineNumber>14</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>13036</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\status_mode.s</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>6</Number>
-          <Type>0</Type>
-          <LineNumber>11</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\status_mode.s</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
@@ -278,10 +165,10 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>0</aLwin>
+        <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>1</aSer1>
-        <aSer2>1</aSer2>
+        <aSer2>0</aSer2>
         <aPa>0</aPa>
         <viewmode>1</viewmode>
         <vrSel>0</vrSel>
@@ -290,10 +177,10 @@
         <AscS1>0</AscS1>
         <AscS2>0</AscS2>
         <AscS3>0</AscS3>
-        <aSer3>1</aSer3>
+        <aSer3>0</aSer3>
         <eProf>2</eProf>
         <aLa>0</aLa>
-        <aPa1>0</aPa1>
+        <aPa1>1</aPa1>
         <AscS4>0</AscS4>
         <aSer4>0</aSer4>
         <StkLoc>1</StkLoc>
@@ -660,6 +547,30 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+    <File>
+      <GroupNumber>8</GroupNumber>
+      <FileNumber>23</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Idle_PowerDown.c</PathWithFileName>
+      <FilenameWithoutPath>Idle_PowerDown.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>8</GroupNumber>
+      <FileNumber>24</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Idle_PowerDown.h</PathWithFileName>
+      <FilenameWithoutPath>Idle_PowerDown.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
   </Group>
 
   <Group>
@@ -670,7 +581,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>9</GroupNumber>
-      <FileNumber>23</FileNumber>
+      <FileNumber>25</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -682,7 +593,7 @@
     </File>
     <File>
       <GroupNumber>9</GroupNumber>
-      <FileNumber>24</FileNumber>
+      <FileNumber>26</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -702,7 +613,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>25</FileNumber>
+      <FileNumber>27</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -714,7 +625,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>26</FileNumber>
+      <FileNumber>28</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -726,7 +637,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>27</FileNumber>
+      <FileNumber>29</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -738,7 +649,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>28</FileNumber>
+      <FileNumber>30</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -750,7 +661,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>29</FileNumber>
+      <FileNumber>31</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -762,7 +673,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>30</FileNumber>
+      <FileNumber>32</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -774,7 +685,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>31</FileNumber>
+      <FileNumber>33</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -786,7 +697,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>32</FileNumber>
+      <FileNumber>34</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -806,7 +717,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>33</FileNumber>
+      <FileNumber>35</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -818,7 +729,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>34</FileNumber>
+      <FileNumber>36</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -838,7 +749,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>12</GroupNumber>
-      <FileNumber>35</FileNumber>
+      <FileNumber>37</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -850,7 +761,7 @@
     </File>
     <File>
       <GroupNumber>12</GroupNumber>
-      <FileNumber>36</FileNumber>
+      <FileNumber>38</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -862,7 +773,7 @@
     </File>
     <File>
       <GroupNumber>12</GroupNumber>
-      <FileNumber>37</FileNumber>
+      <FileNumber>39</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

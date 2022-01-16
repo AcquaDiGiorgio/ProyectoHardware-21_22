@@ -146,7 +146,7 @@ void IO_checkFinPartida(uint8_t fila, uint8_t columna, uint8_t valor)
 	if(fila == 0 && columna == 0 && valor == 0)
 	{
 		sudoku_reiniciar();
-		PM_power_down();
+		energia_power_down();
 	}
 }
 

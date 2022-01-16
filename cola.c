@@ -67,7 +67,7 @@ void tratar_alarma(uint32_t auxData){
 						break;
 				
 				case EV_POWER:				// Poner el procesador en modo Power Down
-						PM_power_down();
+						energia_power_down();
 						IO_reiniciarEstadoAnterior();
 						break;
 				
@@ -248,7 +248,7 @@ void scheduler()
 				if(cola_hay_evento() == TRUE){
 						cola_leer_evento();
 				}else{
-						PM_idle();
+						energia_idle();
 				}		
 		}
 }

@@ -566,6 +566,16 @@
               <FileType>1</FileType>
               <FilePath>.\gestor_energia.c</FilePath>
             </File>
+            <File>
+              <FileName>Idle_PowerDown.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Idle_PowerDown.c</FilePath>
+            </File>
+            <File>
+              <FileName>Idle_PowerDown.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Idle_PowerDown.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

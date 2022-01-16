@@ -12,12 +12,12 @@ void __swi(0xFA) disable_fiq (void);
 static volatile state isr_state = ENABLE;
 static volatile state fiq_state = ENABLE;
 
+extern int status_mode(void);
+
 void lock(void)
 {
 		disable_isr_fiq();
 }
-
-extern int status_mode(void);
 
 void unlock()
 {
@@ -31,7 +31,8 @@ void unlock()
 				break;
 				
 			case ISR:
-					enable_fiq();
+				enable_fiq();
+				break;
 			
 			case FIQ:
 				break;

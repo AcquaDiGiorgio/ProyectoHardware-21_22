@@ -32,10 +32,10 @@ void temporizador_empezar()
 	VICIntEnable = VICIntEnable | 0x00000020;			// Encendemos timer1
 }
 
-// Devuelve ms
+// Devuelve us
 uint64_t temporizador_leer(void)
 {
-	 // Veces interrumpido * Tiempo por interrupcción (ms) + Ciclos actuales / ciclos por ms  con  reloj de 60 MHz
+	 // Veces interrumpido * Tiempo por interrupcción (us) + Ciclos actuales / ciclos por us con un PCLK de 15 MHz
 	 return timer1_count * 240000000 + T1TC / 15;
 }
 

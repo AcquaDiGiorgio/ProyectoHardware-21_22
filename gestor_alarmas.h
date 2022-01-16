@@ -6,7 +6,7 @@
 	#include "constantes_comunes.h"
 
 	#define TOT_ALARMAS 10 		// Máximo número de alarmas
-	#define DYNAMIC_ID 	2			// Mínimo índice de una alarma no predifinida por el sistema
+	#define DYNAMIC_ID 	2			// Número de alarmas predefinidas
 	
 	// Tipo de una alma
 	struct alarma_t{
@@ -16,6 +16,7 @@
 	};
 	
 	// Id de alarmas predefinidas por el sistema
+	// Deben tomar valores mayores que 0 y menores que TOT_ALARMAS
 	enum {
 		POW_DOWN 			= 1,			// Alarma que pondrá el sistema a modo Power Down
 		LED_CANCELAR  = 2,			// Alarma que cambia el estado del led de cancelar operacion

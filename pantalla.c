@@ -43,9 +43,6 @@ void pantalla_add_to_buffer(volatile char buff[], int size)
 				{
 						indice_buffer.aEscribir = 0;
 				}
-				if (indice_buffer.aEscribir == indice_buffer.aMostrar){
-						// Overflow
-				}
 		}
 		if (buffer_vacio == TRUE)
 		{

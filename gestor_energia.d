@@ -3,4 +3,5 @@
 .\gestor_energia.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\gestor_energia.o: gestor_energia.h
 .\gestor_energia.o: eventos.h
+.\gestor_energia.o: idle_powerdown.h
 .\gestor_energia.o: constantes_comunes.h
